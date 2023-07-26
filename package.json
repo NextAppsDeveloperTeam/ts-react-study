@@ -4,9 +4,6 @@
     "dev": "cross-env NODE_ENV=development webpack serve --config=webpack.config.js"
   },
   "devDependencies": {
-    "@loadable/component": "^5.15.3",
-    "@pdg/api": "^1.0.2",
-    "@pdg/react-hook": "^1.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@soda/friendly-errors-webpack-plugin": "^1.8.1",
     "@types/jest": "^29.5.3",
@@ -22,7 +19,6 @@
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
-    "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "eslint": "8.45.0",
     "eslint-config-prettier": "^8.8.0",
@@ -33,7 +29,6 @@
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
-    "js-file-download": "^0.4.12",
     "path": "^0.12.7",
     "prettier": "^3.0.0",
     "react-app-rewired": "^2.2.1",

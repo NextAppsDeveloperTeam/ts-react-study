@@ -11,15 +11,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const CopyPlugin = require('copy-webpack-plugin');
 /* eslint-enable */
 
-// ---------------------------------------------------------------------------------------------------------------------
-
-const isProduction = process.env.NODE_ENV === 'production';
-const outputPath = path.resolve(__dirname, 'dist');
-
-// ---------------------------------------------------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------------------------------------------------
-
 const options = {
   mode: 'development',
   devtool: 'eval',
@@ -28,12 +19,6 @@ const options = {
   stats: false,
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  },
-  output: {
-    path: outputPath,
-    publicPath: '/',
-    filename: '[name].[chunkhash].js',
-    chunkFilename: 'chunks/[name].[chunkhash].js',
   },
   devServer: {
     host: env.APP_HOST,
@@ -63,10 +48,6 @@ const options = {
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
-    }),
-    new webpack.IgnorePlugin({
-      resourceRegExp: /^\.\/locale$/,
-      contextRegExp: /moment$/,
     }),
     new FriendlyErrorsWebpackPlugin({
       clearConsole: true,
