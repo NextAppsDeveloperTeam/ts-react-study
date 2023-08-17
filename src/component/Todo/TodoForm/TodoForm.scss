@@ -1,0 +1,18 @@
+.TodoForm {
+  border: 1px solid #afafaf;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+
+  > div {
+    &:first-of-type {
+      flex: 1;
+      padding-right: 10px;
+    }
+  }
+
+  input {
+    width: 100%;
+    border: 0;
+  }
+}
