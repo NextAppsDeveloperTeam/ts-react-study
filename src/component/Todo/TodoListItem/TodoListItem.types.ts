@@ -1,5 +1,6 @@
+import {TodoStatus, TTodoListItem} from "../@common";
 
 export interface TodoListItemProps {
-    item: {id: number, text: string, status: string}
-    onChangeStatus: any;
+    item: TTodoListItem;
+    onChangeStatus(item: TTodoListItem, status: TodoStatus): void;
 }

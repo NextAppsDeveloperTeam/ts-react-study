@@ -1,31 +1,24 @@
-import React from 'react';
 import {TodoHomeProps as Props} from './TodoHome.types';
 import TodoList from "../TodoList/TodoList";
-import {TList} from "../@common";
-import TodoStatus from "../@common/TodoStatus";
+import {TTodoList, TTodoListItem, TodoStatus} from "../@common";
 import TodoForm from "../TodoForm/TodoForm";
 import './TodoHome.scss';
 
 const TodoHome: React.FC<Props> = () => {
-    const [inputText, setInputText] = useState('');
-    const [todoList, setTodoList] = useState<TList[]>([]);
+    const [todoList, setTodoList] = useState<TTodoList>([]);
 
-    const handleTextTyping = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputText(e.target.value);
-    }, []);
-
-    const handleTextInput = useCallback((event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const newTodo: TList = {
+    const handleSubmit = useCallback((text: string) => {
+        const now = new Date();
+        const item = {
             id: Date.now(),
-            text: inputText,
+            text,
+            date: (now.getFullYear()+(`0${now.getMonth()+1}`).slice(-2)+(`0${now.getDate()}`).slice(-2)).toString(),
             status: TodoStatus.Todo,
         };
-        setTodoList([...todoList, newTodo]);
-        setInputText('');
-    }, [inputText, todoList]);
+        setTodoList((old) => [item, ...old]);
+    }, []);
 
-    const handleChangeStatus = useCallback((item: TList, status: string) => {
+    const handleChangeStatus = useCallback((item: TTodoListItem, status: TodoStatus) => {
         setTodoList((old) =>
             old.map((oldItem) => {
                 if (oldItem === item) {
@@ -41,11 +34,7 @@ const TodoHome: React.FC<Props> = () => {
             <h1>Todo</h1>
             <div className='todo-home-container'>
                 <div>
-                    <TodoForm
-                        onChange={handleTextTyping}
-                        onSubmit={handleTextInput}
-                        inputText={inputText}
-                    />
+                    <TodoForm onSubmit={handleSubmit}/>
                     <p>TODO 목록</p>
                     <TodoList status={TodoStatus.Todo} todoList={todoList} onChangeStatus={handleChangeStatus}/>
                 </div>

@@ -1,11 +1,7 @@
-const TodoStatus = {
+export const TodoStatus = {
   Todo: 'todo',
   Complete: 'comp',
   Delete: 'del',
+} as const;
 
-  getList() {
-    return [TodoStatus.Todo, TodoStatus.Complete, TodoStatus.Delete];
-  },
-};
-
-export default TodoStatus;
+export type TodoStatus = ValueOf<typeof TodoStatus>;

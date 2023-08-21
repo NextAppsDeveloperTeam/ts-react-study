@@ -1,5 +1,2 @@
-export interface TList {
-  id: number;
-  text: string;
-  status: string;
-}
+export * from './TodoList';
+export * from './TodoStatus';

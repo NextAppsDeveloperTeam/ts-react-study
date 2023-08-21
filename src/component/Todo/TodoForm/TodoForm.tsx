@@ -1,33 +1,40 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {TodoFormProps as Props} from './TodoForm.types';
 import './TodoForm.scss';
 
-const TodoForm: React.FC<Props> = ({onChange, onSubmit, inputText}) => {
+const TodoForm: React.FC<Props> = ({onSubmit}) => {
 
-    const inputRef = useRef<any>(null);
+    const textRef = useRef<HTMLInputElement>(null);
 
-    const handelInputRef = useCallback(() => {
-        inputRef.current?.focus();
+    const [text, setText] = useState<string>('');
+
+    const handelTextChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setText(e.target.value);
     }, []);
+
+
+    const handelAddBtnClick = useCallback(() => {
+        onSubmit(text);
+        setText('');
+        textRef.current?.focus();
+    }, [onSubmit, text]);
 
     return (
         <div className='TodoForm'>
             <div>
                 <input
-                    onChange={(e) => onChange(e)}
+                    ref={textRef}
                     type='text'
                     placeholder='할 일을 입력해주세요'
-                    ref={inputRef}
-                    value={inputText}
+                    value={text}
+                    onChange={handelTextChange}
                 />
             </div>
-            <form onSubmit={(event) => onSubmit(event)}>
-                <div>
-                    <button type='submit' disabled={inputText === ''} onClick={handelInputRef}>
-                        추가
-                    </button>
-                </div>
-            </form>
+            <div>
+                <button disabled={empty(text)} onClick={handelAddBtnClick}>
+                    추가
+                </button>
+            </div>
         </div>
     );
 };
