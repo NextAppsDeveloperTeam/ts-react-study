@@ -1,0 +1,30 @@
+.AuthReg {
+  display: flex;
+  justify-content: center;
+  margin-top: 130px;
+
+  div {
+    text-align: center;
+    width: 270px;
+
+    > div {
+      > div {
+        display: flex;
+        padding-bottom: 20px;
+        align-items: center;
+
+        > label {
+          flex: 1;
+          text-align: left;
+          font-size: 17px;
+        }
+      }
+    }
+
+    button {
+      margin: 30px;
+      padding: 7px 15px;
+      font-size: 16px;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+import * as React from 'react';
+import './AuthLogin.scss';
+
+const AuthLogin: React.FC = () => {
+
+    return (
+        <div className='AuthLogin'>
+            <div>
+                <div>
+                    <div>
+                        <label htmlFor='email'>이메일</label>
+                        <input type='text' id='email' />
+                    </div>
+                    <div>
+                        <label htmlFor='password'>비밀번호</label>
+                        <input type='password' id='password' />
+                    </div>
+                </div>
+                <button type='submit'>로그인</button>
+            </div>
+        </div>
+    );
+};
+export default AuthLogin;
