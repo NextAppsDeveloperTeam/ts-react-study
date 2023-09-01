@@ -16,7 +16,7 @@ const LoginUser: React.FC = () => {
                         <input type='password' id='password' />
                     </div>
                 </div>
-                <button>로그인</button>
+                <button type='submit'>로그인</button>
             </form>
         </div>
     );

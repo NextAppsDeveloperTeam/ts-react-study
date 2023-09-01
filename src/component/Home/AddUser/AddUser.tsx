@@ -20,7 +20,7 @@ const AddUser: React.FC = () => {
 
     return (
         <div className='addUser'>
-        <form className='Form' onSubmit={(e) => handleSaveUser(e, formData)} action='./userList'>
+        <form className='Form' onSubmit={(e) => handleSaveUser(e, formData)} action='./adminpage'>
             <div>
                 {/*<div>*/}
                 {/*    <label htmlFor='id'>아이디</label>*/}
@@ -48,7 +48,7 @@ const AddUser: React.FC = () => {
                     <input onChange={handleForm} type='radio' id='status_admin' name='status' value='admin' />관리자
                 </div>
             </div>
-            <button disabled={formData === undefined}>추가</button>
+            <button type='submit' disabled={formData === undefined}>추가</button>
         </form>
         </div>
     );

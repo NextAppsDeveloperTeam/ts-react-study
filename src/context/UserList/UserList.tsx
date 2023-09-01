@@ -10,7 +10,7 @@ interface Props {
 const UserProvider = ({children}:Props) => {
     const [userList, setUserList] = useState<User[]>(users);
 
-    const addUser = (user: User) => {
+    const addUser = useCallback((user: User) => {
         if(user) {
             const newList : User[] = [...userList, {
                 id: userList.length+1,
@@ -23,13 +23,13 @@ const UserProvider = ({children}:Props) => {
             localStorage.setItem('UserList', JSON.stringify(newList));
             setUserList(newList);
         }
-    };
+    },[userList]);
 
-    const deleteUser = (id: number) => {
+    const deleteUser = useCallback((id: number) => {
         const list = userList.filter(user => user.id !== id);
         localStorage.removeItem('UserList');
         setUserList(list);
-    };
+    }, [userList]);
 
     useEffect(() => {
         const list = localStorage.getItem('UserList');

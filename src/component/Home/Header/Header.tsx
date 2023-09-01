@@ -11,7 +11,7 @@ const Header : React.FC = () => {
               <nav>
                   <ul>
                       <li><a onClick={() => navigate('/')}>HOME</a></li>
-                      <li><a href='#'>MY</a></li>
+                      <li><a onClick={() => navigate('/myPage')}>MY</a></li>
                       <li><a onClick={() => navigate('/userList')}>회원관리</a></li>
                   </ul>
               </nav>
