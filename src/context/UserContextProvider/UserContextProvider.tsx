@@ -28,12 +28,12 @@ const UserContextProvider = ({children}:Props) => {
     const addUser = useCallback((user: User) => {
         if(user) {
             const newList : User[] = [...userList, {
-                id: userList.length+1,
+                id: userList[userList.length-1].id+1,
                 name: user.name,
                 email: user.email,
                 phone: user.phone,
                 password: user.password,
-                status: UserStatus.User,
+                status: user.status,
             }];
             localStorage.setItem('UserList', JSON.stringify(newList));
             setUserList(newList);
