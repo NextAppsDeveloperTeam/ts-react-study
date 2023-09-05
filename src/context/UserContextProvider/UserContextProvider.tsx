@@ -7,7 +7,7 @@ const users : User[] = [
     {
         id: 1,
         name: 'admin',
-        email: 'test@test.com',
+        email: 'test00@test.com',
         phone: '01011112222',
         password: '1234',
         status: UserStatus.Admin,
@@ -15,7 +15,7 @@ const users : User[] = [
     {
         id: 2,
         name: 'user1',
-        email: 'test2@test.com',
+        email: 'test01@test.com',
         phone: '01011113333',
         password: '1234',
         status: UserStatus.User,

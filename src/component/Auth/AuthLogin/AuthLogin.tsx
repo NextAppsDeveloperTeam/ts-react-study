@@ -1,24 +1,21 @@
 import * as React from 'react';
-import './AuthLogin.scss';
+import {Button, Container, Form, Input, InputBox, Label} from '../../style';
 
 const AuthLogin: React.FC = () => {
-
-    return (
-        <div className='AuthLogin'>
-            <div>
-                <div>
-                    <div>
-                        <label htmlFor='email'>이메일</label>
-                        <input type='text' id='email' />
-                    </div>
-                    <div>
-                        <label htmlFor='password'>비밀번호</label>
-                        <input type='password' id='password' />
-                    </div>
-                </div>
-                <button type='submit'>로그인</button>
-            </div>
-        </div>
-    );
+  return (
+    <Container className='AuthLogin'>
+      <Form>
+        <InputBox>
+          <Label htmlFor='email'>이메일</Label>
+          <Input type='text' id='email' />
+        </InputBox>
+        <InputBox>
+          <Label htmlFor='password'>비밀번호</Label>
+          <Input type='password' id='password' />
+        </InputBox>
+        <Button type='submit'>로그인</Button>
+      </Form>
+    </Container>
+  );
 };
 export default AuthLogin;
