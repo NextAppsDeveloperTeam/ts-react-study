@@ -4,6 +4,7 @@ import { useContext, useState } from 'react';
 import { UserContext, UserContextValue } from '../../../context';
 import {Button, Container, Form, Input, InputBox, Label} from '../../style';
 import styled from 'styled-components';
+import {useNavigate} from "react-router-dom";
 
 const LabelRadio = styled.label`
   margin-right: 50px;
@@ -22,7 +23,9 @@ const Span = styled.p`
 `;
 
 const AuthReg: React.FC = () => {
-  const { addUser } = useContext(UserContext) as UserContextValue;
+  const navigate = useNavigate();
+
+  const { userList, addUser } = useContext(UserContext) as UserContextValue;
 
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputEmailRef = useRef<HTMLInputElement>(null);
@@ -44,15 +47,24 @@ const AuthReg: React.FC = () => {
   const passwordRegEx = useMemo(() => {
     return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/;
   }, []);
-  const phoneRegEx = useMemo(() => {
-    // return /^(\d{2,3})(\d{3,4}(\d{4})$/, `$1-$2-$3`;
-    return /^[0-9]{9,11}$/;
-  }, []);
+  const chkEmail = useMemo(() => {
+    return userList.map((a) => a.email);
+  }, [userList]);
+
+  useEffect(() => {
+    if(phone) {
+      setPhone(phone.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'));
+    }
+    if(name) {
+      setName(name.replace(/[ {}[\]/?.,;:|)*~`!^\-_+<>@#$%&'"\\(=]/g, ''));
+    }
+  }, [name, phone]);
 
   const handelJoinCLick = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
       if (!name) {
+        console.log(chkEmail);
         alert('이름을 입력해주세요');
         inputNameRef.current?.focus();
       } else if (!email) {
@@ -61,11 +73,11 @@ const AuthReg: React.FC = () => {
       } else if (!emailRegEx.test(email)) {
         alert('이메일을 형식에 맞게 입력해주세요');
         inputEmailRef.current?.focus();
+      } else if(chkEmail.includes(email)) {
+        alert('이미 존재하는 이메일입니다')
+        inputEmailRef.current?.focus();
       } else if (!phone) {
         alert('전화번호를 입력해주세요');
-        inputPhoneRef.current?.focus();
-      } else if (!phoneRegEx.test(phone)) {
-        alert("전화번호를 형식에 맞게 입력해주세요\n('-' 없이 번호만 입력해주세요)");
         inputPhoneRef.current?.focus();
       } else if (!password) {
         alert('비밀번호를 입력해주세요');
@@ -81,16 +93,17 @@ const AuthReg: React.FC = () => {
         inputCheckPwdRef.current?.focus();
       } else {
         alert('회원가입이 완료되었습니다\n로그인해주세요');
+        navigate('/login');
         addUser({ id, name, email, phone, password, status });
-        setName('');
-        setEmail('');
-        setPhone('');
-        setPassword('');
-        setCheckPwd('');
-        setStatus(UserStatus.User);
+        // setName('');
+        // setEmail('');
+        // setPhone('');
+        // setPassword('');
+        // setCheckPwd('');
+        // setStatus(UserStatus.User);
       }
     },
-    [addUser, checkPwd, email, emailRegEx, id, name, password, passwordRegEx, phone, phoneRegEx, status]
+    [addUser, checkPwd, chkEmail, email, emailRegEx, id, name, navigate, password, passwordRegEx, phone, status]
   );
 
   return (
@@ -127,6 +140,7 @@ const AuthReg: React.FC = () => {
             id='phone'
             value={phone}
             placeholder='01011112222'
+            maxLength={13}
             onChange={(e) => setPhone(e.target.value)}
           />
         </InputBox>
