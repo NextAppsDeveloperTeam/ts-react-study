@@ -48,15 +48,15 @@ const AuthReg: React.FC = () => {
     return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/;
   }, []);
   const chkEmail = useMemo(() => {
-    return userList.map((a) => a.email);
+    return userList.map((user) => user.email);
   }, [userList]);
 
   useEffect(() => {
-    if(phone) {
-      setPhone(phone.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'));
-    }
     if(name) {
       setName(name.replace(/[ {}[\]/?.,;:|)*~`!^\-_+<>@#$%&'"\\(=]/g, ''));
+    }
+    if(phone) {
+      setPhone(phone.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'));
     }
   }, [name, phone]);
 
@@ -78,6 +78,9 @@ const AuthReg: React.FC = () => {
         inputEmailRef.current?.focus();
       } else if (!phone) {
         alert('전화번호를 입력해주세요');
+        inputPhoneRef.current?.focus();
+      } else if (phone.length<9) {
+        alert('전화번호는 최소 9자입니다');
         inputPhoneRef.current?.focus();
       } else if (!password) {
         alert('비밀번호를 입력해주세요');
@@ -144,7 +147,7 @@ const AuthReg: React.FC = () => {
             onChange={(e) => setPhone(e.target.value)}
           />
         </InputBox>
-        <Span>'-' 없이 번호만 입력</Span>
+        <Span>'-' 없이 번호만 입력 (9~11자)</Span>
         <InputBox>
           <Label htmlFor='password'>비밀번호</Label>
           <Input
