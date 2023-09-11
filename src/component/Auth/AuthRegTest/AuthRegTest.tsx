@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styled from "styled-components";
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
-import FormName from "../../Input/FormName";
+import {FormChkPwd, FormEmail, FormName, FormPhone, FormPwd, FormStatus} from "../../Input";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 130px;
+  margin-top: 80px;
 `;
 
 const Form = styled.form`
@@ -21,6 +21,9 @@ const Button = styled.button`
 interface IFormData extends FieldValues {
     name: string;
     email: string;
+    phone: string;
+    password: string;
+    chkPwd: string;
 }
 
 const AuthRegTest: React.FC = () => {
@@ -28,6 +31,9 @@ const AuthRegTest: React.FC = () => {
         defaultValues: {
             name: '',
             email: '',
+            phone: '',
+            password: '',
+            chkPwd: '',
         },
         mode: 'onChange',
     });
@@ -44,38 +50,12 @@ const AuthRegTest: React.FC = () => {
       <FormProvider {...methods}>
           <Container>
           <Form onSubmit={handleSubmit(onSubmit)}>
-              <FormName
-                  label='이름'
-                  name='name'
-                  rules={{
-                      required: '이름을 입력해주세요',
-                      pattern: {
-                          value: /^[^ ]*[^ ]$/,
-                          message: '앞뒤 공백을 지워주세요',
-                      },
-                      minLength: {
-                          value: 2,
-                          message: '2글자 이상 입력해주세요'
-                      },
-                  }}
-                  type='text'
-                  placeholder='이름을 입력해주세요'
-                  helperText='2글자 이상'
-               />
-              <FormName
-                  label='이메일'
-                  name='email'
-                  rules={{
-                      required: '이메일을 입력해주세요',
-                      pattern: {
-                          value: /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/,
-                          message: '이메일을 형식에 맞게 입력해주세요,'
-                      }
-                  }}
-                  type='text'
-                  placeholder='이메일을 입력해주세요'
-                  helperText='ex) text00@email.com'
-              />
+              <FormName />
+              <FormEmail />
+              <FormPhone />
+              <FormPwd />
+              <FormChkPwd />
+              <FormStatus />
               <Button type='submit'>가입하기</Button>
           </Form>
           </Container>
