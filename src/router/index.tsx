@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import {AuthRegTest, AuthReg, Home, MyPage, UserList} from "../component";
+import {AuthRegTest, Home, MyPage, UserList, AuthLogin} from "../component";
 
 
 const routes = () => {
@@ -7,8 +7,8 @@ const routes = () => {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path='/userList' element={<UserList />} />
-      <Route path='/join' element={<AuthReg />} />
-      <Route path='/login' element={<AuthRegTest />} />
+      <Route path='/join' element={<AuthRegTest />} />
+      <Route path='/login' element={<AuthLogin />} />
 
       <Route path='/myPage' element={<MyPage />} />
 

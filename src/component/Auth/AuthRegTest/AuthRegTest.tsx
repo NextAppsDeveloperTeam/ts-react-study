@@ -1,7 +1,11 @@
 import * as React from 'react';
 import styled from "styled-components";
-import {FieldValues, FormProvider, useForm} from "react-hook-form";
+import {FormProvider, useForm} from "react-hook-form";
 import {FormChkPwd, FormEmail, FormName, FormPhone, FormPwd, FormStatus} from "../../Input";
+import {useContext} from "react";
+import {UserContext, UserContextValue} from "../../../context";
+import {IFormData} from "./AuthRegTest.types";
+import {useNavigate} from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -18,15 +22,11 @@ const Button = styled.button`
   padding: 10px 30px;
 `;
 
-interface IFormData extends FieldValues {
-    name: string;
-    email: string;
-    phone: string;
-    password: string;
-    chkPwd: string;
-}
-
 const AuthRegTest: React.FC = () => {
+    const navigate = useNavigate();
+
+    const { addUser } = useContext(UserContext) as UserContextValue;
+
     const methods = useForm<IFormData>({
         defaultValues: {
             name: '',
@@ -43,7 +43,9 @@ const AuthRegTest: React.FC = () => {
     } = methods;
 
     const onSubmit = (data:IFormData) => {
-        console.log(data);
+        addUser(data);
+        alert('회원가입이 완료되었습니다\n로그인해주세요');
+        navigate('/login');
     };
 
   return (
@@ -55,7 +57,7 @@ const AuthRegTest: React.FC = () => {
               <FormPhone />
               <FormPwd />
               <FormChkPwd />
-              <FormStatus />
+              <FormStatus /><br />
               <Button type='submit'>가입하기</Button>
           </Form>
           </Container>

@@ -1,15 +1,6 @@
-import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
+import { FieldPath, FieldValues, useController } from 'react-hook-form';
 import styled from 'styled-components';
-
-interface InputProps<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> extends UseControllerProps<TFieldValues, TName> {
-  label?: string;
-  type?: string;
-  placeholder?: string;
-  helperText?: string;
-}
+import {InputProps} from "./FormContext.types";
 
 const Wrapper = styled.div<{ error?: boolean }>`
   display: flex;
