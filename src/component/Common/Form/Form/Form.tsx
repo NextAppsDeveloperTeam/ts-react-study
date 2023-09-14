@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormProps as Props, FormDefaultProps, FormCommands } from './Form.types';
-import FormContextProvider from '../FormContextProvider';
 import { useFormContext } from '../FormContext';
 
 const Form = React.forwardRef<FormCommands, Props>(({ children, onSubmit }, ref) => {

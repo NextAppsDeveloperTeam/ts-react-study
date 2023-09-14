@@ -3,7 +3,7 @@ import { FormTextProps as Props, FormTextDefaultProps } from './FormText.types';
 import FormInputControl from '../FormInputControl';
 
 const FormText: React.FC<Props> = (props) => {
-  return <FormInputControl type='text' {...props} />;
+  return <FormInputControl type='name' {...props} />;
 };
 
 FormText.displayName = 'FormText';

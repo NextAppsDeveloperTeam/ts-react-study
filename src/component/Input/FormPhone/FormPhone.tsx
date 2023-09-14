@@ -1,13 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import FormContext from "../FormContext";
 
 const FormPhone: React.FC = () => {
-    // const [phone, setPhone] = useState('');
-    // useEffect(() => {
-    //     if(phone) {
-    //         setPhone(phone.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'));
-    //     }
-    // }, [phone]);
   return (
     <>
         <FormContext
