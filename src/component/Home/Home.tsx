@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, FormCommands, FormEmail, FormNumber, FormText } from '../Common';
+import React, { useEffect } from 'react';
+import { Form, FormCommands, FormEmail, FormNumber, FormPhone, FormText } from '../Common';
 import { Button } from '../style';
 import FormContextProvider from '../Common/Form/FormContextProvider';
 // import {UserContext, UserContextValue} from "../../context";
@@ -10,6 +10,7 @@ const Home = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [num, setNum] = useState<number | undefined>(0);
+  const [phone, setPhone] = useState('');
 
   const formCommandsRef = useRef<FormCommands>(null);
 
@@ -20,6 +21,12 @@ const Home = () => {
       }
     }, 1);
   }, []);
+
+  useEffect(() => {
+    if (phone) {
+      setPhone(phone.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'));
+    }
+  }, [phone]);
 
   const handleSubmit = useCallback((value: Dict) => {
     ll(value);
@@ -33,8 +40,8 @@ const Home = () => {
           <FormText
             label='Name'
             name='name'
-            placeholder='텍스트를 입력해주세요.'
-            helperText={name}
+            placeholder='텍스트를 입력해주세요'
+            helperText='텍스트를 입력해주세요'
             value={name}
             onChange={setName}
             required
@@ -43,7 +50,7 @@ const Home = () => {
             label='Email'
             name='email'
             placeholder='이메일을 입력해주세요'
-            helperText={email}
+            helperText='이메일을 입력해주세요'
             value={email}
             onChange={setEmail}
             required
@@ -51,10 +58,19 @@ const Home = () => {
           <FormNumber
             label='Number'
             name='number'
-            placeholder='전화번호를 입력해주세요'
-            helperText={num}
+            placeholder='입력해주세요'
+            helperText='입력해주세요'
             value={num}
             onChange={setNum}
+            required
+          />
+          <FormPhone
+            label='Phone'
+            name='phone'
+            placeholder='전화번호를 입력해주세요'
+            helperText='전화번호를 입력해주세요'
+            value={phone}
+            onChange={setPhone}
             required
           />
           <Button>Submit</Button>

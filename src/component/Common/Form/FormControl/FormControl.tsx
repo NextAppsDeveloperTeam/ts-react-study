@@ -45,7 +45,7 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
         {props.required && '*'}
       </div>
       <div>{props.children}</div>
-      {props.helperText && <div>{props.helperText}</div>}
+      {props.helperText && <div style={{display: error ? 'block' : 'none', color: 'red'}}>{props.helperText}</div>}
     </div>
   );
 }
