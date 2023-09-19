@@ -1,6 +1,6 @@
 import { FormControlProps, FormControlValue } from '../FormControl';
 
-export type FormInputControlType = 'name' | 'email' | 'number' | 'phone';
+export type FormInputControlType = 'name' | 'email' | 'number' | 'phone' | 'password';
 
 export interface FormInputControlProps<
   Type extends FormInputControlType = 'name',

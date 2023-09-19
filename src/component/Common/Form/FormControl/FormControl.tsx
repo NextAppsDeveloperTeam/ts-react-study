@@ -27,6 +27,7 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
           }
         }
 
+        setError(false);
         return true;
       },
       getValue(): FormControlValue {
