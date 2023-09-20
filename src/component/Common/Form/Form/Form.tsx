@@ -1,6 +1,12 @@
 import React from 'react';
 import { FormProps as Props, FormDefaultProps, FormCommands } from './Form.types';
 import { useFormContext } from '../FormContext';
+import styled from "styled-components";
+
+export const FormInput = styled.form`
+  text-align: center;
+  width: 400px;
+`;
 
 const Form = React.forwardRef<FormCommands, Props>(({ children, onSubmit }, ref) => {
   const { submit, focusControl } = useFormContext();
@@ -28,7 +34,7 @@ const Form = React.forwardRef<FormCommands, Props>(({ children, onSubmit }, ref)
     [submit, onSubmit]
   );
 
-  return <form onSubmit={handleSubmit}>{children}</form>;
+  return <FormInput onSubmit={handleSubmit}>{children}</FormInput>;
 });
 
 Form.displayName = 'Form';

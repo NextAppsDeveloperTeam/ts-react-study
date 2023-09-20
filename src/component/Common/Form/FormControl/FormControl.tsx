@@ -6,6 +6,20 @@ import {
   FormControlProps,
 } from './FormControl.types';
 import { useFormContext } from '../FormContext';
+import styled from "styled-components";
+
+const InputBox = styled.div`
+  padding-bottom: 10px;
+`;
+
+const Label = styled.label`
+  text-align: left;
+  font-size: 17px;
+`;
+
+const HelperText = styled.div`
+  font-size: 14px;
+`;
 
 function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
   const { addControl } = useFormContext();
@@ -40,14 +54,14 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
   }, [addControl, props]);
 
   return (
-    <div>
+    <InputBox>
       <div style={{ color: error ? 'red' : undefined }}>
-        {props.label}
+        <Label>{props.label}</Label>
         {props.required && '*'}
       </div>
       <div>{props.children}</div>
-      {props.helperText && <div style={{display: error ? 'block' : 'none', color: 'red'}}>{props.helperText}</div>}
-    </div>
+      {props.helperText && <HelperText style={{display: error ? 'block' : 'none', color: 'red'}}>{props.helperText}</HelperText>}
+    </InputBox>
   );
 }
 

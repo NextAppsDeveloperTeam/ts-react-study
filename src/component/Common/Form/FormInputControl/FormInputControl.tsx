@@ -5,6 +5,13 @@ import {
   FormInputControlType,
 } from './FormInputControl.types';
 import FormControl, { FormControlValue } from '../FormControl';
+import styled from "styled-components";
+
+const Input = styled.input`
+  width: 250px;
+  height: 27px;
+  padding-left: 5px;
+`;
 
 const FormInputControl = <Type extends FormInputControlType, T extends FormControlValue>({
   type,
@@ -35,7 +42,7 @@ const FormInputControl = <Type extends FormInputControlType, T extends FormContr
 
   return (
     <FormControl value={value} {...props} onRequestFocus={handleRequestFocus}>
-      <input ref={inputRef} type={type} placeholder={placeholder} value={value} onChange={handleChange} />
+      <Input ref={inputRef} type={type} placeholder={placeholder} value={value} onChange={handleChange} />
     </FormControl>
   );
 };
