@@ -1,8 +1,19 @@
-import React, {useContext, useEffect, useState} from 'react';
-import { Form, FormChkPwd, FormCommands, FormEmail, FormNumber, FormPassword, FormPhone, FormText } from '../Common';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  Form,
+  FormChkPwd,
+  FormCommands,
+  FormEmail,
+  FormNumber,
+  FormPassword,
+  FormPhone,
+  FormStatus,
+  FormText,
+} from '../Common';
 import FormContextProvider from '../Common/Form/FormContextProvider';
-import {UserContext, UserContextValue} from "../../context";
-import styled from "styled-components";
+import { UserContext, UserContextValue } from '../../context';
+import styled from 'styled-components';
+import { UserStatus } from '../../@types';
 
 const Container = styled.div`
   display: flex;
@@ -11,8 +22,8 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  margin: 20px;
-  padding: 10px 50px;
+  margin-top: 20px;
+  padding: 10px 40px;
   font-size: 16px;
   border: none;
   background: #000000;
@@ -23,14 +34,16 @@ const Button = styled.button`
 `;
 
 const Home = () => {
-  const { userList } = useContext(UserContext) as UserContextValue;
+  const { userList, addUser } = useContext(UserContext) as UserContextValue;
 
+  const [id] = useState(0);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [num, setNum] = useState<number | undefined>(0);
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [chkPwd, setChkPwd] = useState('');
+  const [status, setStatus] = useState<UserStatus>(UserStatus.User);
 
   const formCommandsRef = useRef<FormCommands>(null);
 
@@ -61,19 +74,27 @@ const Home = () => {
     }
   }, [name, phone]);
 
-  const handleSubmit = useCallback((value: Dict) => {
-    if (!emailRegEx.test(email)) {
-      alert('이메일을 형식에 맞게 입력해주세요');
-    } else if(chkEmail.includes(email)) {
-      alert('이미 존재하는 이메일입니다')
-    } else if (!passwordRegEx.test(password)) {
-      alert('비밀번호를 형식에 맞게 입력해주세요\n(영문, 숫자, 특수문자 포함 8~16자)');
-    } else {
-      ll(value);
-      // addUser(value);
-      alert('회원가입이 완료되었습니다');
-    }
-  }, [chkEmail, email, emailRegEx, password, passwordRegEx]);
+  const handleSubmit = useCallback(
+    (value: Dict) => {
+      if (!emailRegEx.test(email)) {
+        alert('이메일을 형식에 맞게 입력해주세요');
+        console.error('이메일을 형식에 맞게 입력해주세요');
+      } else if (phone.length < 9 || phone.replace(/-/g, '').length > 11) {
+        alert('전화번호는 9~11자입니다');
+      } else if (chkEmail.includes(email)) {
+        alert('이미 존재하는 이메일입니다');
+      } else if (!passwordRegEx.test(password)) {
+        alert('비밀번호를 형식에 맞게 입력해주세요\n(영문, 숫자, 특수문자 포함 8~16자)');
+      } else if (chkPwd !== password) {
+        alert('비밀번호가 일치하지 않습니다');
+      } else {
+        ll(value);
+        addUser({ id, name, email, phone, password, status });
+        alert('회원가입이 완료되었습니다');
+      }
+    },
+    [addUser, chkEmail, chkPwd, email, emailRegEx, id, name, password, passwordRegEx, phone, status]
+  );
 
   return (
     <Container>
@@ -132,6 +153,23 @@ const Home = () => {
             value={num}
             onChange={setNum}
           />
+          <FormStatus
+            label='Status'
+            name='status'
+            id='user'
+            value={status}
+            onChange={() => setStatus(UserStatus.User)}
+            required
+          />
+          회원
+          <FormStatus
+            name='status'
+            id='admin'
+            helperText='입력해주세요'
+            value={status}
+            onChange={() => setStatus(UserStatus.Admin)}
+          />
+          관리자<br />
           <Button>Submit</Button>
         </Form>
       </FormContextProvider>

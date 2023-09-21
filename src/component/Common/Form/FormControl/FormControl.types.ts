@@ -5,6 +5,7 @@ export type FormControlValue = string | number | undefined;
 export interface FormControlProps<T extends FormControlValue> {
   children: ReactNode;
   name: string;
+  id?: string;
   label?: string;
   required?: boolean;
   placeholder?: string;

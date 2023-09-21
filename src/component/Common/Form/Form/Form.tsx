@@ -4,8 +4,7 @@ import { useFormContext } from '../FormContext';
 import styled from "styled-components";
 
 export const FormInput = styled.form`
-  text-align: center;
-  width: 400px;
+  width: 260px;
 `;
 
 const Form = React.forwardRef<FormCommands, Props>(({ children, onSubmit }, ref) => {

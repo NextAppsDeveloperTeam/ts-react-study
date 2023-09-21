@@ -5,3 +5,4 @@ export * from './FormNumber';
 export * from './FormPhone';
 export * from './FormPassword';
 export * from './FormChkPwd';
+export * from './FormStatus';
