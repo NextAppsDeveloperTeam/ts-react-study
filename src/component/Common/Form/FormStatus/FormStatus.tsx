@@ -1,9 +1,23 @@
 import React from 'react';
 import { FormStatusProps as Props, FormStatusDefaultProps } from './FormStatus.types';
 import FormInputControl from '../FormInputControl';
+import styled from "styled-components";
 
-const FormStatus: React.FC<Props> = (props) => {
-  return <FormInputControl type='radio' {...props} />;
+const Label = styled.label`
+  
+`;
+
+const Span = styled.span`
+  
+`;
+
+const FormStatus: React.FC<Props> = ({ labelText, ...props }) => {
+  return (
+    <Label>
+      <FormInputControl type='radio' {...props} />
+      <Span>{labelText}</Span>
+    </Label>
+  );
 };
 
 FormStatus.displayName = 'FormStatus';

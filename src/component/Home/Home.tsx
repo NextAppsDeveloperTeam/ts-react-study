@@ -13,7 +13,8 @@ import {
 import FormContextProvider from '../Common/Form/FormContextProvider';
 import { UserContext, UserContextValue } from '../../context';
 import styled from 'styled-components';
-import { UserStatus } from '../../@types';
+import { User, UserStatus } from '../../@types';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -36,7 +37,9 @@ const Button = styled.button`
 const Home = () => {
   const { userList, addUser } = useContext(UserContext) as UserContextValue;
 
-  const [id] = useState(0);
+  const navigate = useNavigate();
+
+  // const [id] = useState(0);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [num, setNum] = useState<number | undefined>(0);
@@ -75,7 +78,7 @@ const Home = () => {
   }, [name, phone]);
 
   const handleSubmit = useCallback(
-    (value: Dict) => {
+    (value: User) => {
       if (!emailRegEx.test(email)) {
         alert('이메일을 형식에 맞게 입력해주세요');
         console.error('이메일을 형식에 맞게 입력해주세요');
@@ -89,11 +92,12 @@ const Home = () => {
         alert('비밀번호가 일치하지 않습니다');
       } else {
         ll(value);
-        addUser({ id, name, email, phone, password, status });
+        addUser(value);
         alert('회원가입이 완료되었습니다');
+        navigate('/login');
       }
     },
-    [addUser, chkEmail, chkPwd, email, emailRegEx, id, name, password, passwordRegEx, phone, status]
+    [addUser, chkEmail, chkPwd, email, emailRegEx, navigate, password, passwordRegEx, phone]
   );
 
   return (
@@ -157,19 +161,21 @@ const Home = () => {
             label='Status'
             name='status'
             id='user'
+            helperText='선택해주세요'
             value={status}
             onChange={() => setStatus(UserStatus.User)}
+            labelText='회원'
+            // checked={status === UserStatus.User}
             required
           />
-          회원
           <FormStatus
             name='status'
             id='admin'
-            helperText='입력해주세요'
             value={status}
             onChange={() => setStatus(UserStatus.Admin)}
+            labelText='관리자'
           />
-          관리자<br />
+          <br />
           <Button>Submit</Button>
         </Form>
       </FormContextProvider>

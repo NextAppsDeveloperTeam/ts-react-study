@@ -10,7 +10,9 @@ export interface FormControlProps<T extends FormControlValue> {
   required?: boolean;
   placeholder?: string;
   helperText?: ReactNode;
+  labelText?: string;
   value?: T;
+  // checked?: boolean;
   onChange?(value: T): void;
   onValidate?(): boolean;
   onRequestFocus?(): void;
