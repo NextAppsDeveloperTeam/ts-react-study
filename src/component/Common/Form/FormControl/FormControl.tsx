@@ -19,12 +19,14 @@ const Label = styled.label`
 
 const HelperText = styled.div`
   font-size: 14px;
+  color: red;
 `;
 
 function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
   const { addControl } = useFormContext();
 
   const [error, setError] = useState(false);
+  const [errorReg, setErrorReg] = useState(false);
 
   useEffect(() => {
     addControl(props.name, {
@@ -34,14 +36,19 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
           return false;
         }
 
+        // if (props.onRequestFocus) {
+        //     setErrorReg(true);
+        //     return false;
+        // }
+
         if (props.onValidate) {
           if (!props.onValidate()) {
-            setError(true);
             return false;
           }
         }
 
         setError(false);
+        setErrorReg(false);
         return true;
       },
       getValue(): FormControlValue {
@@ -49,6 +56,7 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
       },
       focus() {
         props.onRequestFocus && props.onRequestFocus();
+        // setErrorReg(true);
       },
     });
   }, [addControl, props]);
@@ -60,7 +68,8 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
         {props.required && '*'}
       </div>
       <div>{props.children}</div>
-      {props.helperText && <HelperText style={{display: error ? 'block' : 'none', color: 'red'}}>{props.helperText}</HelperText>}
+      {props.helperText && <HelperText style={{display: error ? 'block' : 'none'}}>{props.helperText}</HelperText>}
+      {props.errorText && <HelperText style={{display: errorReg ? 'block' : 'none'}}>{props.errorText}</HelperText>}
     </InputBox>
   );
 }

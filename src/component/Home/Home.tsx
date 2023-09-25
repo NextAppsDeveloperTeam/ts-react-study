@@ -81,7 +81,6 @@ const Home = () => {
     (value: User) => {
       if (!emailRegEx.test(email)) {
         alert('이메일을 형식에 맞게 입력해주세요');
-        console.error('이메일을 형식에 맞게 입력해주세요');
       } else if (phone.length < 9 || phone.replace(/-/g, '').length > 11) {
         alert('전화번호는 9~11자입니다');
       } else if (chkEmail.includes(email)) {
@@ -120,6 +119,7 @@ const Home = () => {
             helperText='이메일을 입력해주세요'
             value={email}
             onChange={setEmail}
+            errorText='이메일을 형식에 맞게 입력해주세요'
             required
           />
           <FormPhone
