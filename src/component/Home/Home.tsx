@@ -160,7 +160,6 @@ const Home = () => {
           <FormStatus
             label='Status'
             name='status'
-            id='user'
             helperText='선택해주세요'
             value={status}
             onChange={() => setStatus(UserStatus.User)}
@@ -169,13 +168,12 @@ const Home = () => {
             required
           />
           <FormStatus
+            label='.'
             name='status'
-            id='admin'
             value={status}
             onChange={() => setStatus(UserStatus.Admin)}
             labelText='관리자'
           />
-          <br />
           <Button>Submit</Button>
         </Form>
       </FormContextProvider>

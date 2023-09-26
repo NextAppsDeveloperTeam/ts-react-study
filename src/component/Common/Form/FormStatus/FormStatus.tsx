@@ -1,22 +1,31 @@
 import React from 'react';
 import { FormStatusProps as Props, FormStatusDefaultProps } from './FormStatus.types';
-import FormInputControl from '../FormInputControl';
-import styled from "styled-components";
+import FormRadioControl from '../FormRadioControl';
+import styled from 'styled-components';
 
-const Label = styled.label`
-  
+const Radio = styled.label`
+  display: inline-block;
+  text-align: right;
+`;
+
+const DIV = styled.div`
+  float: left;
 `;
 
 const Span = styled.span`
-  
+  float: right;
+  line-height: 70px;
+  margin: 0 50px 0 7px;
 `;
 
 const FormStatus: React.FC<Props> = ({ labelText, ...props }) => {
   return (
-    <Label>
-      <FormInputControl type='radio' {...props} />
+    <Radio>
+      <DIV>
+        <FormRadioControl type='radio' {...props} />
+      </DIV>
       <Span>{labelText}</Span>
-    </Label>
+    </Radio>
   );
 };
 

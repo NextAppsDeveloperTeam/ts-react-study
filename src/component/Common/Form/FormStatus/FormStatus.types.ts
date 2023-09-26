@@ -1,5 +1,5 @@
-import { FormInputControlProps } from '../FormInputControl';
+import { FormRadioControlProps } from '../FormRadioControl';
 
-export interface FormStatusProps extends Omit<FormInputControlProps<'radio'>, 'type'> {}
+export interface FormStatusProps extends Omit<FormRadioControlProps<'radio'>, 'type'> {}
 
 export const FormStatusDefaultProps = {};
