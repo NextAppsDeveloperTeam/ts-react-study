@@ -18,13 +18,13 @@ const Span = styled.span`
   margin: 0 50px 0 7px;
 `;
 
-const FormStatus: React.FC<Props> = ({ labelText, ...props }) => {
+const FormStatus: React.FC<Props> = ({ ...props }) => {
   return (
     <Radio>
       <DIV>
         <FormRadioControl type='radio' {...props} />
       </DIV>
-      <Span>{labelText}</Span>
+      <Span>{props.labelText}</Span>
     </Radio>
   );
 };

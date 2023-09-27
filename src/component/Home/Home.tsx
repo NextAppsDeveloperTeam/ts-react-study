@@ -119,7 +119,6 @@ const Home = () => {
             helperText='이메일을 입력해주세요'
             value={email}
             onChange={setEmail}
-            errorText='이메일을 형식에 맞게 입력해주세요'
             required
           />
           <FormPhone

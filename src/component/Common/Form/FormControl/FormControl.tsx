@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  // FormControlProps as Props,
   FormControlDefaultProps,
   FormControlValue,
   FormControlProps,
@@ -26,7 +25,6 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
   const { addControl } = useFormContext();
 
   const [error, setError] = useState(false);
-  const [errorReg, setErrorReg] = useState(false);
 
   useEffect(() => {
     addControl(props.name, {
@@ -36,11 +34,6 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
           return false;
         }
 
-        // if (props.onRequestFocus) {
-        //     setErrorReg(true);
-        //     return false;
-        // }
-
         if (props.onValidate) {
           if (!props.onValidate()) {
             return false;
@@ -48,7 +41,6 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
         }
 
         setError(false);
-        setErrorReg(false);
         return true;
       },
       getValue(): FormControlValue {
@@ -56,7 +48,6 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
       },
       focus() {
         props.onRequestFocus && props.onRequestFocus();
-        // setErrorReg(true);
       },
     });
   }, [addControl, props]);
@@ -69,7 +60,6 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
       </div>
       <div>{props.children}</div>
       {props.helperText && <HelperText style={{display: error ? 'block' : 'none'}}>{props.helperText}</HelperText>}
-      {props.errorText && <HelperText style={{display: errorReg ? 'block' : 'none'}}>{props.errorText}</HelperText>}
     </InputBox>
   );
 }
