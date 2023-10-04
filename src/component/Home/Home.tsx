@@ -140,7 +140,7 @@ const Home = () => {
             required
           />
           <FormChkPwd
-            label='Check Password'
+            label='Password Check'
             name='chkPwd'
             placeholder='비밀번호를 한 번 더 입력해주세요'
             helperText='비밀번호를 한 번 더 입력해주세요'
@@ -167,7 +167,6 @@ const Home = () => {
             required
           />
           <FormStatus
-            label='.'
             name='status'
             value={status}
             onChange={() => setStatus(UserStatus.Admin)}
