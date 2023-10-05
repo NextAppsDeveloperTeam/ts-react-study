@@ -77,18 +77,21 @@ const Home = () => {
     }
   }, [name, phone]);
 
+  const [isEmailError, setIsEmailError] = useState(false);
+  const [isEmailCheck, setIsEmailCheck] = useState(false);
+  const [isPhoneError, setIsPhoneError] = useState(false);
+  const [isPwdError, setIsPwdError] = useState(false);
+  const [isChkPwdError, setIsChkPwdError] = useState(false);
+
+  const isError = isEmailError && isEmailCheck && isPhoneError && isPwdError && isChkPwdError;
   const handleSubmit = useCallback(
     (value: User) => {
-      if (!emailRegEx.test(email)) {
-        alert('이메일을 형식에 맞게 입력해주세요');
-      } else if (phone.length < 9 || phone.replace(/-/g, '').length > 11) {
-        alert('전화번호는 9~11자입니다');
-      } else if (chkEmail.includes(email)) {
-        alert('이미 존재하는 이메일입니다');
-      } else if (!passwordRegEx.test(password)) {
-        alert('비밀번호를 형식에 맞게 입력해주세요\n(영문, 숫자, 특수문자 포함 8~16자)');
-      } else if (chkPwd !== password) {
-        alert('비밀번호가 일치하지 않습니다');
+      if (!isError) {
+        emailRegEx.test(email) ? setIsEmailError(false) : setIsEmailError(true);
+        chkEmail.includes(email) ? setIsEmailCheck(true) : setIsEmailCheck(false);
+        phone.length >= 9 || phone.replace(/-/g, '').length <= 11 ? setIsPhoneError(false) : setIsPhoneError(true);
+        passwordRegEx.test(password) ? setIsPwdError(false) : setIsPwdError(true);
+        chkPwd === password ? setIsChkPwdError(false) : setIsChkPwdError(true);
       } else {
         ll(value);
         addUser(value);
@@ -96,7 +99,7 @@ const Home = () => {
         navigate('/login');
       }
     },
-    [addUser, chkEmail, chkPwd, email, emailRegEx, navigate, password, passwordRegEx, phone]
+    [addUser, chkEmail, chkPwd, email, emailRegEx, isError, navigate, password, passwordRegEx, phone]
   );
 
   return (
@@ -113,37 +116,47 @@ const Home = () => {
             required
           />
           <FormEmail
+            error={isEmailError}
+            check={isEmailCheck}
             label='Email'
             name='email'
             placeholder='이메일을 입력해주세요'
             helperText='이메일을 입력해주세요'
+            errorText='이메일을 형식에 맞게 입력해주세요'
+            checkText='이미 존재하는 이메일입니다'
             value={email}
             onChange={setEmail}
             required
           />
           <FormPhone
+            error={isPhoneError}
             label='Phone'
             name='phone'
             placeholder='전화번호를 입력해주세요'
             helperText='전화번호를 입력해주세요'
+            errorText='전화번호는 9~11자입니다'
             value={phone}
             onChange={setPhone}
             required
           />
           <FormPassword
+            error={isPwdError}
             label='Password'
             name='password'
             placeholder='비밀번호를 입력해주세요'
             helperText='비밀번호를 입력해주세요'
+            errorText='비밀번호를 형식에 맞게 입력해주세요(영문, 숫자, 특수문자 포함 8~16자)'
             value={password}
             onChange={setPassword}
             required
           />
           <FormChkPwd
+            error={isChkPwdError}
             label='Password Check'
             name='chkPwd'
             placeholder='비밀번호를 한 번 더 입력해주세요'
             helperText='비밀번호를 한 번 더 입력해주세요'
+            errorText='비밀번호가 일치하지 않습니다'
             value={chkPwd}
             onChange={setChkPwd}
             required
@@ -166,12 +179,7 @@ const Home = () => {
             // checked={status === UserStatus.User}
             required
           />
-          <FormStatus
-            name='status'
-            value={status}
-            onChange={() => setStatus(UserStatus.Admin)}
-            labelText='관리자'
-          />
+          <FormStatus name='status' value={status} onChange={() => setStatus(UserStatus.Admin)} labelText='관리자' />
           <Button>Submit</Button>
         </Form>
       </FormContextProvider>

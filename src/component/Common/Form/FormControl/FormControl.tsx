@@ -60,6 +60,8 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
       </div>
       <div>{props.children}</div>
       {props.helperText && <HelperText style={{display: error ? 'block' : 'none'}}>{props.helperText}</HelperText>}
+      {props.error === true && <HelperText>{props.errorText}</HelperText>}
+      {props.check === true && <HelperText>{props.checkText}</HelperText>}
     </InputBox>
   );
 }
