@@ -83,15 +83,18 @@ const Home = () => {
   const [isPwdError, setIsPwdError] = useState(false);
   const [isChkPwdError, setIsChkPwdError] = useState(false);
 
-  const isError = isEmailError && isEmailCheck && isPhoneError && isPwdError && isChkPwdError;
   const handleSubmit = useCallback(
     (value: User) => {
-      if (!isError) {
+      let isError = true;
+      if (isError) {
+        ll(isError);
         emailRegEx.test(email) ? setIsEmailError(false) : setIsEmailError(true);
         chkEmail.includes(email) ? setIsEmailCheck(true) : setIsEmailCheck(false);
-        phone.length >= 9 || phone.replace(/-/g, '').length <= 11 ? setIsPhoneError(false) : setIsPhoneError(true);
+        phone.length >= 9 && phone.replace(/-/g, '').length <= 11 ? setIsPhoneError(false) : setIsPhoneError(true);
         passwordRegEx.test(password) ? setIsPwdError(false) : setIsPwdError(true);
         chkPwd === password ? setIsChkPwdError(false) : setIsChkPwdError(true);
+        isEmailError || isEmailCheck || isPhoneError || isPwdError || isChkPwdError ? isError = true : isError = false;
+        ll(`-- ${isError}`);
       } else {
         ll(value);
         addUser(value);
@@ -99,7 +102,7 @@ const Home = () => {
         navigate('/login');
       }
     },
-    [addUser, chkEmail, chkPwd, email, emailRegEx, isError, navigate, password, passwordRegEx, phone]
+    [addUser, chkEmail, chkPwd, email, emailRegEx, isChkPwdError, isEmailCheck, isEmailError, isPhoneError, isPwdError, navigate, password, passwordRegEx, phone]
   );
 
   return (
