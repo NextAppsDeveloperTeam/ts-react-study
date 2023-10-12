@@ -17,7 +17,7 @@ export interface FormControlProps<T extends FormControlValue> {
   value?: T;
   // checked?: boolean;
   onChange?(value: T): void;
-  onValidate?(): boolean;
+  onValidate?(value: T): boolean;
   onRequestFocus?(): void;
 }
 

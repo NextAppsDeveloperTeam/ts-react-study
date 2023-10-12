@@ -67,6 +67,10 @@ const Home = () => {
   }, [name, phone]);
 
 
+  const handleChkPwdValidate = useCallback((value: string) => {
+    return password === value ? true : '비밀번호가 일치하지 않습니다.'
+  }, [password])
+
   const handleSubmit = useCallback(
     (value: User) => {
         ll(value);
@@ -120,6 +124,18 @@ const Home = () => {
             value={password}
             onChange={setPassword}
             required
+          />
+
+          <FormPassword
+              label='Password Check'
+              name='chkPwd'
+              placeholder='비밀번호를 한 번 더 입력해주세요'
+              helperText='비밀번호를 한 번 더 입력해주세요'
+              errorText='비밀번호가 일치하지 않습니다'
+              value={chkPwd}
+              onChange={setChkPwd}
+              onValidate={handleChkPwdValidate}
+              required
           />
           <FormChkPwd
             label='Password Check'
