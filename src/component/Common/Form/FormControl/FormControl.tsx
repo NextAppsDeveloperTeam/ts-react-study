@@ -1,11 +1,7 @@
-import React from 'react';
-import {
-  FormControlDefaultProps,
-  FormControlValue,
-  FormControlProps,
-} from './FormControl.types';
+import React, { useState } from 'react';
+import { FormControlDefaultProps, FormControlValue, FormControlProps } from './FormControl.types';
 import { useFormContext } from '../FormContext';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const InputBox = styled.div`
   padding-bottom: 10px;
@@ -25,12 +21,19 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
   const { addControl } = useFormContext();
 
   const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     addControl(props.name, {
       validate() {
         if (props.required && empty(props.value)) {
           setError(true);
+          return false;
+        }
+        setError(false);
+
+        if (props.error === true) {
+          setIsError(true);
           return false;
         }
 
@@ -41,6 +44,7 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
         }
 
         setError(false);
+        setIsError(false);
         return true;
       },
       getValue(): FormControlValue {
@@ -59,9 +63,9 @@ function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
         {props.required && '*'}
       </div>
       <div>{props.children}</div>
-      {props.helperText && <HelperText style={{display: error ? 'block' : 'none'}}>{props.helperText}</HelperText>}
-      {props.error === true && <HelperText>{props.errorText}</HelperText>}
-      {props.check === true && <HelperText>{props.checkText}</HelperText>}
+      {props.helperText && <HelperText style={{ display: error ? 'block' : 'none' }}>{props.helperText}</HelperText>}
+      {props.error && <HelperText style={{ display: isError ? 'block' : 'none' }}>{props.errorText}</HelperText>}
+      {props.check && <HelperText style={{ display: isError ? 'block' : 'none' }}>{props.checkText}</HelperText>}
     </InputBox>
   );
 }

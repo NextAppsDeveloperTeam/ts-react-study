@@ -35,11 +35,10 @@ const Button = styled.button`
 `;
 
 const Home = () => {
-  const { userList, addUser } = useContext(UserContext) as UserContextValue;
+  const { addUser } = useContext(UserContext) as UserContextValue;
 
   const navigate = useNavigate();
 
-  // const [id] = useState(0);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [num, setNum] = useState<number | undefined>(0);
@@ -49,16 +48,6 @@ const Home = () => {
   const [status, setStatus] = useState<UserStatus>(UserStatus.User);
 
   const formCommandsRef = useRef<FormCommands>(null);
-
-  const emailRegEx = useMemo(() => {
-    return /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-  }, []);
-  const passwordRegEx = useMemo(() => {
-    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/;
-  }, []);
-  const chkEmail = useMemo(() => {
-    return userList.map((user) => user.email);
-  }, [userList]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -77,32 +66,15 @@ const Home = () => {
     }
   }, [name, phone]);
 
-  const [isEmailError, setIsEmailError] = useState(false);
-  const [isEmailCheck, setIsEmailCheck] = useState(false);
-  const [isPhoneError, setIsPhoneError] = useState(false);
-  const [isPwdError, setIsPwdError] = useState(false);
-  const [isChkPwdError, setIsChkPwdError] = useState(false);
 
   const handleSubmit = useCallback(
     (value: User) => {
-      let isError = true;
-      if (isError) {
-        ll(isError);
-        emailRegEx.test(email) ? setIsEmailError(false) : setIsEmailError(true);
-        chkEmail.includes(email) ? setIsEmailCheck(true) : setIsEmailCheck(false);
-        phone.length >= 9 && phone.replace(/-/g, '').length <= 11 ? setIsPhoneError(false) : setIsPhoneError(true);
-        passwordRegEx.test(password) ? setIsPwdError(false) : setIsPwdError(true);
-        chkPwd === password ? setIsChkPwdError(false) : setIsChkPwdError(true);
-        isEmailError || isEmailCheck || isPhoneError || isPwdError || isChkPwdError ? isError = true : isError = false;
-        ll(`-- ${isError}`);
-      } else {
         ll(value);
         addUser(value);
         alert('회원가입이 완료되었습니다');
         navigate('/login');
-      }
     },
-    [addUser, chkEmail, chkPwd, email, emailRegEx, isChkPwdError, isEmailCheck, isEmailError, isPhoneError, isPwdError, navigate, password, passwordRegEx, phone]
+    [addUser, navigate]
   );
 
   return (
@@ -119,8 +91,6 @@ const Home = () => {
             required
           />
           <FormEmail
-            error={isEmailError}
-            check={isEmailCheck}
             label='Email'
             name='email'
             placeholder='이메일을 입력해주세요'
@@ -132,7 +102,6 @@ const Home = () => {
             required
           />
           <FormPhone
-            error={isPhoneError}
             label='Phone'
             name='phone'
             placeholder='전화번호를 입력해주세요'
@@ -143,7 +112,6 @@ const Home = () => {
             required
           />
           <FormPassword
-            error={isPwdError}
             label='Password'
             name='password'
             placeholder='비밀번호를 입력해주세요'
@@ -154,7 +122,6 @@ const Home = () => {
             required
           />
           <FormChkPwd
-            error={isChkPwdError}
             label='Password Check'
             name='chkPwd'
             placeholder='비밀번호를 한 번 더 입력해주세요'
