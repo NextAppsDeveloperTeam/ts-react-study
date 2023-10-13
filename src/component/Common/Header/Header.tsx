@@ -1,6 +1,6 @@
-import React from "react";
-import {useNavigate} from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import './Header.scss';
 
 const Container = styled.div`
@@ -27,7 +27,7 @@ const NavA = styled.a`
   color: #ffffff;
   font-size: 18px;
   cursor: pointer;
-  
+
   &:hover {
     color: #b9d8ff;
   }
@@ -50,19 +50,29 @@ const AuthA = styled.a`
   cursor: pointer;
 `;
 
-const Header : React.FC = () => {
-    const navigate = useNavigate();
+const Header: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <Container className='Header'>
-                  <NavUl>
-                      <NavLi><NavA onClick={() => navigate('/')}>HOME</NavA></NavLi>
-                      <NavLi><NavA onClick={() => navigate('/myPage')}>MY</NavA></NavLi>
-                      <NavLi><NavA onClick={() => navigate('/userList')}>회원관리</NavA></NavLi>
-                  </NavUl>
-              <AuthUl>
-                  <AuthLi><AuthA onClick={() => navigate('/login')}>로그인</AuthA></AuthLi>
-                  <AuthLi><AuthA onClick={() => navigate('/join')}>회원가입</AuthA></AuthLi>
-              </AuthUl>
+      <NavUl>
+        <NavLi>
+          <NavA onClick={() => navigate('/')}>HOME</NavA>
+        </NavLi>
+        <NavLi>
+          <NavA onClick={() => navigate('/myPage')}>MY</NavA>
+        </NavLi>
+        <NavLi>
+          <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
+        </NavLi>
+      </NavUl>
+      <AuthUl>
+        <AuthLi>
+          <AuthA onClick={() => navigate('/login')}>로그인</AuthA>
+        </AuthLi>
+        <AuthLi>
+          <AuthA onClick={() => navigate('/join')}>회원가입</AuthA>
+        </AuthLi>
+      </AuthUl>
     </Container>
   );
 };

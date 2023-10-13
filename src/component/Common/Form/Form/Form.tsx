@@ -4,7 +4,7 @@ import { useFormContext } from '../FormContext';
 import styled from 'styled-components';
 
 export const StyledForm = styled.form`
-  width: 260px;
+  width: 280px;
 `;
 
 const Form = React.forwardRef<FormCommands, Props>(({ children, onSubmit }, ref) => {

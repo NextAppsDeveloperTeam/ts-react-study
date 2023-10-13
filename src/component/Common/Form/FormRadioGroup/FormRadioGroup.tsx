@@ -5,6 +5,19 @@ import {
   FormRadioGroupItemValue,
 } from './FormRadioGroup.types';
 import FormControl from '../FormControl';
+import styled from "styled-components";
+
+const Label = styled.label`
+  display: inline-block;
+  margin: 10px 50px 0 15px;
+`;
+
+const Input = styled.input`
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+`;
 
 function FormRadioGroup<T extends FormRadioGroupItemValue>({
   value: initValue,
@@ -30,10 +43,10 @@ function FormRadioGroup<T extends FormRadioGroupItemValue>({
   return (
     <FormControl name={name} value={value} {...props}>
       {items.map((item) => (
-        <label key={item.value}>
-          <input type='radio' name={`FormRadioGroup_${name}`} onClick={() => changeValue(item.value)} />
+        <Label key={item.value}>
+          <Input type='radio' name={`FormRadioGroup_${name}`} onClick={() => changeValue(item.value)} />
           {item.label}
-        </label>
+        </Label>
       ))}
     </FormControl>
   );

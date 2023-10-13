@@ -8,9 +8,9 @@ import FormControl, { FormControlValue } from '../FormControl';
 import styled from "styled-components";
 
 const Input = styled.input`
-  width: 250px;
-  height: 27px;
-  padding-left: 5px;
+  width: 270px;
+  height: 35px;
+  padding-left: 6px;
 `;
 
 const FormInputControl = <Type extends FormInputControlType, T extends FormControlValue>({

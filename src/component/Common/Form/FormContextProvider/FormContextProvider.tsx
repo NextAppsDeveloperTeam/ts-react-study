@@ -7,6 +7,7 @@ const FormContextProvider = ({ children }: Props) => {
 
   const submit = useCallback(() => {
     let isValid = true;
+    let isFocus = true;
 
     const values: Dict = {};
 
@@ -14,6 +15,10 @@ const FormContextProvider = ({ children }: Props) => {
       const commands = controls[key];
       values[key] = commands.getValue();
       if (!commands.validate()) {
+          if(isFocus){
+              commands.focus();
+              isFocus = false;
+          }
         isValid = false;
       }
     });

@@ -13,7 +13,7 @@ const Label = styled.label`
 `;
 
 const HelperText = styled.div`
-  font-size: 14px;
+  font-size: 13px;
   opacity: 0.5;
 `;
 
