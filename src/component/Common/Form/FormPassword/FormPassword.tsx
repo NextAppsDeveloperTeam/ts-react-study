@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormPasswordProps as Props, FormPasswordDefaultProps } from './FormPassword.types';
 import FormInputControl from '../FormInputControl';
 
-const FormPassword: React.FC<Props> = (props) => {
-  const [isPwdError, setIsPwdError] = useState(false);
+const VALID_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/;
 
-  const passwordRegEx = useMemo(() => {
-    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,16}$/;
-  }, []);
+const FormPassword: React.FC<Props> = ({ onValidate, ...props }) => {
+  const handleValidate = useCallback(
+    (value?: string) => {
+      if (notEmpty(value) && !VALID_REGEX.test(value)) {
+        return '비밀번호를 형식에 맞게 입력해주세요.';
+      }
 
-  useEffect(() => {
-    if (notEmpty(props.value)) {
-      props.value && passwordRegEx.test(props.value) ? setIsPwdError(false) : setIsPwdError(true);
-    }
-  }, [passwordRegEx, props.value]);
+      if (onValidate) {
+        return onValidate(value);
+      }
 
-  return <FormInputControl type='password' error={isPwdError} {...props} />;
+      return true;
+    },
+    [onValidate]
+  );
+
+  return <FormInputControl type='password' onValidate={handleValidate} {...props} />;
 };
 
 FormPassword.displayName = 'FormPassword';

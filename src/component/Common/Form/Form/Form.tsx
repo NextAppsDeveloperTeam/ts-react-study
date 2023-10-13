@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormProps as Props, FormDefaultProps, FormCommands } from './Form.types';
 import { useFormContext } from '../FormContext';
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const FormInput = styled.form`
+export const StyledForm = styled.form`
   width: 260px;
 `;
 
@@ -33,7 +33,7 @@ const Form = React.forwardRef<FormCommands, Props>(({ children, onSubmit }, ref)
     [submit, onSubmit]
   );
 
-  return <FormInput onSubmit={handleSubmit}>{children}</FormInput>;
+  return <StyledForm onSubmit={handleSubmit}>{children}</StyledForm>;
 });
 
 Form.displayName = 'Form';

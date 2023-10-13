@@ -14,58 +14,71 @@ const Label = styled.label`
 
 const HelperText = styled.div`
   font-size: 14px;
+  opacity: 0.5;
+`;
+
+const ErrorText = styled.div`
+  font-size: 14px;
   color: red;
 `;
 
-function FormControl<T extends FormControlValue>(props: FormControlProps<T>) {
+function FormControl<T extends FormControlValue>({
+  children,
+  name,
+  value,
+  label,
+  helperText,
+  required,
+  onValidate,
+  onRequestFocus,
+}: FormControlProps<T>) {
   const { addControl } = useFormContext();
 
   const [error, setError] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [errorText, setErrorText] = useState<string>();
+
+  // const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    addControl(props.name, {
+    addControl(name, {
       validate() {
-        if (props.required && empty(props.value)) {
+        if (required && empty(value)) {
           setError(true);
-          return false;
-        }
-        setError(false);
-
-        if (props.error === true) {
-          setIsError(true);
+          setErrorText('필수 입력 항목입니다.');
           return false;
         }
 
-        if (props.onValidate) {
-          if (!props.onValidate()) {
+        if (onValidate) {
+          const validateResult = onValidate(value);
+          if (validateResult !== true) {
+            setError(true);
+            setErrorText(validateResult);
             return false;
           }
         }
 
         setError(false);
-        setIsError(false);
+        setErrorText(undefined);
         return true;
       },
       getValue(): FormControlValue {
-        return props.value;
+        return value;
       },
       focus() {
-        props.onRequestFocus && props.onRequestFocus();
+        onRequestFocus && onRequestFocus();
       },
     });
-  }, [addControl, props]);
+  }, [addControl, error, name, onRequestFocus, onValidate, required, value]);
 
   return (
     <InputBox>
       <div style={{ color: error ? 'red' : undefined }}>
-        <Label>{props.label}</Label>
-        {props.required && '*'}
+        <Label>{label}</Label>
+        {required && '*'}
       </div>
-      <div>{props.children}</div>
-      {props.helperText && <HelperText style={{ display: error ? 'block' : 'none' }}>{props.helperText}</HelperText>}
-      {props.error && <HelperText style={{ display: isError ? 'block' : 'none' }}>{props.errorText}</HelperText>}
-      {props.check && <HelperText style={{ display: isError ? 'block' : 'none' }}>{props.checkText}</HelperText>}
+      <div>{children}</div>
+      {helperText && <HelperText>{helperText}</HelperText>}
+      {error && <ErrorText>{errorText}</ErrorText>}
     </InputBox>
   );
 }

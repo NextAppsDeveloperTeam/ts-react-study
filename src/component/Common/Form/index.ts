@@ -6,3 +6,4 @@ export * from './FormPhone';
 export * from './FormPassword';
 export * from './FormChkPwd';
 export * from './FormStatus';
+export * from './FormRadioGroup';
