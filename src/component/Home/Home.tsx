@@ -141,6 +141,7 @@ const Home = () => {
               ]}
               value={status}
               onChange={(v) => setStatus(v)}
+              required
             />
             <Button>Submit</Button>
           </Form>

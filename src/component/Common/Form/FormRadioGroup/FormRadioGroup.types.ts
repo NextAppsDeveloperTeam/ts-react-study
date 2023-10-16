@@ -5,6 +5,7 @@ export type FormRadioGroupItemValue = string | number;
 export interface FormRadioGroupItem<T extends FormRadioGroupItemValue> {
   label: string;
   value: T;
+  checked?: boolean;
 }
 
 export type FormRadioGroupItems<T extends FormRadioGroupItemValue> = FormRadioGroupItem<T>[];
