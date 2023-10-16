@@ -9,7 +9,7 @@ const users : User[] = [
         name: 'admin',
         email: 'test00@test.com',
         phone: '010-1111-2222',
-        password: '1234',
+        password: 'abcd123@',
         status: UserStatus.Admin,
     },
     {
@@ -17,7 +17,7 @@ const users : User[] = [
         name: 'user1',
         email: 'test01@test.com',
         phone: '010-1111-3333',
-        password: '1234',
+        password: 'abcd123@',
         status: UserStatus.User,
     },
 ];

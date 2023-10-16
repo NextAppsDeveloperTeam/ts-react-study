@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 const Label = styled.label`
   display: inline-block;
-  margin: 10px 50px 0 30px;
+  margin: 10px 40px;
 `;
 
 const Input = styled.input`
