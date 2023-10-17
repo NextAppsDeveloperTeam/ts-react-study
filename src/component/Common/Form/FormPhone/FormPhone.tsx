@@ -19,6 +19,12 @@ const FormPhone: React.FC<Props> = ({ onValidate, ...props }) => {
     [onValidate]
   );
 
+    // useEffect((value?: string) => {
+    //     if(value && onChange) {
+    //         return onChange(value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'));
+    //     }
+    // }, [onChange]);
+
   return <FormInputControl type='tel' onValidate={handelValidate} {...props} />;
 };
 
