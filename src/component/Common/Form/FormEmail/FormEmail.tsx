@@ -5,6 +5,9 @@ import FormInputControl from '../FormInputControl';
 const VALID_REGEX = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
 
 const FormEmail: React.FC<Props> = ({ onValidate, ...props }) => {
+  if (props.value) {
+    props.value = props.value.trim();
+  }
 
   const handleValidate = useCallback(
     (value?: string) => {

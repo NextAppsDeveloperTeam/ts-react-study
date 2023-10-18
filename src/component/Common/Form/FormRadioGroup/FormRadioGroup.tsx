@@ -48,7 +48,7 @@ function FormRadioGroup<T extends FormRadioGroupItemValue>({
             type='radio'
             name={`FormRadioGroup_${name}`}
             onClick={() => changeValue(item.value)}
-            checked={item.value !== undefined ? value === item.value : undefined}
+            defaultChecked={item.value !== undefined ? value === item.value : undefined}
           />
           {item.label}
         </Label>
