@@ -12,9 +12,9 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  width: 150px;
+  width: 280px;
   height: 40px;
-  margin: 10px 65px;
+  margin: 15px 0;
   font-size: 16px;
   border: none;
   background: #000000;
@@ -22,6 +22,20 @@ const Button = styled.button`
 
   &:hover {
     background: #6c6c6c;
+`;
+
+const StyledLoginText = styled.p`
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: mediumpurple;
+    }
+  }
 `;
 
 const AuthReg = () => {
@@ -135,6 +149,7 @@ const AuthReg = () => {
               required
             />
             <Button>가입하기</Button>
+            <StyledLoginText>이미 계정이 있으신가요? <a href='/login'>로그인하기</a></StyledLoginText>
           </Form>
         </FormContextProvider>
       </Container>

@@ -2,8 +2,8 @@ import './init';
 
 import { BrowserRouter } from 'react-router-dom';
 import Router from './router';
-import UserContextProvider from './context/UserContextProvider';
-import Header from './component/Common/Header/Header';
+import { UserContextProvider } from './context';
+import { Header } from './component';
 
 const App = () => {
   return (

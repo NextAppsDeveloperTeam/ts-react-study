@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './Header.scss';
@@ -51,6 +51,7 @@ const AuthA = styled.a`
 `;
 
 const Header: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState<string | null>(sessionStorage.getItem('isAuthenticated'));
   const navigate = useNavigate();
   return (
     <Container className='Header'>
@@ -65,14 +66,44 @@ const Header: React.FC = () => {
           <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
         </NavLi>
       </NavUl>
-      <AuthUl>
-        <AuthLi>
-          <AuthA onClick={() => navigate('/login')}>로그인</AuthA>
-        </AuthLi>
-        <AuthLi>
-          <AuthA onClick={() => navigate('/join')}>회원가입</AuthA>
-        </AuthLi>
-      </AuthUl>
+      {isAuthenticated === null || isAuthenticated === 'false' ? (
+        <AuthUl>
+          <AuthLi>
+            <AuthA
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              로그인
+            </AuthA>
+          </AuthLi>
+          <AuthLi>
+            <AuthA
+              onClick={() => {
+                navigate('/join');
+              }}
+            >
+              회원가입
+            </AuthA>
+          </AuthLi>
+        </AuthUl>
+      ) : (
+        <div>
+          {/*<AuthUl>*/}
+            <AuthLi>
+              <AuthA
+                onClick={() => {
+                  setIsAuthenticated('false');
+                  sessionStorage.setItem('isAuthenticated', 'false');
+                  navigate('/login');
+                }}
+              >
+                로그아웃
+              </AuthA>
+            </AuthLi>
+          {/*</AuthUl>*/}
+        </div>
+      )}
     </Container>
   );
 };

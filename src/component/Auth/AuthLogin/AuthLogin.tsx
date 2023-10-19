@@ -12,9 +12,9 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  width: 150px;
+  width: 280px;
   height: 40px;
-  margin: 10px 65px;
+  margin: 15px 0;
   font-size: 16px;
   border: none;
   background: #000000;
@@ -22,6 +22,20 @@ const Button = styled.button`
 
   &:hover {
     background: #6c6c6c;
+`;
+
+const StyledJoinText = styled.p`
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: mediumpurple;
+    }
+  }
 `;
 
 const AuthLogin = () => {
@@ -42,24 +56,21 @@ const AuthLogin = () => {
     }, 1);
   }, []);
 
-  // const chkEmail = useMemo(() => {
-  //   return userList.find((user: User) => user.email === email);
-  // }, [email, userList]);
-  //
-  // const handleChkEmailValidate = useCallback(() => {
-  //   return chkEmail ? true : '존재하지 않는 이메일입니다.';
-  // }, [chkEmail]);
-
-  const chkPwd = useMemo(() => {
+  const chkValidate = useMemo(() => {
     return userList.find((user: User) => user.email === email && user.password === password);
   }, [email, password, userList]);
 
-  const handelChkPwdValidate = useCallback(() => {
-    return chkPwd ? true : '이메일 또는 비밀번호가 올바르지 않습니다.';
-  }, [chkPwd]);
+  const handleChkEmailValidate = useCallback(() => {
+    return chkValidate ? true : '';
+  }, [chkValidate]);
+
+  const handleChkPwdValidate = useCallback(() => {
+    return chkValidate ? true : '이메일 또는 비밀번호가 맞지 않습니다.';
+  }, [chkValidate]);
 
   const handleSubmit = useCallback(() => {
     userList.find((user: User) => user.email === email && alert(`${user.name}님 반갑습니다.`));
+    sessionStorage.setItem('isAuthenticated', 'true');
     navigate('/');
   }, [email, navigate, userList]);
 
@@ -75,7 +86,7 @@ const AuthLogin = () => {
               placeholder='이메일을 입력해주세요'
               value={email}
               onChange={setEmail}
-              onValidate={handelChkPwdValidate}
+              onValidate={handleChkEmailValidate}
               required
             />
             <FormPassword
@@ -85,10 +96,11 @@ const AuthLogin = () => {
               helperText='영문, 숫자, 특수문자 포함 8~16자'
               value={password}
               onChange={setPassword}
-              onValidate={handelChkPwdValidate}
+              onValidate={handleChkPwdValidate}
               required
             />
             <Button>로그인</Button>
+            <StyledJoinText>계정이 없으신가요? <a href='/join'>회원가입하기</a></StyledJoinText>
           </Form>
         </FormContextProvider>
       </Container>
