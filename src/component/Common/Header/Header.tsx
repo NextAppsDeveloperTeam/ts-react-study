@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './Header.scss';
+import {UserContext, UserContextValue} from "../../../context";
+import {User} from "../../../@types";
 
 const Container = styled.div`
   padding: 0;
@@ -20,7 +22,7 @@ const NavUl = styled.ul`
 
 const NavLi = styled.li`
   float: left;
-  margin: 40px;
+  margin: 35px;
 `;
 
 const NavA = styled.a`
@@ -33,26 +35,26 @@ const NavA = styled.a`
   }
 `;
 
-const AuthUl = styled.ul`
+const AuthDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   line-height: 80px;
 `;
 
-const AuthLi = styled.li`
-  padding-right: 30px;
-`;
-
-const AuthA = styled.a`
+const AuthA = styled.div`
   color: #cfcfcf;
   font-size: 14px;
   cursor: pointer;
+  padding: 0 15px;
 `;
 
 const Header: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<string | null>(sessionStorage.getItem('isAuthenticated'));
+  const { userList } = useContext(UserContext) as UserContextValue;
+
+  const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem('isAuthenticated'));
   const navigate = useNavigate();
+
   return (
     <Container className='Header'>
       <NavUl>
@@ -66,42 +68,39 @@ const Header: React.FC = () => {
           <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
         </NavLi>
       </NavUl>
-      {isAuthenticated === null || isAuthenticated === 'false' ? (
-        <AuthUl>
-          <AuthLi>
+      {isAuthenticated === 'true' ? (
+        <AuthDiv>
+          <AuthA
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            로그인
+          </AuthA>
+          <AuthA
+            onClick={() => {
+              navigate('/join');
+            }}
+          >
+            회원가입
+          </AuthA>
+        </AuthDiv>
+      ) : (
+        <div>
+          <AuthDiv>
+            <AuthA>
+              {userList.map((user:User) => `${user.name}님`)}
+            </AuthA>
             <AuthA
               onClick={() => {
+                setIsAuthenticated('true');
+                sessionStorage.setItem('isAuthenticated', 'true');
                 navigate('/login');
               }}
             >
-              로그인
+              로그아웃
             </AuthA>
-          </AuthLi>
-          <AuthLi>
-            <AuthA
-              onClick={() => {
-                navigate('/join');
-              }}
-            >
-              회원가입
-            </AuthA>
-          </AuthLi>
-        </AuthUl>
-      ) : (
-        <div>
-          {/*<AuthUl>*/}
-            <AuthLi>
-              <AuthA
-                onClick={() => {
-                  setIsAuthenticated('false');
-                  sessionStorage.setItem('isAuthenticated', 'false');
-                  navigate('/login');
-                }}
-              >
-                로그아웃
-              </AuthA>
-            </AuthLi>
-          {/*</AuthUl>*/}
+          </AuthDiv>
         </div>
       )}
     </Container>

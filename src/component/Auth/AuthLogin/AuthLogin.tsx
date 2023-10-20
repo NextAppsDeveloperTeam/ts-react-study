@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, FormCommands, FormEmail, FormPassword, Title } from '../../Common';
-import FormContextProvider from '../../Common/Form/FormContextProvider';
+import {Form, FormCommands, FormContextProvider, FormEmail, FormPassword, Title} from '../../Common';
 import { UserContext, UserContextValue } from '../../../context';
 import styled from 'styled-components';
 import { User } from '../../../@types';
@@ -69,8 +68,9 @@ const AuthLogin = () => {
   }, [chkValidate]);
 
   const handleSubmit = useCallback(() => {
+    sessionStorage.setItem('isAuthenticated', 'false');
     userList.find((user: User) => user.email === email && alert(`${user.name}님 반갑습니다.`));
-    sessionStorage.setItem('isAuthenticated', 'true');
+    location.reload();
     navigate('/');
   }, [email, navigate, userList]);
 
@@ -100,7 +100,9 @@ const AuthLogin = () => {
               required
             />
             <Button>로그인</Button>
-            <StyledJoinText>계정이 없으신가요? <a href='/join'>회원가입하기</a></StyledJoinText>
+            <StyledJoinText>
+              계정이 없으신가요? <a href='/join'>회원가입하기</a>
+            </StyledJoinText>
           </Form>
         </FormContextProvider>
       </Container>

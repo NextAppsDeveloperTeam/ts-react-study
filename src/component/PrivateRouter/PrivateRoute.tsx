@@ -4,10 +4,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const PrivateRoute: React.FC<Props> = ({ authentication }): React.ReactElement | null => {
   const isAuthenticated = sessionStorage.getItem('isAuthenticated');
+
   if (authentication) {
-    return isAuthenticated === null || isAuthenticated === 'false' ? <Navigate to='/login' /> : <Outlet />;
+    return isAuthenticated === 'true' ? <Navigate to='/login' /> : <Outlet />;
   } else {
-    return isAuthenticated === null || isAuthenticated === 'false' ? <Outlet /> : <Navigate to='/' />;
+    return isAuthenticated === 'true' ? <Outlet /> : <Navigate to='/' />;
   }
 };
 

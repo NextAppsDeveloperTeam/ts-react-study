@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Home, MyPage, UserList, AuthLogin, AuthReg } from '../component';
-import PrivateRoute from '../component/PrivateRouter/PrivateRouter';
+import {Home, MyPage, UserList, AuthLogin, AuthReg, PrivateRoute} from '../component';
 
 const routes = () => {
   return (
