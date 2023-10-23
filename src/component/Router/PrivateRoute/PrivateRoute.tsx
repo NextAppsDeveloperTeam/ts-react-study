@@ -6,9 +6,9 @@ const PrivateRoute: React.FC<Props> = ({ authentication }): React.ReactElement |
   const isAuthenticated = sessionStorage.getItem('isAuthenticated');
 
   if (authentication) {
-    return isAuthenticated === 'true' ? <Navigate to='/login' /> : <Outlet />;
+    return (isAuthenticated === null || isAuthenticated === 'false') ? <Navigate to='/login' /> : <Outlet />;
   } else {
-    return isAuthenticated === 'true' ? <Outlet /> : <Navigate to='/' />;
+    return (isAuthenticated === null || isAuthenticated === 'false') ? <Outlet /> : <Navigate to='/' />;
   }
 };
 

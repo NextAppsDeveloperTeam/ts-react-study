@@ -68,7 +68,7 @@ const AuthLogin = () => {
   }, [chkValidate]);
 
   const handleSubmit = useCallback(() => {
-    sessionStorage.setItem('isAuthenticated', 'false');
+    sessionStorage.setItem('isAuthenticated', 'true');
     userList.find((user: User) => user.email === email && alert(`${user.name}님 반갑습니다.`));
     location.reload();
     navigate('/');

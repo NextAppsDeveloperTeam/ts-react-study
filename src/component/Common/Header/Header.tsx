@@ -49,10 +49,11 @@ const AuthA = styled.div`
   padding: 0 15px;
 `;
 
+
 const Header: React.FC = () => {
   const { userList } = useContext(UserContext) as UserContextValue;
 
-  const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem('isAuthenticated'));
+  const [isAuthenticated, setIsAuthenticated] = useState<string | null>(sessionStorage.getItem('isAuthenticated'));
   const navigate = useNavigate();
 
   return (
@@ -68,7 +69,7 @@ const Header: React.FC = () => {
           <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
         </NavLi>
       </NavUl>
-      {isAuthenticated === 'true' ? (
+      {isAuthenticated === null || isAuthenticated === 'false' ? (
         <AuthDiv>
           <AuthA
             onClick={() => {
@@ -90,11 +91,12 @@ const Header: React.FC = () => {
           <AuthDiv>
             <AuthA>
               {userList.map((user:User) => `${user.name}님`)}
+              {/*{userList.filter((user:User) => user.id === id ? `${user.name}님`)}*/}
             </AuthA>
             <AuthA
               onClick={() => {
-                setIsAuthenticated('true');
-                sessionStorage.setItem('isAuthenticated', 'true');
+                setIsAuthenticated('false');
+                sessionStorage.setItem('isAuthenticated', 'false');
                 navigate('/login');
               }}
             >

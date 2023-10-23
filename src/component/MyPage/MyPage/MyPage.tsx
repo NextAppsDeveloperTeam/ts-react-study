@@ -1,16 +1,16 @@
 // import MyMenu from "../MyMenu/MyMenu";
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { UserContext, UserContextValue } from '../../../context';
 import { User } from '../../../@types';
 import UserItem from '../../Auth/UserItem';
 
-const MyPage = () => {
+const MyPage: React.FC = () => {
   const { userList } = useContext(UserContext) as UserContextValue;
 
   return (
     <div className='MyPage'>
       {/*<MyMenu />*/}
-      {/*{userList.find((user: User) => {*/}
+      {/*{userList.filter((user: User) => {*/}
       {/*    */}
       {/*})}*/}
       {userList.map((user: User) => (
