@@ -6,14 +6,12 @@ import UserItem from '../../Auth/UserItem';
 
 const MyPage: React.FC = () => {
   const { userList } = useContext(UserContext) as UserContextValue;
-
+  
   return (
     <div className='MyPage'>
       {/*<MyMenu />*/}
-      {/*{userList.filter((user: User) => {*/}
-      {/*    */}
-      {/*})}*/}
-      {userList.map((user: User) => (
+      {userList.filter((users: User) => users.id===1)
+          .map((user: User) => (
         <UserItem key={user.id} user={user} />
       ))}
     </div>

@@ -90,8 +90,10 @@ const Header: React.FC = () => {
         <div>
           <AuthDiv>
             <AuthA>
-              {userList.map((user:User) => `${user.name}님`)}
-              {/*{userList.filter((user:User) => user.id === id ? `${user.name}님`)}*/}
+              {userList.filter((users: User) => users.id===1)
+                  .map((user: User) => (
+                      `${user.name}님`
+                  ))}
             </AuthA>
             <AuthA
               onClick={() => {

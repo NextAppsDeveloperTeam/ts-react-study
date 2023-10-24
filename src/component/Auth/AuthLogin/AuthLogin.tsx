@@ -26,7 +26,7 @@ const Button = styled.button`
 const StyledJoinText = styled.p`
   font-size: 13px;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0;
 
   a {
     text-decoration: none;
@@ -56,7 +56,7 @@ const AuthLogin = () => {
   }, []);
 
   const chkValidate = useMemo(() => {
-    return userList.find((user: User) => user.email === email && user.password === password);
+    return userList.filter((user: User) => user.email === email && user.password === password);
   }, [email, password, userList]);
 
   const handleChkEmailValidate = useCallback(() => {
@@ -69,7 +69,7 @@ const AuthLogin = () => {
 
   const handleSubmit = useCallback(() => {
     sessionStorage.setItem('isAuthenticated', 'true');
-    userList.find((user: User) => user.email === email && alert(`${user.name}님 반갑습니다.`));
+    userList.filter((user: User) => user.email === email && alert(`${user.name}님 반갑습니다.`));
     location.reload();
     navigate('/');
   }, [email, navigate, userList]);

@@ -27,7 +27,7 @@ const Button = styled.button`
 const StyledLoginText = styled.p`
   font-size: 13px;
   text-align: center;
-  margin-top: 10px;
+  margin: 10px 0;
 
   a {
     text-decoration: none;
