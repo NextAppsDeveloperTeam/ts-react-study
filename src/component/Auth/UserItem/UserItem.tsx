@@ -12,7 +12,7 @@ const StyleUserItem = styled.div`
 `;
 
 const Button = styled.button`
- margin: 10px 0;
+  margin: 10px 0;
   padding: 5px 20px;
 `;
 
@@ -35,7 +35,6 @@ const UserItem: React.FC<Props> = ({ user, deleteUser }) => {
           삭제
         </Button>
       )}
-      <hr />
     </StyleUserItem>
   );
 };

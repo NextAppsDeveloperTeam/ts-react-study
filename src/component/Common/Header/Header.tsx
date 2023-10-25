@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './Header.scss';
 import { UserContext, UserContextValue } from '../../../context';
+import { UserStatus } from '../../../@types';
 
 const Container = styled.div`
-  padding: 0;
-  margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,18 +33,22 @@ const NavA = styled.a`
   }
 `;
 
-const AuthDiv = styled.div`
+const AuthStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   line-height: 80px;
 `;
 
-const AuthA = styled.div`
+const AuthDiv = styled.div`
   color: #cfcfcf;
   font-size: 14px;
   cursor: pointer;
   padding: 0 15px;
+
+  &:hover {
+    color: #879fbe;
+  }
 `;
 
 const Header: React.FC = () => {
@@ -64,43 +67,45 @@ const Header: React.FC = () => {
             <NavLi>
               <NavA onClick={() => navigate('/myPage')}>MY</NavA>
             </NavLi>
-            <NavLi>
-              <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
-            </NavLi>
+            {auth.status === UserStatus.Admin && (
+              <NavLi>
+                <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
+              </NavLi>
+            )}
           </>
         )}
       </NavUl>
       {auth ? (
         <div>
-          <AuthDiv>
+          <AuthStyle>
             <div style={{ color: 'white' }}>{auth.name}님</div>
-            <AuthA
+            <AuthDiv
               onClick={() => {
                 logout();
                 navigate('/login');
               }}
             >
               로그아웃
-            </AuthA>
-          </AuthDiv>
+            </AuthDiv>
+          </AuthStyle>
         </div>
       ) : (
-        <AuthDiv>
-          <AuthA
+        <AuthStyle>
+          <AuthDiv
             onClick={() => {
               navigate('/login');
             }}
           >
             로그인
-          </AuthA>
-          <AuthA
+          </AuthDiv>
+          <AuthDiv
             onClick={() => {
               navigate('/join');
             }}
           >
             회원가입
-          </AuthA>
-        </AuthDiv>
+          </AuthDiv>
+        </AuthStyle>
       )}
     </Container>
   );

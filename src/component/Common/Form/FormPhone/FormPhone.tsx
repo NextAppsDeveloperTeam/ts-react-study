@@ -1,38 +1,59 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import { FormPhoneProps as Props, FormPhoneDefaultProps } from './FormPhone.types';
 import FormInputControl from '../FormInputControl';
 
-const FormPhone: React.FC<Props> = ({ onValidate, ...props }) => {
-  if (props.value) {
-    props.value = props.value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
-  }
+const FormPhone: React.FC<Props> = ({ onValidate, value: initValue, onChange, ...props }) => {
+    const [value, setValue] = useState(initValue || '');
 
-  const handelValidate = useCallback(
-    (value: string) => {
-      const phoneLength = value.length >= 9 && value.replace(/-/g, '').length <= 11;
-      if (notEmpty(value) && !phoneLength) {
-        return '전화번호는 9~11자입니다.';
-      }
+    useEffect(() => {
+        setValue(initValue || '');
+    }, [initValue]);
 
-      if (onValidate) {
-        return onValidate(value);
-      }
+    const handleValidate = useCallback(
+        () => {
+            const phoneLength = value.length >= 9 && value.replace(/-/g, '').length <= 11;
+            if (notEmpty(value) && !phoneLength) {
+                return '전화번호는 9~11자입니다.';
+            }
 
-      return true;
-    },
-    [onValidate]
-  );
+            if (onValidate) {
+                return onValidate(value);
+            }
 
-  // useEffect((value?: string) => {
-  //     if(value && onChange) {
-  //         return onChange(value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'));
-  //     }
-  // }, [onChange]);
+            return true;
+        },
+        [onValidate, value]
+    );
 
-  return <FormInputControl type='tel' onValidate={handelValidate} {...props} />;
+    const handleChange = useCallback(
+        (newValue: string) => {
+            const finalValue = newValue.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
+            setValue(finalValue);
+            onChange && onChange(finalValue);
+        },
+        [onChange]
+    );
+
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === ' ') {
+            e.preventDefault();
+        }
+    }, []);
+
+    return (
+        <FormInputControl
+            type='tel'
+            value={value}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onValidate={handleValidate}
+            {...props}
+        />
+    );
 };
 
 FormPhone.displayName = 'FormPhone';
 FormPhone.defaultProps = FormPhoneDefaultProps;
 
 export default FormPhone;
+

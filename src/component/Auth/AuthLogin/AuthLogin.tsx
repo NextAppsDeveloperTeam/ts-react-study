@@ -36,6 +36,11 @@ const StyledJoinText = styled.p`
   }
 `;
 
+const ErrorText = styled.div`
+  font-size: 14px;
+  color: red;
+`;
+
 const AuthLogin = () => {
   const { login } = useContext(UserContext) as UserContextValue;
 
@@ -63,7 +68,6 @@ const AuthLogin = () => {
     <>
       <Title text='로그인'></Title>
       <Container>
-        {error && <div>이메일 또는 비밀번호가 맞지 않습니다.</div>}
         <FormContextProvider>
           <Form ref={formCommandsRef} onSubmit={handleSubmit}>
             <FormEmail
@@ -85,6 +89,7 @@ const AuthLogin = () => {
               // onValidate={handleChkPwdValidate}
               required
             />
+            {error && <ErrorText>이메일 또는 비밀번호가 맞지 않습니다.</ErrorText>}
             <Button>로그인</Button>
             <StyledJoinText>
               계정이 없으신가요? <a href='/join'>회원가입하기</a>

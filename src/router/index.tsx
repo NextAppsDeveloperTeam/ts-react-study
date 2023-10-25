@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Home, MyPage, UserList, AuthLogin, AuthReg } from '../component';
 import { useContext } from 'react';
 import { UserContext, UserContextValue } from '../context';
+import { UserStatus } from '../@types';
 
 const MainRoute = () => {
   const { auth } = useContext(UserContext) as UserContextValue;
@@ -13,7 +14,7 @@ const MainRoute = () => {
       {auth ? (
         <>
           <Route path='/myPage' element={<MyPage />} />
-          <Route path='/userList' element={<UserList />} />
+          {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>
       ) : (
         <>

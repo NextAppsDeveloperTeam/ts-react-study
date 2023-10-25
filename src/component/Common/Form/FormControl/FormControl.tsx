@@ -44,7 +44,7 @@ function FormControl<T extends FormControlValue>({
       validate() {
         if (required && empty(value)) {
           setError(true);
-          setErrorText('필수 입력 항목입니다.');
+          setErrorText('필수 항목입니다.');
           return false;
         }
 
