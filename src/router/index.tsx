@@ -1,25 +1,30 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import {Home, MyPage, UserList, AuthLogin, AuthReg, PrivateRoute} from '../component';
+import { Home, MyPage, UserList, AuthLogin, AuthReg } from '../component';
+import { useContext } from 'react';
+import { UserContext, UserContextValue } from '../context';
 
-const routes = () => {
+const MainRoute = () => {
+  const { auth } = useContext(UserContext) as UserContextValue;
+
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route element={<PrivateRoute authentication={true} />}>
-        <Route path='/userList' element={<UserList />} />
-      </Route>
-      <Route element={<PrivateRoute authentication={false} />}>
-        <Route path='/join' element={<AuthReg />} />
-        <Route path='/login' element={<AuthLogin />} />
-      </Route>
 
-      <Route element={<PrivateRoute authentication={true} />}>
-        <Route path='/myPage' element={<MyPage />} />
-      </Route>
+      {auth ? (
+        <>
+          <Route path='/myPage' element={<MyPage />} />
+          <Route path='/userList' element={<UserList />} />
+        </>
+      ) : (
+        <>
+          <Route path='/login' element={<AuthLogin />} />
+          <Route path='/join' element={<AuthReg />} />
+        </>
+      )}
 
       <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   );
 };
 
-export default routes;
+export default MainRoute;

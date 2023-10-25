@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {Form, FormCommands, FormContextProvider, FormEmail, FormPassword, Title} from '../../Common';
+import { Form, FormCommands, FormContextProvider, FormEmail, FormPassword, Title } from '../../Common';
 import { UserContext, UserContextValue } from '../../../context';
 import styled from 'styled-components';
-import { User } from '../../../@types';
-import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -38,10 +37,9 @@ const StyledJoinText = styled.p`
 `;
 
 const AuthLogin = () => {
-  const { userList } = useContext(UserContext) as UserContextValue;
+  const { login } = useContext(UserContext) as UserContextValue;
 
-  const navigate = useNavigate();
-
+  const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -55,29 +53,17 @@ const AuthLogin = () => {
     }, 1);
   }, []);
 
-  const chkValidate = useMemo(() => {
-    return userList.filter((user: User) => user.email === email && user.password === password);
-  }, [email, password, userList]);
-
-  const handleChkEmailValidate = useCallback(() => {
-    return chkValidate ? true : '';
-  }, [chkValidate]);
-
-  const handleChkPwdValidate = useCallback(() => {
-    return chkValidate ? true : '이메일 또는 비밀번호가 맞지 않습니다.';
-  }, [chkValidate]);
-
   const handleSubmit = useCallback(() => {
-    sessionStorage.setItem('isAuthenticated', 'true');
-    userList.filter((user: User) => user.email === email && alert(`${user.name}님 반갑습니다.`));
-    location.reload();
-    navigate('/');
-  }, [email, navigate, userList]);
+    if (!login(email, password)) {
+      setError(true);
+    }
+  }, [email, login, password]);
 
   return (
     <>
       <Title text='로그인'></Title>
       <Container>
+        {error && <div>이메일 또는 비밀번호가 맞지 않습니다.</div>}
         <FormContextProvider>
           <Form ref={formCommandsRef} onSubmit={handleSubmit}>
             <FormEmail
@@ -86,17 +72,17 @@ const AuthLogin = () => {
               placeholder='이메일을 입력해주세요'
               value={email}
               onChange={setEmail}
-              onValidate={handleChkEmailValidate}
+              // onValidate={handleChkEmailValidate}
               required
             />
             <FormPassword
               label='Password'
               name='password'
               placeholder='비밀번호를 입력해주세요'
-              helperText='영문, 숫자, 특수문자 포함 8~16자'
+              // helperText='영문, 숫자, 특수문자 포함 8~16자'
               value={password}
               onChange={setPassword}
-              onValidate={handleChkPwdValidate}
+              // onValidate={handleChkPwdValidate}
               required
             />
             <Button>로그인</Button>

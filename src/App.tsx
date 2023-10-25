@@ -1,7 +1,7 @@
 import './init';
 
 import { BrowserRouter } from 'react-router-dom';
-import Router from './router';
+import MainRoute from './router';
 import { UserContextProvider } from './context';
 import { Header } from './component';
 
@@ -10,7 +10,7 @@ const App = () => {
     <UserContextProvider>
       <BrowserRouter>
         <Header />
-        <Router />
+        <MainRoute />
       </BrowserRouter>
     </UserContextProvider>
   );

@@ -1,11 +1,11 @@
-import React, {ChangeEvent} from 'react';
+import React, { ChangeEvent } from 'react';
 import {
   FormInputControlProps as Props,
   FormInputControlDefaultProps,
   FormInputControlType,
 } from './FormInputControl.types';
 import FormControl, { FormControlValue } from '../FormControl';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Input = styled.input`
   width: 270px;
@@ -18,6 +18,7 @@ const FormInputControl = <Type extends FormInputControlType, T extends FormContr
   placeholder,
   value,
   onChange,
+  onKeyDown,
   ...props
 }: Props<Type, T>) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,7 +43,14 @@ const FormInputControl = <Type extends FormInputControlType, T extends FormContr
 
   return (
     <FormControl value={value} {...props} onRequestFocus={handleRequestFocus}>
-      <Input ref={inputRef} type={type} placeholder={placeholder} value={value} onChange={handleChange} />
+      <Input
+        ref={inputRef}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onKeyDown={onKeyDown}
+        onChange={handleChange}
+      />
     </FormControl>
   );
 };

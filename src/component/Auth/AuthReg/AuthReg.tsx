@@ -43,12 +43,7 @@ const AuthReg = () => {
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [chkPwd, setChkPwd] = useState('');
-  const [status, setStatus] = useState<UserStatus>(UserStatus.User);
 
   const formCommandsRef = useRef<FormCommands>(null);
 
@@ -80,7 +75,6 @@ const AuthReg = () => {
 
   const handleSubmit = useCallback(
     (value: User) => {
-      ll(value);
       addUser(value);
       alert('회원가입이 완료되었습니다');
       navigate('/login');
@@ -94,31 +88,15 @@ const AuthReg = () => {
       <Container>
         <FormContextProvider>
           <Form ref={formCommandsRef} onSubmit={handleSubmit}>
-            <FormText
-              label='Name'
-              name='name'
-              placeholder='텍스트를 입력해주세요'
-              value={name}
-              onChange={setName}
-              required
-            />
+            <FormText label='Name' name='name' placeholder='텍스트를 입력해주세요' required />
             <FormEmail
               label='Email'
               name='email'
               placeholder='이메일을 입력해주세요'
-              value={email}
-              onChange={setEmail}
               onValidate={handleChkEmailValidate}
               required
             />
-            <FormPhone
-              label='Phone'
-              name='phone'
-              placeholder='전화번호를 입력해주세요'
-              value={phone}
-              onChange={setPhone}
-              required
-            />
+            <FormPhone label='Phone' name='phone' placeholder='전화번호를 입력해주세요' required />
             <FormPassword
               label='Password'
               name='password'
@@ -132,8 +110,6 @@ const AuthReg = () => {
               label='Password Check'
               name='chkPwd'
               placeholder='비밀번호를 한 번 더 입력해주세요'
-              value={chkPwd}
-              onChange={setChkPwd}
               onValidate={handleChkPwdValidate}
               required
             />
@@ -144,12 +120,12 @@ const AuthReg = () => {
                 { label: '회원', value: UserStatus.User },
                 { label: '관리자', value: UserStatus.Admin },
               ]}
-              value={status}
-              onChange={(v) => setStatus(v)}
               required
             />
             <Button>가입하기</Button>
-            <StyledLoginText>이미 계정이 있으신가요? <a href='/login'>로그인하기</a></StyledLoginText>
+            <StyledLoginText>
+              이미 계정이 있으신가요? <a href='/login'>로그인하기</a>
+            </StyledLoginText>
           </Form>
         </FormContextProvider>
       </Container>

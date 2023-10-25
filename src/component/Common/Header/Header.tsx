@@ -1,9 +1,8 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import './Header.scss';
-import {UserContext, UserContextValue} from "../../../context";
-import {User} from "../../../@types";
+import { UserContext, UserContextValue } from '../../../context';
 
 const Container = styled.div`
   padding: 0;
@@ -49,12 +48,10 @@ const AuthA = styled.div`
   padding: 0 15px;
 `;
 
-
 const Header: React.FC = () => {
-  const { userList } = useContext(UserContext) as UserContextValue;
-
-  const [isAuthenticated, setIsAuthenticated] = useState<string | null>(sessionStorage.getItem('isAuthenticated'));
   const navigate = useNavigate();
+
+  const { auth, logout } = useContext(UserContext) as UserContextValue;
 
   return (
     <Container className='Header'>
@@ -62,14 +59,32 @@ const Header: React.FC = () => {
         <NavLi>
           <NavA onClick={() => navigate('/')}>HOME</NavA>
         </NavLi>
-        <NavLi>
-          <NavA onClick={() => navigate('/myPage')}>MY</NavA>
-        </NavLi>
-        <NavLi>
-          <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
-        </NavLi>
+        {auth && (
+          <>
+            <NavLi>
+              <NavA onClick={() => navigate('/myPage')}>MY</NavA>
+            </NavLi>
+            <NavLi>
+              <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
+            </NavLi>
+          </>
+        )}
       </NavUl>
-      {isAuthenticated === null || isAuthenticated === 'false' ? (
+      {auth ? (
+        <div>
+          <AuthDiv>
+            <div style={{ color: 'white' }}>{auth.name}님</div>
+            <AuthA
+              onClick={() => {
+                logout();
+                navigate('/login');
+              }}
+            >
+              로그아웃
+            </AuthA>
+          </AuthDiv>
+        </div>
+      ) : (
         <AuthDiv>
           <AuthA
             onClick={() => {
@@ -86,26 +101,6 @@ const Header: React.FC = () => {
             회원가입
           </AuthA>
         </AuthDiv>
-      ) : (
-        <div>
-          <AuthDiv>
-            <AuthA>
-              {userList.filter((users: User) => users.id===1)
-                  .map((user: User) => (
-                      `${user.name}님`
-                  ))}
-            </AuthA>
-            <AuthA
-              onClick={() => {
-                setIsAuthenticated('false');
-                sessionStorage.setItem('isAuthenticated', 'false');
-                navigate('/login');
-              }}
-            >
-              로그아웃
-            </AuthA>
-          </AuthDiv>
-        </div>
       )}
     </Container>
   );
