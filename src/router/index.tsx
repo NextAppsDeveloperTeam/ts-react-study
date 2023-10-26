@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Home, MyPage, UserList, AuthLogin, AuthReg } from '../component';
+import {Home, MyPage, UserList, AuthLogin, AuthReg, MyPwdChange} from '../component';
 import { useContext } from 'react';
 import { UserContext, UserContextValue } from '../context';
 import { UserStatus } from '../@types';
@@ -14,6 +14,7 @@ const MainRoute = () => {
       {auth ? (
         <>
           <Route path='/myPage' element={<MyPage />} />
+          <Route path='/myPwdChange' element={<MyPwdChange />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>
       ) : (

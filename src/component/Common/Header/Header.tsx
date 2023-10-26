@@ -11,25 +11,25 @@ const Container = styled.div`
   align-items: center;
   height: 80px;
   background-color: #000000;
-`;
 
-const NavUl = styled.ul`
-  margin-top: 0;
-  line-height: 80px;
-`;
+  ul {
+    margin-top: 0;
+    line-height: 80px;
 
-const NavLi = styled.li`
-  float: left;
-  margin: 35px;
-`;
+    li {
+      float: left;
+      margin: 35px;
 
-const NavA = styled.a`
-  color: #ffffff;
-  font-size: 18px;
-  cursor: pointer;
+      a {
+        color: #ffffff;
+        font-size: 18px;
+        cursor: pointer;
 
-  &:hover {
-    color: #b9d8ff;
+        &:hover {
+          color: #b9d8ff;
+        }
+      }
+    }
   }
 `;
 
@@ -38,16 +38,16 @@ const AuthStyle = styled.div`
   justify-content: space-between;
   align-items: center;
   line-height: 80px;
-`;
 
-const AuthDiv = styled.div`
-  color: #cfcfcf;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 0 15px;
+  div {
+    color: #cfcfcf;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 15px;
 
-  &:hover {
-    color: #879fbe;
+    &:hover {
+      color: #879fbe;
+    }
   }
 `;
 
@@ -58,53 +58,53 @@ const Header: React.FC = () => {
 
   return (
     <Container className='Header'>
-      <NavUl>
-        <NavLi>
-          <NavA onClick={() => navigate('/')}>HOME</NavA>
-        </NavLi>
+      <ul>
+        <li>
+          <a onClick={() => navigate('/')}>HOME</a>
+        </li>
         {auth && (
           <>
-            <NavLi>
-              <NavA onClick={() => navigate('/myPage')}>MY</NavA>
-            </NavLi>
+            <li>
+              <a onClick={() => navigate('/myPage')}>MY</a>
+            </li>
             {auth.status === UserStatus.Admin && (
-              <NavLi>
-                <NavA onClick={() => navigate('/userList')}>회원관리</NavA>
-              </NavLi>
+              <li>
+                <a onClick={() => navigate('/userList')}>회원관리</a>
+              </li>
             )}
           </>
         )}
-      </NavUl>
+      </ul>
       {auth ? (
         <div>
           <AuthStyle>
-            <div style={{ color: 'white' }}>{auth.name}님</div>
-            <AuthDiv
+            <p style={{ color: 'white', paddingRight: '15px' }}>{auth.name}님</p>
+            <div
               onClick={() => {
                 logout();
                 navigate('/login');
               }}
             >
               로그아웃
-            </AuthDiv>
+            </div>
           </AuthStyle>
         </div>
       ) : (
         <AuthStyle>
-          <AuthDiv
+          <div
             onClick={() => {
               navigate('/login');
             }}
           >
             로그인
-          </AuthDiv>
-          <AuthDiv
+          </div>
+          <div
             onClick={() => {
               navigate('/join');
             }}
           >
             회원가입
-          </AuthDiv>
+          </div>
         </AuthStyle>
       )}
     </Container>
