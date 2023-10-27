@@ -73,16 +73,6 @@ const UserContextProvider = ({ children }: Props) => {
     [userList]
   );
 
-  // const updateUser = useCallback(
-  //   (password: string) => {
-  //       const userInfo = userList.find((info) => info.id === auth?.id && info.password === password);
-  //       if (userInfo) {
-  //
-  //       }
-  //   },
-  //   [auth?.id, userList]
-  // );
-
   const login = useCallback(
     (email: string, password: string) => {
       const userInfo = userList.find((info) => info.email === email && info.password === password);

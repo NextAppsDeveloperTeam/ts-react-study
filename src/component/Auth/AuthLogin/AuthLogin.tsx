@@ -76,17 +76,15 @@ const AuthLogin = () => {
               placeholder='이메일을 입력해주세요'
               value={email}
               onChange={setEmail}
-              // onValidate={handleChkEmailValidate}
               required
             />
             <FormPassword
               label='Password'
               name='password'
               placeholder='비밀번호를 입력해주세요'
-              // helperText='영문, 숫자, 특수문자 포함 8~16자'
+              helperText='영문, 숫자, 특수문자 포함 8~16자'
               value={password}
               onChange={setPassword}
-              // onValidate={handleChkPwdValidate}
               required
             />
             {error && <ErrorText>이메일 또는 비밀번호가 맞지 않습니다.</ErrorText>}
