@@ -6,6 +6,7 @@ export type UserContextValue = {
   userList: User[];
   addUser: (user: User) => void;
   deleteUser: (id: number) => void;
+  updateUser: (password: string) => void;
   login(email: string, password: string): boolean;
   logout(): void;
 };

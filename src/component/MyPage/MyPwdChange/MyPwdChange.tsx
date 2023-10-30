@@ -1,9 +1,9 @@
 import MyMenu from '../MyMenu/MyMenu';
-import React, { useEffect, useState } from 'react';
-// import { UserContext, UserContextValue } from '../../../context';
+import React, {useContext, useEffect, useState} from 'react';
+import { UserContext, UserContextValue } from '../../../context';
 import { Form, FormCommands, FormContextProvider, FormPassword, Title } from '../../Common';
 import styled from 'styled-components';
-// import { User } from '../../../@types';
+import {useNavigate} from "react-router-dom";
 
 const Container = styled.div`
   margin-left: 180px;
@@ -26,7 +26,9 @@ const Button = styled.button`
 `;
 
 const MyPwdChange: React.FC = () => {
-  // const { userList, auth } = useContext(UserContext) as UserContextValue;
+  const { updateUser, auth } = useContext(UserContext) as UserContextValue;
+
+  const navigate = useNavigate();
 
   const [password, setPassword] = useState('');
   const [newPwd, setNewPwd] = useState('');
@@ -42,10 +44,9 @@ const MyPwdChange: React.FC = () => {
     }, 1);
   }, []);
 
-  // const handlePwdValidate = useCallback((value?: string) => {
-  //   userList.find((user:User) => user.email === auth?.email)
-  //   return newPwd === value ? true : '비밀번호가 일치하지 않습니다.';
-  // }, []);
+  const handlePwdValidate = useCallback((value?: string) => {
+    return auth?.password === value ? true : '비밀번호가 일치하지 않습니다.';
+  }, [auth?.password]);
 
   const handleChkPwdValidate = useCallback(
     (value?: string) => {
@@ -55,8 +56,10 @@ const MyPwdChange: React.FC = () => {
   );
 
   const handleSubmit = useCallback(() => {
-    //
-  }, []);
+    updateUser(newPwd);
+    alert('비밀번호 변경이 완료되었습니다');
+    navigate('/myPage');
+  }, [navigate, newPwd, updateUser]);
 
   return (
     <Container className='MyPage'>
@@ -68,7 +71,7 @@ const MyPwdChange: React.FC = () => {
             label='Password'
             name='password'
             placeholder='현재 비밀번호를 입력해주세요'
-            // onValidate={handlePwdValidate}
+            onValidate={handlePwdValidate}
             value={password}
             onChange={setPassword}
             required

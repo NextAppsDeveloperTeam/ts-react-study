@@ -24,6 +24,8 @@ const MyInfo: React.FC<Props> = ({ user }) => {
         <span className='item'>전화번호: {user.phone}</span>
         <br />
         <span className='item'>회원유형: {user.status}</span>
+        <br />
+        <span className='item'>비밀번호: {user.password}</span>
       </div>
     </StyleUserItem>
   );
