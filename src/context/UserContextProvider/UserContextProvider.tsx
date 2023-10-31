@@ -80,7 +80,7 @@ const UserContextProvider = ({ children }: Props) => {
         if (userInfo) {
           const updateList = userList.map((item) => ({
             ...item,
-            password: item.password === userInfo.password ? password : item.password,
+            password: item.id === userInfo.id ? password : item.password,
           }));
           localStorage.setItem('UserList', JSON.stringify(updateList));
           setUserList(updateList);
@@ -96,6 +96,7 @@ const UserContextProvider = ({ children }: Props) => {
       if (userInfo) {
         setAuth(userInfo);
         localStorage.setItem('UserAuth', `${userInfo.id}`);
+        alert(`${userInfo.name}님 환영합니다.`);
         return true;
       } else {
         return false;

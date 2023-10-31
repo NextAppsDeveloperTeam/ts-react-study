@@ -1,10 +1,9 @@
+import { Title } from '../Common';
 
 const Home = () => {
-
   return (
     <>
-      <h1>Home</h1>
-
+      <Title text='Home' />
     </>
   );
 };

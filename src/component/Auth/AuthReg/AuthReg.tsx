@@ -21,7 +21,7 @@ const Button = styled.button`
   color: #ffffff;
 
   &:hover {
-    background: #6c6c6c;
+    opacity: 0.7;
 `;
 
 const StyledLoginText = styled.p`
@@ -33,7 +33,7 @@ const StyledLoginText = styled.p`
     text-decoration: none;
 
     &:hover {
-      color: mediumpurple;
+      opacity: 0.5;
     }
   }
 `;

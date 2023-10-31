@@ -16,12 +16,12 @@ const Container = styled.div`
 
     a {
       display: block;
-      color: #dedede;
+      color: #bdbdbd;
     }
 
     :hover {
-      background: #9d9d9d;
-      color: #000000;
+      background: rgba(51, 51, 51, 0.69);
+      color: #eeeeee;
     }
   }
 `;
@@ -34,13 +34,13 @@ const MyMenu: React.FC = () => {
       <nav>
         <ul>
           <li>
-            <a onClick={() => navigate('/myPage')}>회원정보</a>
+            <a onClick={() => navigate('/myPage')}>내 정보</a>
           </li>
           <li>
             <a onClick={() => navigate('/myPwdChange')}>비밀번호 변경</a>
           </li>
           <li>
-            <a href='#'>탈퇴하기</a>
+            <a onClick={() => navigate('/myDelete')}>탈퇴하기</a>
           </li>
         </ul>
       </nav>
