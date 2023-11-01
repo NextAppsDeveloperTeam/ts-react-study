@@ -7,7 +7,7 @@ import { Title } from '../../Common';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  margin-left: 180px;
+  margin-left: 200px;
 `;
 
 const MyPage: React.FC = () => {

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {useNavigate} from "react-router-dom";
 
 const Container = styled.div`
-  margin-left: 180px;
+  margin-left: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
