@@ -27,7 +27,7 @@ const UserContextProvider = ({ children }: Props) => {
   const [userList, setUserList] = useState<User[]>(users);
 
   // -------------------------------------------------------------------------------------------------------------------
-
+  ll(auth);
   useEffect(() => {
     const list = localStorage.getItem('UserList');
     if (list) {
@@ -82,6 +82,7 @@ const UserContextProvider = ({ children }: Props) => {
             ...item,
             password: item.id === userInfo.id ? password : item.password,
           }));
+          auth.password = password;
           localStorage.setItem('UserList', JSON.stringify(updateList));
           setUserList(updateList);
         }

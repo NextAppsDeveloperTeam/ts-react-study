@@ -30,9 +30,7 @@ const MyPwdChange: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const [password, setPassword] = useState('');
   const [newPwd, setNewPwd] = useState('');
-  const [chkPwd, setChkPwd] = useState('');
 
   const formCommandsRef = useRef<FormCommands>(null);
 
@@ -72,8 +70,6 @@ const MyPwdChange: React.FC = () => {
             name='password'
             placeholder='현재 비밀번호를 입력해주세요'
             onValidate={handlePwdValidate}
-            value={password}
-            onChange={setPassword}
             required
           />
           <FormPassword
@@ -89,8 +85,6 @@ const MyPwdChange: React.FC = () => {
             name='chkPwd'
             placeholder='새 비밀번호를 한 번 더 입력해주세요'
             onValidate={handleChkPwdValidate}
-            value={chkPwd}
-            onChange={setChkPwd}
             required
           />
           <Button>비밀번호 변경</Button>

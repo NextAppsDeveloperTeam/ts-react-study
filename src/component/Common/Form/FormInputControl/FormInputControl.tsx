@@ -16,21 +16,33 @@ const Input = styled.input`
 const FormInputControl = <Type extends FormInputControlType, T extends FormControlValue>({
   type,
   placeholder,
-  value,
+  value: initValue,
   onChange,
   onKeyDown,
   ...props
 }: Props<Type, T>) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [value, setValue] = useState(initValue === undefined ? '' : initValue);
+
+  useEffect(() => {
+    setValue(initValue === undefined ? '' : initValue);
+  }, [initValue]);
+
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       switch (type) {
-        case 'number':
-          onChange && onChange((empty(e.target.value) ? undefined : Number(e.target.value)) as T);
+        case 'number':{
+          const value = (empty(e.target.value) ? undefined : Number(e.target.value)) as T;
+          onChange && onChange(value);
+          setValue(value === undefined ? '' : value);
+        }
           break;
-        default:
-          onChange && onChange(e.target.value as T);
+        default: {
+          const value = e.target.value as T;
+          onChange && onChange(value);
+          setValue(value === undefined ? '' : value);
+        }
           break;
       }
     },

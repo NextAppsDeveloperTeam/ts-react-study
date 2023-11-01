@@ -48,10 +48,6 @@ const MyInfo: React.FC<Props> = ({ user }) => {
         <div>회원유형</div>
         <p>{user.status}</p>
       </Item>
-      <Item>
-        <div>비밀번호</div>
-        <p>{user.password}</p>
-      </Item>
     </StyleUserItem>
   );
 };
