@@ -36,7 +36,8 @@ const UserContextProvider = ({ children }: Props) => {
 
       const userAuthId = localStorage.getItem('UserAuth');
       if (userAuthId) {
-        setAuth(userList.find((info) => info.id === Number(userAuthId)));
+        const user = userList.find((info) => info.id === Number(userAuthId));
+        setAuth(user);
       }
     }
   }, []);

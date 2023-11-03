@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, FormCommands, FormContextProvider, FormEmail, FormPassword, Title } from '../../Common';
 import { UserContext, UserContextValue } from '../../../context';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -44,6 +45,8 @@ const ErrorText = styled.div`
 const AuthLogin = () => {
   const { login } = useContext(UserContext) as UserContextValue;
 
+  const navigate = useNavigate();
+
   const [error, setError] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -61,8 +64,10 @@ const AuthLogin = () => {
   const handleSubmit = useCallback(() => {
     if (!login(email, password)) {
       setError(true);
+    } else {
+      navigate('/');
     }
-  }, [email, login, password]);
+  }, [email, login, navigate, password]);
 
   return (
     <>

@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;`;
+  align-items: center;
+`;
 
 const Button = styled.button`
   width: 280px;
@@ -44,7 +45,6 @@ const AuthReg = () => {
   const navigate = useNavigate();
 
   const [password, setPassword] = useState('');
-  const [chkPwd, setChkPwd] = useState('');
 
   const formCommandsRef = useRef<FormCommands>(null);
 
@@ -112,8 +112,6 @@ const AuthReg = () => {
               name='chkPwd'
               placeholder='비밀번호를 한 번 더 입력해주세요'
               onValidate={handleChkPwdValidate}
-              value={chkPwd}
-              onChange={setChkPwd}
               required
             />
             <FormRadioGroup
