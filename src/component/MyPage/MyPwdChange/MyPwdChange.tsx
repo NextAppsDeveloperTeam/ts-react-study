@@ -30,6 +30,7 @@ const MyPwdChange: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const [password, setPassword] = useState('');
   const [newPwd, setNewPwd] = useState('');
 
   const formCommandsRef = useRef<FormCommands>(null);
@@ -45,6 +46,10 @@ const MyPwdChange: React.FC = () => {
   const handlePwdValidate = useCallback((value?: string) => {
     return auth?.password === value ? true : '비밀번호가 일치하지 않습니다.';
   }, [auth?.password]);
+
+  const handleSamePwdValidate = useCallback((value?: string) => {
+    return password === value ? '이전과 동일한 비밀번호는 사용할 수 없습니다.' : true;
+  }, [password]);
 
   const handleChkPwdValidate = useCallback(
     (value?: string) => {
@@ -69,6 +74,8 @@ const MyPwdChange: React.FC = () => {
             label='Password'
             name='password'
             placeholder='현재 비밀번호를 입력해주세요'
+            value={password}
+            onChange={setPassword}
             onValidate={handlePwdValidate}
             required
           />
@@ -78,6 +85,7 @@ const MyPwdChange: React.FC = () => {
             placeholder='새 비밀번호를 입력해주세요'
             value={newPwd}
             onChange={setNewPwd}
+            onValidate={handleSamePwdValidate}
             required
           />
           <FormPassword

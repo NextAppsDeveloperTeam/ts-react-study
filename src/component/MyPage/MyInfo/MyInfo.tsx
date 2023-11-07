@@ -1,14 +1,24 @@
-import React from 'react';
-import { User } from '../../../@types';
+import MyMenu from '../MyMenu/MyMenu';
+import React, { useContext } from 'react';
+import { UserContext, UserContextValue } from '../../../context';
+import { Title } from '../../Common';
 import styled from 'styled-components';
 
-type Props = {
-  user: User;
-  deleteUser?: (id: number) => void;
-};
+const Container = styled.div`
+  margin-left: 220px;
+`;
 
-const StyleUserItem = styled.div`
-  margin: 20px;
+const Button = styled.button`
+  width: 250px;
+  height: 37px;
+  margin: 15px 0;
+  font-size: 15px;
+  border: none;
+  background: #000000;
+  color: #ffffff;
+
+  &:hover {
+    opacity: 0.7;
 `;
 
 const Item = styled.div`
@@ -25,30 +35,41 @@ const Item = styled.div`
   }
 `;
 
-const MyInfo: React.FC<Props> = ({ user }) => {
+const MyInfo: React.FC = () => {
+  const { auth } = useContext(UserContext) as UserContextValue;
+
   return (
-    <StyleUserItem>
-      <Item>
-        <div>아이디</div>
-        <p>{user.id}</p>
-      </Item>
-      <Item>
-        <div>이름</div>
-        <p>{user.name}</p>
-      </Item>
-      <Item>
-        <div>이메일</div>
-        <p>{user.email}</p>
-      </Item>
-      <Item>
-        <div>전화번호</div>
-        <p>{user.phone}</p>
-      </Item>
-      <Item>
-        <div>회원유형</div>
-        <p>{user.status}</p>
-      </Item>
-    </StyleUserItem>
+    <Container className='MyPage'>
+      <Title text='내 정보 수정' />
+      <MyMenu />
+      {auth && (
+        <>
+          <Item>
+            <div>아이디</div>
+            <p>{auth.id}</p>
+          </Item>
+          <Item>
+            <div>이름</div>
+            <p>{auth.name}</p>
+          </Item>
+          <Item>
+            <div>이메일</div>
+            <p>{auth.email}</p>
+          </Item>
+          <Item>
+            <div>전화번호</div>
+            <p>{auth.phone}</p>
+          </Item>
+          <Item>
+            <div>회원유형</div>
+            <p>{auth.status}</p>
+          </Item>
+        </>
+      )}
+      <Button>내 정보 수정</Button>
+    </Container>
   );
 };
+
+MyInfo.displayName = 'MyInfo';
 export default MyInfo;
