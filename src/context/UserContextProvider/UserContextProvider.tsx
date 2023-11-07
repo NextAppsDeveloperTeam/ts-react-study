@@ -25,6 +25,7 @@ const users: User[] = [
 const UserContextProvider = ({ children }: Props) => {
   const [auth, setAuth] = useState<User>();
   const [userList, setUserList] = useState<User[]>(users);
+  const [loading, setLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------------------------------------
   ll(auth);
@@ -40,6 +41,7 @@ const UserContextProvider = ({ children }: Props) => {
         setAuth(user);
       }
     }
+    setLoading(true);
   }, []);
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -126,7 +128,7 @@ const UserContextProvider = ({ children }: Props) => {
         logout,
       }}
     >
-      {children}
+      {loading && children}
     </UserContext.Provider>
   );
 };
