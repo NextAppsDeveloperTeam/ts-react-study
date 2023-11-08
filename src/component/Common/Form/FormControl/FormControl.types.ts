@@ -7,6 +7,7 @@ export interface FormControlProps<T extends FormControlValue> {
   name: string;
   label?: string;
   required?: boolean;
+  readonly?: boolean;
   placeholder?: string;
   helperText?: ReactNode;
   labelText?: string;

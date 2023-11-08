@@ -3,11 +3,12 @@ import {useNavigate} from "react-router-dom";
 import styled from 'styled-components';
 
 const Container = styled.div`
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 80px;
   bottom: 0;
   width: 200px;
+  height: 100%;
   background: #3d3d3d;
   text-align: center;
 
@@ -38,6 +39,9 @@ const MyMenu: React.FC = () => {
           </li>
           <li>
             <a onClick={() => navigate('/myPwdChange')}>비밀번호 변경</a>
+          </li>
+          <li>
+            <a onClick={() => navigate('/myInfoUpdate')}>내 정보 수정</a>
           </li>
           <li>
             <a onClick={() => navigate('/myDelete')}>탈퇴하기</a>
