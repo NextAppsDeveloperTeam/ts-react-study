@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import { FormPasswordProps as Props, FormPasswordDefaultProps } from './FormPassword.types';
 import FormInputControl from '../FormInputControl';
 
@@ -20,7 +20,13 @@ const FormPassword: React.FC<Props> = ({ onValidate, ...props }) => {
     [onValidate]
   );
 
-  return <FormInputControl type='password' onValidate={handleValidate} {...props} />;
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === ' ') {
+      e.preventDefault();
+    }
+  }, []);
+
+  return <FormInputControl type='password' onKeyDown={handleKeyDown} onValidate={handleValidate} {...props} />;
 };
 
 FormPassword.displayName = 'FormPassword';

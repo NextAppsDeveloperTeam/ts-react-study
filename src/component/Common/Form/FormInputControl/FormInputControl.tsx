@@ -32,17 +32,26 @@ const FormInputControl = <Type extends FormInputControlType, T extends FormContr
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       switch (type) {
-        case 'number':{
-          const value = (empty(e.target.value) ? undefined : Number(e.target.value)) as T;
-          onChange && onChange(value);
-          setValue(value === undefined ? '' : value);
-        }
+        case 'number':
+          {
+            const value = (empty(e.target.value) ? undefined : Number(e.target.value)) as T;
+            onChange && onChange(value);
+            setValue(value === undefined ? '' : value);
+          }
           break;
-        default: {
-          const value = e.target.value as T;
-          onChange && onChange(value);
-          setValue(value === undefined ? '' : value);
-        }
+        case 'tel':
+          {
+            const value = e.target.value.replace(/[^0-9]/g, '') as T;
+            onChange && onChange(value);
+            setValue(value === undefined ? '' : value);
+          }
+          break;
+        default:
+          {
+            const value = e.target.value as T;
+            onChange && onChange(value);
+            setValue(value === undefined ? '' : value);
+          }
           break;
       }
     },

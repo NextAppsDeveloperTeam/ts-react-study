@@ -22,6 +22,12 @@ const ErrorText = styled.div`
   color: red;
 `;
 
+const ReadOnly = styled.div`
+  input {
+    
+  }
+`;
+
 function FormControl<T extends FormControlValue>({
   children,
   name,
@@ -29,6 +35,7 @@ function FormControl<T extends FormControlValue>({
   label,
   helperText,
   required,
+  readonly,
   onValidate,
   onRequestFocus,
 }: FormControlProps<T>) {
@@ -76,7 +83,7 @@ function FormControl<T extends FormControlValue>({
         <Label>{label}</Label>
         {required && '*'}
       </div>
-      <div>{children}</div>
+      <div>{readonly ? <ReadOnly>{children}</ReadOnly> : <>{children}</>}</div>
       {helperText && <HelperText>{helperText}</HelperText>}
       {error && <ErrorText>{errorText}</ErrorText>}
     </InputBox>
