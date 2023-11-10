@@ -41,9 +41,6 @@ const MyMenu: React.FC = () => {
             <a onClick={() => navigate('/myPwdChange')}>비밀번호 변경</a>
           </li>
           <li>
-            <a onClick={() => navigate('/myInfoUpdate')}>내 정보 수정</a>
-          </li>
-          <li>
             <a onClick={() => navigate('/myDelete')}>탈퇴하기</a>
           </li>
         </ul>

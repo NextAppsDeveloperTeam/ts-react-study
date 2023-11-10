@@ -1,4 +1,4 @@
-import { User } from '../../@types';
+import {User} from '../../@types';
 import React from 'react';
 
 export type UserContextValue = {
@@ -7,6 +7,7 @@ export type UserContextValue = {
   addUser: (user: User) => void;
   deleteUser: (id: number) => void;
   updateUser: (password: string) => void;
+  updateInfo: (name: string, phone: string) => void;
   login(email: string, password: string): boolean;
   logout(): void;
 };

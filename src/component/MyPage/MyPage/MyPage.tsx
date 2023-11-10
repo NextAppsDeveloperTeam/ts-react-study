@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { UserContext, UserContextValue } from '../../../context';
 import { Title } from '../../Common';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   margin-left: 220px;
@@ -38,6 +39,12 @@ const Item = styled.div`
 const MyPage: React.FC = () => {
   const { auth } = useContext(UserContext) as UserContextValue;
 
+  const navigate = useNavigate();
+
+  const handleClick = useCallback(() => {
+      navigate('/myInfoUpdate');
+  }, [navigate]);
+
   return (
     <Container className='MyPage'>
       <Title text='내 정보' />
@@ -66,7 +73,7 @@ const MyPage: React.FC = () => {
           </Item>
         </>
       )}
-      <Button>내 정보 수정</Button>
+      <Button onClick={handleClick}>내 정보 수정</Button>
     </Container>
   );
 };

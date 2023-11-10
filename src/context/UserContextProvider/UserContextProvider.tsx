@@ -94,6 +94,26 @@ const UserContextProvider = ({ children }: Props) => {
     [auth, userList]
   );
 
+  const updateInfo = useCallback(
+      (name: string, phone: string) => {
+        if (auth) {
+          const userInfo = userList.find((info) => info.id === auth.id);
+          if (userInfo) {
+            const updateList = userList.map((item) => ({
+              ...item,
+              name: item.id === userInfo.id && notEmpty(name) ? name : item.name,
+              phone: item.id === userInfo.id && notEmpty(phone) ? phone : item.phone,
+            }));
+            auth.name = name;
+            auth.phone = phone;
+            localStorage.setItem('UserList', JSON.stringify(updateList));
+            setUserList(updateList);
+          }
+        }
+      },
+      [auth, userList]
+  );
+
   const login = useCallback(
     (email: string, password: string) => {
       const userInfo = userList.find((info) => info.email === email && info.password === password);
@@ -124,6 +144,7 @@ const UserContextProvider = ({ children }: Props) => {
         addUser,
         deleteUser,
         updateUser,
+        updateInfo,
         login,
         logout,
       }}

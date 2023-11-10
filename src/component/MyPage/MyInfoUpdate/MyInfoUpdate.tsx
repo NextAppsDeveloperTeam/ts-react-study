@@ -1,5 +1,5 @@
 import MyMenu from '../MyMenu/MyMenu';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext, UserContextValue } from '../../../context';
 import {
   Form,
@@ -36,14 +36,18 @@ const Button = styled.button`
 `;
 
 const MyInfoUpdate: React.FC = () => {
-  const { auth } = useContext(UserContext) as UserContextValue;
+  const { updateInfo, auth } = useContext(UserContext) as UserContextValue;
 
   const navigate = useNavigate();
 
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
   const handleSubmit = useCallback(() => {
+    updateInfo(name, phone);
     alert('회원정보 수정이 완료되었습니다');
     navigate('/myPage');
-  }, [navigate]);
+  }, [name, navigate, phone, updateInfo]);
 
   return (
     <Container className='MyPage'>
@@ -54,9 +58,9 @@ const MyInfoUpdate: React.FC = () => {
           {auth && (
             <>
               <FormNumber label='Id' name='id' value={auth.id} required readonly />
-              <FormText label='Name' name='name' value={auth.name} required />
+              <FormText label='Name' name='name' value={auth.name} onChange={setName} required />
               <FormEmail label='Email' name='email' value={auth.email} required readonly />
-              <FormPhone label='Phone' name='phone' value={auth.phone} required />
+              <FormPhone label='Phone' name='phone' value={auth.phone} onChange={setPhone} required />
               <FormRadioGroup
                 label='Status'
                 name='status'
@@ -69,7 +73,7 @@ const MyInfoUpdate: React.FC = () => {
               />
             </>
           )}
-          <Button>내 정보 수정</Button>
+          <Button>수정하기</Button>
         </Form>
       </FormContextProvider>
     </Container>
