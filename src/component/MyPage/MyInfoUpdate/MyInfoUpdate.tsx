@@ -40,8 +40,8 @@ const MyInfoUpdate: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState(auth ? auth.name : '');
+  const [phone, setPhone] = useState(auth ? auth.phone : '');
 
   const handleSubmit = useCallback(() => {
     updateInfo(name, phone);

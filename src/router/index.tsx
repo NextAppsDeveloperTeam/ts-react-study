@@ -3,6 +3,7 @@ import { Home, MyPage, UserList, AuthLogin, AuthReg, MyPwdChange, MyDelete, MyIn
 import { useContext } from 'react';
 import { UserContext, UserContextValue } from '../context';
 import { UserStatus } from '../@types';
+import MyPwdCheck from '../component/MyPage/MyPwdCheck';
 
 const MainRoute = () => {
   const { auth } = useContext(UserContext) as UserContextValue;
@@ -16,6 +17,7 @@ const MainRoute = () => {
           <Route path='/myPage' element={<MyPage />} />
           <Route path='/myPwdChange' element={<MyPwdChange />} />
           <Route path='myInfoUpdate' element={<MyInfoUpdate />} />
+          <Route path='myPwdCheck' element={<MyPwdCheck />} />
           <Route path='/myDelete' element={<MyDelete />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>

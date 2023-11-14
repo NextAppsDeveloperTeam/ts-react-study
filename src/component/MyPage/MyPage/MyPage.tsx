@@ -1,5 +1,5 @@
 import MyMenu from '../MyMenu/MyMenu';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext, UserContextValue } from '../../../context';
 import { Title } from '../../Common';
 import styled from 'styled-components';
@@ -41,8 +41,18 @@ const MyPage: React.FC = () => {
 
   const navigate = useNavigate();
 
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+  const clickModal = useCallback(() => {
+    setIsOpenModal(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setIsOpenModal(false);
+  }, []);
+
   const handleClick = useCallback(() => {
-      navigate('/myInfoUpdate');
+    navigate('/myPwdCheck');
   }, [navigate]);
 
   return (

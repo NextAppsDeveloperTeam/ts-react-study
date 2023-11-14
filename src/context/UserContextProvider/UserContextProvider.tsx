@@ -101,8 +101,8 @@ const UserContextProvider = ({ children }: Props) => {
           if (userInfo) {
             const updateList = userList.map((item) => ({
               ...item,
-              name: item.id === userInfo.id && notEmpty(name) ? name : item.name,
-              phone: item.id === userInfo.id && notEmpty(phone) ? phone : item.phone,
+              name: item.id === userInfo.id ? name : item.name,
+              phone: item.id === userInfo.id ? phone : item.phone,
             }));
             auth.name = name;
             auth.phone = phone;
