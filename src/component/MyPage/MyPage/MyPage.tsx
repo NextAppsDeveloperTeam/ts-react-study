@@ -3,16 +3,16 @@ import React, { useContext, useState } from 'react';
 import { UserContext, UserContextValue } from '../../../context';
 import { Title } from '../../Common';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import MyPwdCheck from '../MyPwdCheck';
 
 const Container = styled.div`
-  margin-left: 220px;
+  margin-left: 200px;
 `;
 
 const Button = styled.button`
   width: 250px;
   height: 37px;
-  margin: 15px 0;
+  margin: 15px 20px;
   font-size: 15px;
   border: none;
   background: #000000;
@@ -24,7 +24,7 @@ const Button = styled.button`
 
 const Item = styled.div`
   display: block;
-  margin: 15px 0;
+  margin: 15px 20px;
 
   div {
     float: left;
@@ -39,8 +39,6 @@ const Item = styled.div`
 const MyPage: React.FC = () => {
   const { auth } = useContext(UserContext) as UserContextValue;
 
-  const navigate = useNavigate();
-
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const clickModal = useCallback(() => {
@@ -50,10 +48,6 @@ const MyPage: React.FC = () => {
   const closeModal = useCallback(() => {
     setIsOpenModal(false);
   }, []);
-
-  const handleClick = useCallback(() => {
-    navigate('/myPwdCheck');
-  }, [navigate]);
 
   return (
     <Container className='MyPage'>
@@ -83,7 +77,8 @@ const MyPage: React.FC = () => {
           </Item>
         </>
       )}
-      <Button onClick={handleClick}>내 정보 수정</Button>
+      <Button onClick={clickModal}>내 정보 수정</Button>
+      {isOpenModal && <MyPwdCheck onCLick={closeModal}/>}
     </Container>
   );
 };

@@ -8,7 +8,6 @@ const Container = styled.div`
   top: 80px;
   bottom: 0;
   width: 200px;
-  height: 100%;
   background: #3d3d3d;
   text-align: center;
 

@@ -42,12 +42,13 @@ const MyInfoUpdate: React.FC = () => {
 
   const [name, setName] = useState(auth ? auth.name : '');
   const [phone, setPhone] = useState(auth ? auth.phone : '');
+  const [status, setStatus] = useState(auth ? auth.status : UserStatus.User);
 
   const handleSubmit = useCallback(() => {
-    updateInfo(name, phone);
+    updateInfo(name, phone, status);
     alert('회원정보 수정이 완료되었습니다');
     navigate('/myPage');
-  }, [name, navigate, phone, updateInfo]);
+  }, [name, navigate, phone, status, updateInfo]);
 
   return (
     <Container className='MyPage'>
@@ -69,6 +70,7 @@ const MyInfoUpdate: React.FC = () => {
                   { label: '관리자', value: UserStatus.Admin },
                 ]}
                 value={auth.status}
+                // onChange={() => setStatus(status)}
                 required
               />
             </>

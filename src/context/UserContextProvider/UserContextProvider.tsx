@@ -95,7 +95,7 @@ const UserContextProvider = ({ children }: Props) => {
   );
 
   const updateInfo = useCallback(
-      (name: string, phone: string) => {
+      (name: string, phone: string, status: UserStatus) => {
         if (auth) {
           const userInfo = userList.find((info) => info.id === auth.id);
           if (userInfo) {
@@ -103,9 +103,11 @@ const UserContextProvider = ({ children }: Props) => {
               ...item,
               name: item.id === userInfo.id ? name : item.name,
               phone: item.id === userInfo.id ? phone : item.phone,
+              status: item.id === userInfo.id ? status : item.status,
             }));
             auth.name = name;
             auth.phone = phone;
+            auth.status = status;
             localStorage.setItem('UserList', JSON.stringify(updateList));
             setUserList(updateList);
           }
