@@ -11,6 +11,9 @@ const Container = styled.div`
   align-items: center;
   height: 80px;
   background-color: #000000;
+  position: relative;
+  width: 100%;
+  z-index: 999;
 
   ul {
     margin-top: 0;

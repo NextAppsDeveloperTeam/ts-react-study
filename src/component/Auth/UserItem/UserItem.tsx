@@ -13,11 +13,10 @@ const StyleUserItem = styled.div`
 `;
 
 const Item = styled.span`
-  display: block;
+  display: flex;
   margin: 5px 0;
 
   div {
-    float: left;
     width: 80px;
   }
 

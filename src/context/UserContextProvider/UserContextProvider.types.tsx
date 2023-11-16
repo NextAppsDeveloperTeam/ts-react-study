@@ -7,7 +7,7 @@ export type UserContextValue = {
   addUser: (user: User) => void;
   deleteUser: (id: number) => void;
   updateUser: (password: string) => void;
-  updateInfo: (name: string, phone: string, status: UserStatus) => void;
+  updateInfo: (name: string, email: string, phone: string, status: UserStatus) => void;
   login(email: string, password: string): boolean;
   logout(): void;
 };

@@ -3,16 +3,18 @@ import {useNavigate} from "react-router-dom";
 import styled from 'styled-components';
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0;
-  top: 80px;
+  top: 0;
   bottom: 0;
   width: 200px;
   background: #3d3d3d;
   text-align: center;
+  overflow: auto;
 
   ul {
     line-height: 70px;
+    margin-top: 80px;
 
     a {
       display: block;

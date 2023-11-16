@@ -36,19 +36,31 @@ const Button = styled.button`
 `;
 
 const MyInfoUpdate: React.FC = () => {
-  const { updateInfo, auth } = useContext(UserContext) as UserContextValue;
+  const { userList, updateInfo, auth } = useContext(UserContext) as UserContextValue;
 
   const navigate = useNavigate();
 
   const [name, setName] = useState(auth ? auth.name : '');
+  const [email, setEmail] = useState(auth ? auth.email : '');
   const [phone, setPhone] = useState(auth ? auth.phone : '');
-  const [status, setStatus] = useState(auth ? auth.status : UserStatus.User);
+  const [status, setStatus] = useState<UserStatus>(auth ? auth.status : UserStatus.User);
+
+  const chkEmail = useMemo(() => {
+    return userList.map((user) => user.email);
+  }, [userList]);
+
+  const handleChkEmailValidate = useCallback(
+    (value: string) => {
+      return auth && auth.email !== value && chkEmail.includes(value) ? '이미 존재하는 이메일입니다.' : true;
+    },
+    [auth, chkEmail]
+  );
 
   const handleSubmit = useCallback(() => {
-    updateInfo(name, phone, status);
+    updateInfo(name, email, phone, status);
     alert('회원정보 수정이 완료되었습니다');
     navigate('/myPage');
-  }, [name, navigate, phone, status, updateInfo]);
+  }, [email, name, navigate, phone, status, updateInfo]);
 
   return (
     <Container className='MyPage'>
@@ -59,9 +71,16 @@ const MyInfoUpdate: React.FC = () => {
           {auth && (
             <>
               <FormNumber label='Id' name='id' value={auth.id} required readonly />
-              <FormText label='Name' name='name' value={auth.name} onChange={setName} required />
-              <FormEmail label='Email' name='email' value={auth.email} required readonly />
-              <FormPhone label='Phone' name='phone' value={auth.phone} onChange={setPhone} required />
+              <FormText label='Name' name='name' value={name} onChange={setName} required />
+              <FormEmail
+                label='Email'
+                name='email'
+                value={email}
+                onChange={setEmail}
+                onValidate={handleChkEmailValidate}
+                required
+              />
+              <FormPhone label='Phone' name='phone' value={phone} onChange={setPhone} required />
               <FormRadioGroup
                 label='Status'
                 name='status'
@@ -69,8 +88,8 @@ const MyInfoUpdate: React.FC = () => {
                   { label: '회원', value: UserStatus.User },
                   { label: '관리자', value: UserStatus.Admin },
                 ]}
-                value={auth.status}
-                // onChange={() => setStatus(status)}
+                value={status}
+                onChange={() => setStatus(status)}
                 required
               />
             </>
