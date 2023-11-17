@@ -1,16 +1,7 @@
 import MyMenu from '../MyMenu/MyMenu';
 import React, { useContext, useState } from 'react';
 import { UserContext, UserContextValue } from '../../../context';
-import {
-  Form,
-  FormContextProvider,
-  FormEmail,
-  FormNumber,
-  FormPhone,
-  FormRadioGroup,
-  FormText,
-  Title,
-} from '../../Common';
+import { Form, FormContextProvider, FormEmail, FormPhone, FormRadioGroup, FormText, Title } from '../../Common';
 import styled from 'styled-components';
 import { UserStatus } from '../../../@types';
 import { useNavigate } from 'react-router-dom';
@@ -70,7 +61,6 @@ const MyInfoUpdate: React.FC = () => {
         <Form onSubmit={handleSubmit}>
           {auth && (
             <>
-              <FormNumber label='Id' name='id' value={auth.id} required readonly />
               <FormText label='Name' name='name' value={name} onChange={setName} required />
               <FormEmail
                 label='Email'

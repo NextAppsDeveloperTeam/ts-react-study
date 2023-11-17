@@ -56,10 +56,6 @@ const MyPage: React.FC = () => {
       {auth && (
         <>
           <Item>
-            <div>아이디</div>
-            <p>{auth.id}</p>
-          </Item>
-          <Item>
             <div>이름</div>
             <p>{auth.name}</p>
           </Item>
