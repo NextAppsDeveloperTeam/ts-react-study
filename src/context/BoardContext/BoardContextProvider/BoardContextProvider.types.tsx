@@ -1,17 +1,14 @@
-import {User, UserStatus} from '../../@types';
+import {User, UserStatus} from '../../../@types';
 import React from 'react';
 
-export type UserContextValue = {
+export type BoardContextValue = {
   auth?: User;
   userList: User[];
   addUser: (user: User) => void;
   deleteUser: (id: number) => void;
-  updateUser: (password: string) => void;
   updateInfo: (name: string, email: string, phone: string, status: UserStatus) => void;
-  login(email: string, password: string): boolean;
-  logout(): void;
 };
 
-export interface UserContextProps {
+export interface BoardContextProps {
   children: React.ReactNode;
 }

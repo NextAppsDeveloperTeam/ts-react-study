@@ -1,7 +1,2 @@
-import {UserContext} from './UserContext';
-
-export default UserContext;
-
-export { UserContext };
-
-export * from './UserContext.types';
+export * from './UserContext';
+export * from './UserContextProvider';

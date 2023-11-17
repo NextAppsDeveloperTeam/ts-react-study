@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { UserContext, UserContextValue } from '../context';
 import { UserStatus } from '../@types';
 import MyPwdCheck from '../component/MyPage/MyPwdCheck';
+import { Board } from '../component/Board';
 
 const MainRoute = () => {
   const { auth } = useContext(UserContext) as UserContextValue;
@@ -19,6 +20,7 @@ const MainRoute = () => {
           <Route path='myInfoUpdate' element={<MyInfoUpdate />} />
           <Route path='myPwdCheck' element={<MyPwdCheck />} />
           <Route path='/myDelete' element={<MyDelete />} />
+          <Route path='/board' element={<Board />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>
       ) : (

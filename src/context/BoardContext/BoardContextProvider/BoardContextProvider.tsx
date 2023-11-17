@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { User, UserStatus } from '../../@types';
-import { UserContext } from '../UserContext';
-import { UserContextProps as Props } from './UserContextProvider.types';
+import { User, UserStatus } from '../../../@types';
+import { BoardContext } from '../BoardContext';
+import { BoardContextProps as Props } from './BoardContextProvider.types';
 
 const users: User[] = [
   {
@@ -22,7 +22,7 @@ const users: User[] = [
   },
 ];
 
-const UserContextProvider = ({ children }: Props) => {
+const BoardContextProvider = ({ children }: Props) => {
   const [auth, setAuth] = useState<User>();
   const [userList, setUserList] = useState<User[]>(users);
   const [loading, setLoading] = useState(false);
@@ -76,16 +76,22 @@ const UserContextProvider = ({ children }: Props) => {
     [userList]
   );
 
-  const updateUser = useCallback(
-    (password: string) => {
+  const updateInfo = useCallback(
+    (name: string, email: string, phone: string, status: UserStatus) => {
       if (auth) {
         const userInfo = userList.find((info) => info.id === auth.id);
         if (userInfo) {
           const updateList = userList.map((item) => ({
             ...item,
-            password: item.id === userInfo.id ? password : item.password,
+            name: item.id === userInfo.id ? name : item.name,
+            email: item.id === userInfo.id ? email : item.email,
+            phone: item.id === userInfo.id ? phone : item.phone,
+            status: item.id === userInfo.id ? status : item.status,
           }));
-          auth.password = password;
+          auth.name = name;
+          auth.email = email;
+          auth.phone = phone;
+          auth.status = status;
           localStorage.setItem('UserList', JSON.stringify(updateList));
           setUserList(updateList);
         }
@@ -94,68 +100,21 @@ const UserContextProvider = ({ children }: Props) => {
     [auth, userList]
   );
 
-  const updateInfo = useCallback(
-      (name: string, email: string, phone: string, status: UserStatus) => {
-        if (auth) {
-          const userInfo = userList.find((info) => info.id === auth.id);
-          if (userInfo) {
-            const updateList = userList.map((item) => ({
-              ...item,
-              name: item.id === userInfo.id ? name : item.name,
-              email: item.id === userInfo.id ? email : item.email,
-              phone: item.id === userInfo.id ? phone : item.phone,
-              status: item.id === userInfo.id ? status : item.status,
-            }));
-            auth.name = name;
-            auth.email = email;
-            auth.phone = phone;
-            auth.status = status;
-            localStorage.setItem('UserList', JSON.stringify(updateList));
-            setUserList(updateList);
-          }
-        }
-      },
-      [auth, userList]
-  );
-
-  const login = useCallback(
-    (email: string, password: string) => {
-      const userInfo = userList.find((info) => info.email === email && info.password === password);
-      if (userInfo) {
-        setAuth(userInfo);
-        localStorage.setItem('UserAuth', `${userInfo.id}`);
-        alert(`${userInfo.name}님 환영합니다.`);
-        return true;
-      } else {
-        return false;
-      }
-    },
-    [userList]
-  );
-
-  const logout = useCallback(() => {
-    setAuth(undefined);
-    localStorage.removeItem('UserAuth');
-  }, []);
-
   // -------------------------------------------------------------------------------------------------------------------
 
   return (
-    <UserContext.Provider
+    <BoardContext.Provider
       value={{
         auth,
         userList,
         addUser,
         deleteUser,
-        updateUser,
         updateInfo,
-        login,
-        logout,
       }}
     >
       {loading && children}
-    </UserContext.Provider>
+    </BoardContext.Provider>
   );
 };
 
-export default UserContextProvider;
+export default BoardContextProvider;
