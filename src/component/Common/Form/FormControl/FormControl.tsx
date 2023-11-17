@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FormControlDefaultProps, FormControlValue, FormControlProps } from './FormControl.types';
 import { useFormContext } from '../FormContext';
 import styled from 'styled-components';
+import { UserContext, UserContextValue } from '../../../../context';
 
 const InputBox = styled.div`
   padding-bottom: 10px;
@@ -24,7 +25,6 @@ const ErrorText = styled.div`
 
 const ReadOnly = styled.div`
   input {
-    
   }
 `;
 
@@ -39,12 +39,12 @@ function FormControl<T extends FormControlValue>({
   onValidate,
   onRequestFocus,
 }: FormControlProps<T>) {
+  const { auth } = useContext(UserContext) as UserContextValue;
+
   const { addControl } = useFormContext();
 
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState<string>();
-
-  // const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     addControl(name, {
@@ -64,6 +64,11 @@ function FormControl<T extends FormControlValue>({
           }
         }
 
+        // if (readonly && auth && value !== auth.id) {
+        //   setError(true);
+        //   return false;
+        // }
+
         setError(false);
         setErrorText(undefined);
         return true;
@@ -75,7 +80,7 @@ function FormControl<T extends FormControlValue>({
         onRequestFocus && onRequestFocus();
       },
     });
-  }, [addControl, error, name, onRequestFocus, onValidate, required, value]);
+  }, [addControl, auth, error, name, onRequestFocus, onValidate, readonly, required, value]);
 
   return (
     <InputBox>

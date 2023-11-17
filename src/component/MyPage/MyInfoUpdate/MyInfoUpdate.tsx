@@ -16,7 +16,7 @@ import { UserStatus } from '../../../@types';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-  margin-left: 200px;
+  margin-left: 230px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,7 +89,7 @@ const MyInfoUpdate: React.FC = () => {
                   { label: '관리자', value: UserStatus.Admin },
                 ]}
                 value={status}
-                onChange={() => setStatus(status)}
+                onChange={(value) => setStatus(value)}
                 required
               />
             </>

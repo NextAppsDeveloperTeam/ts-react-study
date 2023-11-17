@@ -6,7 +6,7 @@ export const UserStatus = {
 export type UserStatus = ValueOf<typeof UserStatus>;
 
 export interface User {
-    id: number;
+    readonly id: number;
     name: string;
     email: string;
     phone: string;

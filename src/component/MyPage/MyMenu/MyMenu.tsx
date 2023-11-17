@@ -7,7 +7,7 @@ const Container = styled.div`
   left: 0;
   top: 0;
   bottom: 0;
-  width: 200px;
+  width: 230px;
   background: #3d3d3d;
   text-align: center;
   overflow: auto;

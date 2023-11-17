@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import MyPwdCheck from '../MyPwdCheck';
 
 const Container = styled.div`
-  margin-left: 200px;
+  margin-left: 230px;
 `;
 
 const Button = styled.button`

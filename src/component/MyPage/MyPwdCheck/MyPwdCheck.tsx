@@ -8,8 +8,6 @@ type Props = {
   onCLick?: () => void;
 };
 
-const Container = styled.div``;
-
 const ModalBackGround = styled.div`
   background: rgba(0, 0, 0, 0.4);
   width: 100%;
@@ -79,7 +77,7 @@ const MyPwdCheck: React.FC<Props> = ({ onCLick }) => {
   }, [navigate]);
 
   return (
-    <Container>
+    <>
       <ModalBackGround />
       <Modal>
         <FormContextProvider>
@@ -96,7 +94,7 @@ const MyPwdCheck: React.FC<Props> = ({ onCLick }) => {
             </Form>
         </FormContextProvider>
       </Modal>
-    </Container>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Title } from '../../Common';
 
 const Container = styled.div`
-  margin-left: 180px;
+  margin-left: 230px;
   display: flex;
   flex-direction: column;
   align-items: center;
