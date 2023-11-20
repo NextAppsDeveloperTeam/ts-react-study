@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, UserStatus } from '../../../@types';
+import {Board, User, UserStatus} from '../../../@types';
 import { UserContext } from '../UserContext';
 import { UserContextProps as Props } from './UserContextProvider.types';
 
@@ -22,9 +22,33 @@ const users: User[] = [
   },
 ];
 
+const boards: Board[] = [
+  {
+    id: 1,
+    title: '제목',
+    content: '내용',
+    user_id: 1,
+    create_date: new Date('2023-11-20'),
+    update_date: undefined,
+    views: 2,
+    comment: [{ id: 1, user_id: 1, content: '댓글' }],
+  },
+  {
+    id: 2,
+    title: '제목2',
+    content: '내용2',
+    user_id: 2,
+    create_date: new Date(),
+    update_date: new Date(),
+    views: 5,
+    comment: [{ id: 2, user_id: 2, content: '댓글' }],
+  },
+];
+
 const UserContextProvider = ({ children }: Props) => {
   const [auth, setAuth] = useState<User>();
   const [userList, setUserList] = useState<User[]>(users);
+  const [boardList, setBoardList] = useState<Board[]>(boards);
   const [loading, setLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -145,6 +169,7 @@ const UserContextProvider = ({ children }: Props) => {
       value={{
         auth,
         userList,
+        boardList,
         addUser,
         deleteUser,
         updateUser,

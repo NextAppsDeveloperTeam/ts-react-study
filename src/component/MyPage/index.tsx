@@ -3,3 +3,4 @@ export * from './MyMenu';
 export * from './MyInfoUpdate';
 export * from './MyPwdChange';
 export * from './MyDelete';
+export * from './MyPwdCheck';

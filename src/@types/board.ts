@@ -2,8 +2,9 @@ export interface Board {
   readonly id: number;
   title: string;
   content: string;
-  writer: string;
-  date: string;
+  user_id: number;
+  create_date: Date;
+  update_date?: Date;
   views: number;
-  comment: { name: string; content: string };
+  comment: { id: number; user_id: number; content: string }[];
 }
