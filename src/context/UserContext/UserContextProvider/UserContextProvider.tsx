@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Board, User, UserStatus} from '../../../@types';
+import { Board, User, UserStatus } from '../../../@types';
 import { UserContext } from '../UserContext';
 import { UserContextProps as Props } from './UserContextProvider.types';
 
@@ -28,9 +28,9 @@ const boards: Board[] = [
     title: '제목',
     content: '내용',
     user_id: 1,
-    create_date: new Date('2023-11-20'),
+    create_date: new Date('2023-9-13'),
     update_date: undefined,
-    views: 2,
+    views: 0,
     comment: [{ id: 1, user_id: 1, content: '댓글' }],
   },
   {
@@ -38,10 +38,10 @@ const boards: Board[] = [
     title: '제목2',
     content: '내용2',
     user_id: 2,
-    create_date: new Date(),
+    create_date: new Date('2023-11-5'),
     update_date: new Date(),
-    views: 5,
-    comment: [{ id: 2, user_id: 2, content: '댓글' }],
+    views: 0,
+    comment: [{ id: 1, user_id: 2, content: '댓글' }],
   },
 ];
 
@@ -91,6 +91,29 @@ const UserContextProvider = ({ children }: Props) => {
     [userList]
   );
 
+  const addBoard = useCallback(
+    (board: Board) => {
+      if (board) {
+        const newList: Board[] = [
+          ...boardList,
+          {
+            id: boardList[boardList.length - 1].id + 1,
+            title: board.title,
+            content: board.content,
+            user_id: board.user_id,
+            create_date: board.create_date,
+            update_date: board.update_date,
+            views: board.views,
+            comment: [{ id: board.id, user_id: board.user_id, content: board.content }],
+          },
+        ];
+        localStorage.setItem('BoardList', JSON.stringify(newList));
+        setBoardList(newList);
+      }
+    },
+    [boardList]
+  );
+
   const deleteUser = useCallback(
     (id: number) => {
       const list = userList.filter((user) => user.id !== id);
@@ -119,27 +142,27 @@ const UserContextProvider = ({ children }: Props) => {
   );
 
   const updateInfo = useCallback(
-      (name: string, email: string, phone: string, status: UserStatus) => {
-        if (auth) {
-          const userInfo = userList.find((info) => info.id === auth.id);
-          if (userInfo) {
-            const updateList = userList.map((item) => ({
-              ...item,
-              name: item.id === userInfo.id ? name : item.name,
-              email: item.id === userInfo.id ? email : item.email,
-              phone: item.id === userInfo.id ? phone : item.phone,
-              status: item.id === userInfo.id ? status : item.status,
-            }));
-            auth.name = name;
-            auth.email = email;
-            auth.phone = phone;
-            auth.status = status;
-            localStorage.setItem('UserList', JSON.stringify(updateList));
-            setUserList(updateList);
-          }
+    (name: string, email: string, phone: string, status: UserStatus) => {
+      if (auth) {
+        const userInfo = userList.find((info) => info.id === auth.id);
+        if (userInfo) {
+          const updateList = userList.map((item) => ({
+            ...item,
+            name: item.id === userInfo.id ? name : item.name,
+            email: item.id === userInfo.id ? email : item.email,
+            phone: item.id === userInfo.id ? phone : item.phone,
+            status: item.id === userInfo.id ? status : item.status,
+          }));
+          auth.name = name;
+          auth.email = email;
+          auth.phone = phone;
+          auth.status = status;
+          localStorage.setItem('UserList', JSON.stringify(updateList));
+          setUserList(updateList);
         }
-      },
-      [auth, userList]
+      }
+    },
+    [auth, userList]
   );
 
   const login = useCallback(

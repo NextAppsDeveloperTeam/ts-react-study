@@ -9,34 +9,63 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  
+
   table {
     width: 100%;
-    
+    padding: 0 20px;
     thead {
-      th:nth-child(1) {
-        width: 10%;
+      th {
+        padding: 10px 0;
       }
+
+      th:nth-child(1) {
+        width: 15%;
+      }
+
       th:nth-child(2) {
         width: 45%;
       }
+
       th:nth-child(3) {
-        width: 15%;
+        width: 12%;
       }
+
       th:nth-child(4) {
-        width: 20%;
+        width: 18%;
       }
+
       th:nth-child(5) {
         width: 10%;
       }
     }
-    
+
     tbody {
-      tr {
-        border-bottom: 1px solid #000;
+      td {
+        padding: 8px 0;
+      }
+
+      td:nth-child(2) {
+        text-align: left;
       }
     }
   }
+`;
+
+const SearchBtn = styled.div`
+  select {
+    padding: 5px;
+  }
+  input {
+    width: 180px;
+    padding: 5px;
+  }
+  button {
+    padding: 5px 15px;
+  }
+`;
+
+const AddBtn = styled.button`
+  padding: 5px 15px;
 `;
 
 const BoardList: React.FC = () => {
@@ -46,6 +75,15 @@ const BoardList: React.FC = () => {
   return (
     <Container className='Board'>
       <Title text='자유게시판' />
+      <SearchBtn>
+        <select>
+          <option>제목</option>
+          <option>내용</option>
+          <option>작성자</option>
+        </select>
+        <input placeholder='검색' />
+        <button>검색</button>
+      </SearchBtn>
       <table>
         <thead>
           <tr>
@@ -62,12 +100,16 @@ const BoardList: React.FC = () => {
               <td>{board.id}</td>
               <td>{board.content}</td>
               <td>{board.user_id}</td>
-              <td>{board.create_date.toString()}</td>
+              <td>
+                {board.create_date.getFullYear()}.{(board.create_date.getMonth() + 1).toString().padStart(2, '0')}.
+                {board.create_date.getDate().toString().padStart(2, '0')}
+              </td>
               <td>{board.views}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <AddBtn>글쓰기</AddBtn>
     </Container>
   );
 };

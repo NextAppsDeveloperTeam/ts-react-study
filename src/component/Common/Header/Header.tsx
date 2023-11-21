@@ -16,12 +16,13 @@ const Container = styled.div`
   z-index: 999;
 
   ul {
-    margin-top: 0;
     line-height: 80px;
+    width: 600px;
+    text-align: center;
 
     li {
       float: left;
-      margin: 35px;
+      width: 25%;
 
       a {
         color: #ffffff;
@@ -37,19 +38,21 @@ const Container = styled.div`
 `;
 
 const AuthStyle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  line-height: 80px;
+  ul {
+    line-height: 80px;
+    width: 200px;
+    text-align: center;
 
-  div {
-    color: #cfcfcf;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0 15px;
+    li {
+      width: 50%;
+      float: left;
+      color: #cfcfcf;
+      font-size: 14px;
+      cursor: pointer;
 
-    &:hover {
-      color: #879fbe;
+      &:hover {
+        color: #879fbe;
+      }
     }
   }
 `;
@@ -82,35 +85,37 @@ const Header: React.FC = () => {
         )}
       </ul>
       {auth ? (
-        <div>
-          <AuthStyle>
-            <p style={{ color: 'white', paddingRight: '15px' }}>{auth.name}님</p>
-            <div
+        <AuthStyle>
+          <ul>
+            <li style={{ color: 'white' }}>{auth.name}님</li>
+            <li
               onClick={() => {
                 logout();
                 navigate('/login');
               }}
             >
               로그아웃
-            </div>
-          </AuthStyle>
-        </div>
+            </li>
+          </ul>
+        </AuthStyle>
       ) : (
         <AuthStyle>
-          <div
-            onClick={() => {
-              navigate('/login');
-            }}
-          >
-            로그인
-          </div>
-          <div
-            onClick={() => {
-              navigate('/join');
-            }}
-          >
-            회원가입
-          </div>
+          <ul>
+            <li
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              로그인
+            </li>
+            <li
+              onClick={() => {
+                navigate('/join');
+              }}
+            >
+              회원가입
+            </li>
+          </ul>
         </AuthStyle>
       )}
     </Container>
