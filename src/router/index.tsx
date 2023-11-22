@@ -1,15 +1,16 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import {
-    Home,
-    MyPage,
-    UserList,
-    AuthLogin,
-    AuthReg,
-    MyPwdChange,
-    MyDelete,
-    MyInfoUpdate,
-    BoardList,
-    MyPwdCheck
+  Home,
+  MyPage,
+  UserList,
+  AuthLogin,
+  AuthReg,
+  MyPwdChange,
+  MyDelete,
+  MyInfoUpdate,
+  MyPwdCheck,
+  BoardList,
+  BoardPost,
 } from '../component';
 import { useContext } from 'react';
 import { UserContext, UserContextValue } from '../context';
@@ -30,6 +31,7 @@ const MainRoute = () => {
           <Route path='myPwdCheck' element={<MyPwdCheck />} />
           <Route path='/myDelete' element={<MyDelete />} />
           <Route path='/boardList' element={<BoardList />} />
+          <Route path='/boardPost' element={<BoardPost />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>
       ) : (

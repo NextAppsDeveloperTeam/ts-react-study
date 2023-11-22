@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Board, User, UserStatus } from '../../../@types';
+import { User, UserStatus } from '../../../@types';
 import { UserContext } from '../UserContext';
 import { UserContextProps as Props } from './UserContextProvider.types';
 
@@ -22,33 +22,9 @@ const users: User[] = [
   },
 ];
 
-const boards: Board[] = [
-  {
-    id: 1,
-    title: '제목',
-    content: '내용',
-    user_id: 1,
-    create_date: new Date('2023-9-13'),
-    update_date: undefined,
-    views: 0,
-    comment: [{ id: 1, user_id: 1, content: '댓글' }],
-  },
-  {
-    id: 2,
-    title: '제목2',
-    content: '내용2',
-    user_id: 2,
-    create_date: new Date('2023-11-5'),
-    update_date: new Date(),
-    views: 0,
-    comment: [{ id: 1, user_id: 2, content: '댓글' }],
-  },
-];
-
 const UserContextProvider = ({ children }: Props) => {
   const [auth, setAuth] = useState<User>();
   const [userList, setUserList] = useState<User[]>(users);
-  const [boardList, setBoardList] = useState<Board[]>(boards);
   const [loading, setLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -89,29 +65,6 @@ const UserContextProvider = ({ children }: Props) => {
       }
     },
     [userList]
-  );
-
-  const addBoard = useCallback(
-    (board: Board) => {
-      if (board) {
-        const newList: Board[] = [
-          ...boardList,
-          {
-            id: boardList[boardList.length - 1].id + 1,
-            title: board.title,
-            content: board.content,
-            user_id: board.user_id,
-            create_date: board.create_date,
-            update_date: board.update_date,
-            views: board.views,
-            comment: [{ id: board.id, user_id: board.user_id, content: board.content }],
-          },
-        ];
-        localStorage.setItem('BoardList', JSON.stringify(newList));
-        setBoardList(newList);
-      }
-    },
-    [boardList]
   );
 
   const deleteUser = useCallback(
@@ -192,7 +145,6 @@ const UserContextProvider = ({ children }: Props) => {
       value={{
         auth,
         userList,
-        boardList,
         addUser,
         deleteUser,
         updateUser,

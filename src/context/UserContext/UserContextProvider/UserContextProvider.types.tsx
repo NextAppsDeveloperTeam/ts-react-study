@@ -1,10 +1,9 @@
-import {Board, User, UserStatus} from '../../../@types';
+import { User, UserStatus } from '../../../@types';
 import React from 'react';
 
 export type UserContextValue = {
   auth?: User;
   userList: User[];
-  boardList: Board[];
   addUser: (user: User) => void;
   deleteUser: (id: number) => void;
   updateUser: (password: string) => void;
