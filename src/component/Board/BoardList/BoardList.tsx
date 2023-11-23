@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Title } from '../../Common';
 import styled from 'styled-components';
 import { Board } from '../../../@types';
-import {BoardContext, BoardContextValue, UserContext, UserContextValue} from '../../../context';
+import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
@@ -26,41 +26,43 @@ const TableStyled = styled.div`
   table {
     width: 100%;
 
-      thead {
-        th {
-          padding: 10px 0;
-        }
-
-        th:nth-child(1) {
-          width: 15%;
-        }
-
-        th:nth-child(2) {
-          width: 45%;
-        }
-
-        th:nth-child(3) {
-          width: 12%;
-        }
-
-        th:nth-child(4) {
-          width: 18%;
-        }
-
-        th:nth-child(5) {
-          width: 10%;
-        }
+    thead {
+      th {
+        padding: 10px 0;
       }
 
-      tbody {
+      th:nth-child(1) {
+        width: 15%;
+      }
+
+      th:nth-child(2) {
+        width: 45%;
+      }
+
+      th:nth-child(3) {
+        width: 12%;
+      }
+
+      th:nth-child(4) {
+        width: 18%;
+      }
+
+      th:nth-child(5) {
+        width: 10%;
+      }
+    }
+
+    tbody {
+      tr {
         td {
-          padding: 8px 0;
+          padding: 7px 0;
         }
 
         td:nth-child(2) {
           text-align: left;
         }
       }
+    }
   }
 `;
 
@@ -69,16 +71,16 @@ const SearchBtn = styled.div`
   margin: 20px 0;
 
   select {
-    padding: 5px;
+    padding: 7px 5px;
   }
 
   input {
-    width: 180px;
-    padding: 5px;
+    width: 200px;
+    padding: 7px 5px;
   }
 
   button {
-    padding: 7px 15px;
+    padding: 9px 17px;
   }
 `;
 
@@ -86,14 +88,14 @@ const AddBtn = styled.div`
   text-align: center;
 
   button {
-    padding: 7px 15px;
+    padding: 10px 20px;
   }
 `;
 
 const BoardList: React.FC = () => {
   const navigate = useNavigate();
 
-  // const { userList } = useContext(UserContext) as UserContextValue;
+  const { userList } = useContext(UserContext) as UserContextValue;
   const { boardList } = useContext(BoardContext) as BoardContextValue;
 
   return (
@@ -108,15 +110,9 @@ const BoardList: React.FC = () => {
         <input placeholder='검색' />
         <button>검색</button>
       </SearchBtn>
+      <hr />
       <TableStyled>
         <table>
-          {/*<colgroup>*/}
-          {/*  <col width='15%' />*/}
-          {/*  <col width='45%' />*/}
-          {/*  <col width='12%' />*/}
-          {/*  <col width='18%' />*/}
-          {/*  <col width='10%' />*/}
-          {/*</colgroup>*/}
           <thead>
             <tr>
               <th>번호</th>
@@ -131,7 +127,7 @@ const BoardList: React.FC = () => {
               <tr>
                 <td>{board.id}</td>
                 <td>{board.content}</td>
-                <td>{board.user_id}</td>
+                <td>{userList.map((user) => (user.id === board.user_id ? user.name : ''))}</td>
                 <td>
                   {board.create_date.getFullYear()}.{(board.create_date.getMonth() + 1).toString().padStart(2, '0')}.
                   {board.create_date.getDate().toString().padStart(2, '0')}
