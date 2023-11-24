@@ -60,6 +60,10 @@ const TableStyled = styled.div`
 
         td:nth-child(2) {
           text-align: left;
+
+          a {
+            color: #000000;
+          }
         }
       }
     }
@@ -126,7 +130,9 @@ const BoardList: React.FC = () => {
             {boardList.map((board: Board) => (
               <tr>
                 <td>{board.id}</td>
-                <td>{board.content}</td>
+                <td>
+                  <a href='#'>{board.content}</a>
+                </td>
                 <td>{userList.map((user) => (user.id === board.user_id ? user.name : ''))}</td>
                 <td>
                   {board.create_date.getFullYear()}.{(board.create_date.getMonth() + 1).toString().padStart(2, '0')}.

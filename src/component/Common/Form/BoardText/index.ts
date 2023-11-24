@@ -4,4 +4,4 @@ export default BoardText;
 
 export { BoardText };
 
-export * from './FormText.types';
+export * from './BoardText.types';

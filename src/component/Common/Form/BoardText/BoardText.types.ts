@@ -1,5 +1,7 @@
-import { FormInputControlProps } from '../FormInputControl';
+import { FormControlProps } from '../FormControl';
 
-export interface FormTextProps extends Omit<FormInputControlProps, 'type'> {}
+export type BoardTextValue = string;
 
-export const FormTextDefaultProps = {};
+export interface BoardTextProps<T extends BoardTextValue> extends Omit<FormControlProps<T>, 'children'> {}
+
+export const BoardTextDefaultProps = {};
