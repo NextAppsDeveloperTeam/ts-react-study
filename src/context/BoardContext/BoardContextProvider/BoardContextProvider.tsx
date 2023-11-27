@@ -31,17 +31,20 @@ const BoardContextProvider = ({ children }: Props) => {
   const { auth } = useContext(UserContext) as UserContextValue;
 
   const [boardList, setBoardList] = useState<Board[]>(boards);
-  const [commentList, setCommentList] = useState<Board['comment']>(boards);
+  // const [commentList, setCommentList] = useState<Board['comment']>(boards);
+  const [loading, setLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------------------------------------
   useEffect(() => {
     const list = localStorage.getItem('BoardList');
     if (list) {
-      const userList: Board[] = JSON.parse(list);
-      setBoardList(userList);
+      const boardList: Board[] = JSON.parse(list);
+      setBoardList(boardList);
     }
+    // localStorage.removeItem('BoardList');
+    setLoading(true);
   }, []);
-
+ll(boardList)
   // -------------------------------------------------------------------------------------------------------------------
 
   const addBoard = useCallback(
@@ -49,7 +52,7 @@ const BoardContextProvider = ({ children }: Props) => {
       if (board && auth) {
         const newList: Board[] = [
           {
-            id: boardList[boardList.length - 1].id + 1,
+            id: boardList[0].id + 1,
             title: board.title,
             content: board.content,
             user_id: auth.id,
@@ -57,12 +60,17 @@ const BoardContextProvider = ({ children }: Props) => {
             update_date: undefined,
             views: 0,
             comment: [
+              // {
+              //   id: commentList[commentList.length - 1].id + 1,
+              //   user_id: board.user_id,
+              //   content: board.content,
+              // },
+              // ...commentList,
               {
-                id: commentList[commentList.length - 1].id + 1,
-                user_id: board.user_id,
-                content: board.content,
+                id: undefined,
+                user_id: undefined,
+                content: undefined,
               },
-              ...commentList,
             ],
           },
           ...boardList,
@@ -71,7 +79,16 @@ const BoardContextProvider = ({ children }: Props) => {
         setBoardList(newList);
       }
     },
-    [auth, boardList, commentList]
+    [auth, boardList]
+  );
+
+  const deleteBoard = useCallback(
+      (id: number) => {
+        const list = boardList.filter((board) => board.id !== id);
+        localStorage.removeItem('BoardList');
+        setBoardList(list);
+      },
+      [boardList]
   );
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -81,9 +98,10 @@ const BoardContextProvider = ({ children }: Props) => {
       value={{
         boardList,
         addBoard,
+        deleteBoard,
       }}
     >
-      {children}
+      {loading && children}
     </BoardContext.Provider>
   );
 };

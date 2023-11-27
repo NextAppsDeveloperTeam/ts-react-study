@@ -4,6 +4,7 @@ import React from 'react';
 export type BoardContextValue = {
   boardList: Board[];
   addBoard: (board: Board) => void;
+  deleteBoard: (id: number) => void;
 };
 
 export interface BoardContextProps {

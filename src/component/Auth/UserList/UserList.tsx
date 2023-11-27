@@ -10,10 +10,10 @@ const UserList = () => {
     <>
       <Title text='회원관리' />
       {userList.map((user: User) => (
-        <>
-          <UserItem key={user.id} deleteUser={deleteUser} user={user} />
+        <div key={user.id}>
+          <UserItem deleteUser={deleteUser} user={user} />
           <hr />
-        </>
+        </div>
       ))}
     </>
   );

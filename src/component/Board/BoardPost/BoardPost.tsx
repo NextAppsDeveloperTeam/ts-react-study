@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Form, FormCommands, Title} from '../../Common';
 import styled from 'styled-components';
 import FormContextProvider from '../../Common/Form/FormContextProvider';
 import BoardText from '../../Common/Form/BoardText';
 import BoardTextArea from '../../Common/Form/BoardTextArea';
+import {Board} from "../../../@types";
+import {useNavigate} from "react-router-dom";
+import {BoardContext, BoardContextValue} from "../../../context";
 
 const Container = styled.div`
   display: flex;
@@ -26,7 +29,11 @@ const Container = styled.div`
 `;
 
 const BoardPost: React.FC = () => {
+  const navigate = useNavigate();
+
   const formCommandsRef = useRef<FormCommands>(null);
+
+  const { addBoard } = useContext(BoardContext) as BoardContextValue;
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,9 +43,14 @@ const BoardPost: React.FC = () => {
     }, 1);
   }, []);
 
-  const handleSubmit = useCallback(() => {
-    confirm('글을 등록하시겠습니까?');
-  }, []);
+  const handleSubmit = useCallback(
+      (value: Board) => {
+        addBoard(value);
+        confirm('글을 등록하시겠습니까?');
+        navigate('/boardList');
+      },
+      [addBoard, navigate]
+  );
 
   return (
     <Container className='Board'>

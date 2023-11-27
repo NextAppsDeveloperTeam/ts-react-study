@@ -128,15 +128,15 @@ const BoardList: React.FC = () => {
           </thead>
           <tbody>
             {boardList.map((board: Board) => (
-              <tr>
+              <tr key={board.id}>
                 <td>{board.id}</td>
                 <td>
                   <a href='#'>{board.content}</a>
                 </td>
                 <td>{userList.map((user) => (user.id === board.user_id ? user.name : ''))}</td>
                 <td>
-                  {board.create_date.getFullYear()}.{(board.create_date.getMonth() + 1).toString().padStart(2, '0')}.
-                  {board.create_date.getDate().toString().padStart(2, '0')}
+                  {board.create_date.toString().slice(11, 15)}.{board.create_date.toString().slice(4, 7)}.
+                  {board.create_date.toString().slice(8, 10)}
                 </td>
                 <td>{board.views}</td>
               </tr>
@@ -151,5 +151,5 @@ const BoardList: React.FC = () => {
   );
 };
 
-BoardList.displayName = 'BoardItem';
+BoardList.displayName = 'BoardList';
 export default BoardList;

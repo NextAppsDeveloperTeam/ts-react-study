@@ -6,5 +6,5 @@ export interface Board {
   create_date: Date;
   update_date?: Date;
   views: number;
-  comment: { id: number; user_id: number; content: string }[];
+  comment?: { id?: number; user_id?: number; content?: string }[];
 }
