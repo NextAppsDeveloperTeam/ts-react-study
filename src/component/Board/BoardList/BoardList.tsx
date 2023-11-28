@@ -63,6 +63,7 @@ const TableStyled = styled.div`
 
           a {
             color: #000000;
+            cursor: pointer;
           }
         }
       }
@@ -102,6 +103,13 @@ const BoardList: React.FC = () => {
   const { userList } = useContext(UserContext) as UserContextValue;
   const { boardList } = useContext(BoardContext) as BoardContextValue;
 
+  // const formatDate = useCallback((date: Date) => {
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  //   const day = date.getDate().toString().padStart(2, '0');
+  //   return `${year}.${month}.${day}`;
+  // }, []);
+
   return (
     <Container className='Board'>
       <Title text='자유게시판' />
@@ -131,11 +139,12 @@ const BoardList: React.FC = () => {
               <tr key={board.id}>
                 <td>{board.id}</td>
                 <td>
-                  <a href='#'>{board.content}</a>
+                  <a onClick={() => navigate('/boardPage')}>{board.title}</a>
                 </td>
                 <td>{userList.map((user) => (user.id === board.user_id ? user.name : ''))}</td>
                 <td>
-                  {board.create_date.toString().slice(11, 15)}.{board.create_date.toString().slice(4, 7)}.
+                  {/*{formatDate(board.create_date)}*/}
+                  {board.create_date.toString().slice(0, 4)}.{board.create_date.toString().slice(5, 7)}.
                   {board.create_date.toString().slice(8, 10)}
                 </td>
                 <td>{board.views}</td>

@@ -10,7 +10,7 @@ const boards: Board[] = [
     title: '제목2',
     content: '자유롭게 작성해주세요.',
     user_id: 2,
-    create_date: new Date('2023-11-5'),
+    create_date: new Date(2023, 10, 4),
     update_date: new Date(),
     views: 0,
     comment: [{ id: 1, user_id: 2, content: '댓글' }],
@@ -20,7 +20,7 @@ const boards: Board[] = [
     title: '제목',
     content: '자유게시판입니다.',
     user_id: 1,
-    create_date: new Date('2023-9-13'),
+    create_date: new Date(2023, 8, 12),
     update_date: undefined,
     views: 0,
     comment: [{ id: 1, user_id: 1, content: '댓글' }],
@@ -49,6 +49,7 @@ ll(boardList)
 
   const addBoard = useCallback(
     (board: Board) => {
+
       if (board && auth) {
         const newList: Board[] = [
           {

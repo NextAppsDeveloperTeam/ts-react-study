@@ -66,5 +66,5 @@ const BoardPost: React.FC = () => {
   );
 };
 
-BoardPost.displayName = 'BoardItem';
+BoardPost.displayName = 'BoardPost';
 export default BoardPost;

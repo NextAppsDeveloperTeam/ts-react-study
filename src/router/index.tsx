@@ -11,6 +11,7 @@ import {
   MyPwdCheck,
   BoardList,
   BoardPost,
+  BoardPage,
 } from '../component';
 import { useContext } from 'react';
 import { UserContext, UserContextValue } from '../context';
@@ -32,6 +33,7 @@ const MainRoute = () => {
           <Route path='/myDelete' element={<MyDelete />} />
           <Route path='/boardList' element={<BoardList />} />
           <Route path='/boardPost' element={<BoardPost />} />
+          <Route path='/boardPage' element={<BoardPage />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>
       ) : (
