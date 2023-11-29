@@ -28,7 +28,6 @@ const UserContextProvider = ({ children }: Props) => {
   const [loading, setLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------------------------------------
-  ll(auth);
   useEffect(() => {
     const list = localStorage.getItem('UserList');
     if (list) {

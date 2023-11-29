@@ -7,20 +7,20 @@ import { UserContext, UserContextValue } from '../../UserContext';
 const boards: Board[] = [
   {
     id: 2,
-    title: '제목2',
+    title: '자유롭게 작성해주세요',
     content: '자유롭게 작성해주세요.',
     user_id: 2,
-    create_date: new Date(2023, 10, 4),
+    create_date: new Date('2023-11-3'),
     update_date: new Date(),
     views: 0,
     comment: [{ id: 1, user_id: 2, content: '댓글' }],
   },
   {
     id: 1,
-    title: '제목',
+    title: '자유게시판입니다',
     content: '자유게시판입니다.',
     user_id: 1,
-    create_date: new Date(2023, 8, 12),
+    create_date: new Date('2023-9-17'),
     update_date: undefined,
     views: 0,
     comment: [{ id: 1, user_id: 1, content: '댓글' }],
@@ -32,6 +32,7 @@ const BoardContextProvider = ({ children }: Props) => {
 
   const [boardList, setBoardList] = useState<Board[]>(boards);
   // const [commentList, setCommentList] = useState<Board['comment']>(boards);
+  const [board, setBoard] = useState<Board>();
   const [loading, setLoading] = useState(false);
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -40,16 +41,21 @@ const BoardContextProvider = ({ children }: Props) => {
     if (list) {
       const boardList: Board[] = JSON.parse(list);
       setBoardList(boardList);
+
+      const boardId = localStorage.getItem('BoardID');
+      if (boardId) {
+        const board = boardList.find((info) => info.id === Number(boardId));
+        setBoard(board);
+      }
     }
     // localStorage.removeItem('BoardList');
     setLoading(true);
   }, []);
-ll(boardList)
+
   // -------------------------------------------------------------------------------------------------------------------
 
   const addBoard = useCallback(
     (board: Board) => {
-
       if (board && auth) {
         const newList: Board[] = [
           {
@@ -84,12 +90,26 @@ ll(boardList)
   );
 
   const deleteBoard = useCallback(
-      (id: number) => {
-        const list = boardList.filter((board) => board.id !== id);
-        localStorage.removeItem('BoardList');
-        setBoardList(list);
-      },
-      [boardList]
+    (id: number) => {
+      const list = boardList.filter((board) => board.id !== id);
+      localStorage.removeItem('BoardList');
+      setBoardList(list);
+    },
+    [boardList]
+  );
+
+  const openBoard = useCallback(
+    (id: number) => {
+      const boardInfo = boardList.find((info) => info.id === id);
+      if (boardInfo) {
+        setBoard(boardInfo);
+        localStorage.setItem('BoardID', `${boardInfo.id}`);
+        return true;
+      } else {
+        return false;
+      }
+    },
+    [boardList]
   );
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -97,9 +117,11 @@ ll(boardList)
   return (
     <BoardContext.Provider
       value={{
+        board,
         boardList,
         addBoard,
         deleteBoard,
+        openBoard,
       }}
     >
       {loading && children}

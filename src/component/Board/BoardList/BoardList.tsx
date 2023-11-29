@@ -101,7 +101,7 @@ const BoardList: React.FC = () => {
   const navigate = useNavigate();
 
   const { userList } = useContext(UserContext) as UserContextValue;
-  const { boardList } = useContext(BoardContext) as BoardContextValue;
+  const { boardList, openBoard } = useContext(BoardContext) as BoardContextValue;
 
   // const formatDate = useCallback((date: Date) => {
   //   const year = date.getFullYear();
@@ -139,7 +139,14 @@ const BoardList: React.FC = () => {
               <tr key={board.id}>
                 <td>{board.id}</td>
                 <td>
-                  <a onClick={() => navigate('/boardPage')}>{board.title}</a>
+                  <a
+                    onClick={() => {
+                      openBoard(board.id);
+                      navigate('/boardPage');
+                    }}
+                  >
+                    {board.title}
+                  </a>
                 </td>
                 <td>{userList.map((user) => (user.id === board.user_id ? user.name : ''))}</td>
                 <td>
