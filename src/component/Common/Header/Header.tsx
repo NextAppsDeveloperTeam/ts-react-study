@@ -40,7 +40,7 @@ const Container = styled.div`
 const AuthStyle = styled.div`
   ul {
     line-height: 80px;
-    width: 200px;
+    width: 180px;
     text-align: center;
 
     li {

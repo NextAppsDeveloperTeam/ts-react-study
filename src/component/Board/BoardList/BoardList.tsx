@@ -101,7 +101,7 @@ const BoardList: React.FC = () => {
   const navigate = useNavigate();
 
   const { userList } = useContext(UserContext) as UserContextValue;
-  const { boardList, openBoard } = useContext(BoardContext) as BoardContextValue;
+  const { boardList, openBoard, addViews } = useContext(BoardContext) as BoardContextValue;
 
   // const formatDate = useCallback((date: Date) => {
   //   const year = date.getFullYear();
@@ -142,6 +142,7 @@ const BoardList: React.FC = () => {
                   <a
                     onClick={() => {
                       openBoard(board.id);
+                      addViews(board.id);
                       navigate('/boardPage');
                     }}
                   >

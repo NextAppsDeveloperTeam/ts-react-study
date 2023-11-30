@@ -7,6 +7,8 @@ export type BoardContextValue = {
   addBoard: (board: Board) => void;
   deleteBoard: (id: number) => void;
   openBoard(id: number): boolean;
+  addViews: (id: number) => void;
+  addComment: (board: Board) => void;
 };
 
 export interface BoardContextProps {
