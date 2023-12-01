@@ -4,21 +4,22 @@ import styled from 'styled-components';
 import FormContextProvider from '../../Common/Form/FormContextProvider';
 import { Board } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
+import BoardText from "../../Common/Form/BoardText";
 
 const Container = styled.div`
   width: 80%;
+  max-width: 1000px;
   margin: 50px auto;
   text-align: left;
 
   .boardTitle {
     font-weight: bold;
     font-size: 28px;
-    margin-bottom: 50px;
   }
 
   .boardContent {
     font-size: 17px;
-    margin-bottom: 20px;
+    margin: 50px 0;
   }
 
   .commentName,
@@ -28,40 +29,44 @@ const Container = styled.div`
 
   .commentForm {
     width: 100%;
+    max-width: 800px;
+    margin-bottom: 15px;
+
+    input {
+      float: left;
+      width: 75%;
+      height: 36px;
+      padding-left: 5px;
+    }
+
+    button {
+      margin-top: -10px;
+      width: 70px;
+      height: 40px;
+      font-size: 14px;
+      border: none;
+      background: #000000;
+      color: #ffffff;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
 
-  input {
-    width: 70%;
-    height: 30px;
-    padding-left: 5px;
-  }
-  
   hr {
     width: 80%;
-  }
-
-  button {
-    width: 70px;
-    height: 35px;
-    margin: 15px auto;
-    font-size: 14px;
-    border: none;
-    background: #000000;
-    color: #ffffff;
-
-    &:hover {
-      opacity: 0.7;
-    }
   }
 `;
 
 const BoardPage: React.FC = () => {
   const { userList } = useContext(UserContext) as UserContextValue;
-  const { boardList, board } = useContext(BoardContext) as BoardContextValue;
+  const { boardList, board, addComment } = useContext(BoardContext) as BoardContextValue;
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback((value: Board) => {
     confirm('글을 등록하시겠습니까?');
-  }, []);
+    addComment(value);
+  }, [addComment]);
   ll(board);
 
   return (
@@ -78,7 +83,7 @@ const BoardPage: React.FC = () => {
       <FormContextProvider>
         <Form onSubmit={handleSubmit}>
           <div className='commentForm'>
-            <input name='comment' placeholder='댓글을 입력해주세요' required />
+            <BoardText name='content' placeholder='댓글을 입력해주세요' />
             <button>등록하기</button>
           </div>
         </Form>

@@ -66,19 +66,7 @@ const BoardContextProvider = ({ children }: Props) => {
             create_date: new Date(),
             update_date: undefined,
             views: 0,
-            comment: [
-              // {
-              //   id: commentList[commentList.length - 1].id + 1,
-              //   user_id: board.user_id,
-              //   content: board.content,
-              // },
-              // ...commentList,
-              {
-                id: undefined,
-                user_id: undefined,
-                content: undefined,
-              },
-            ],
+            comment: undefined,
           },
           ...boardList,
         ];
@@ -130,17 +118,25 @@ const BoardContextProvider = ({ children }: Props) => {
   const addComment = useCallback(
     (board: Board) => {
       if (board && auth) {
-        const newList: Board['comment'] = [
-          {
-            id: board.id,
-            user_id: board.user_id,
-            content: board.content,
-          },
-          ...boardList,
-        ];
-
-        localStorage.setItem('BoardList', JSON.stringify(newList));
-        // setBoardList(newList);
+        const boardInfo = boardList.find((info) => info.id === board.id);
+        if (boardInfo) {
+          const addCommentList = boardList.map((item) => ({
+            ...item,
+            comment:
+              item.id === boardInfo.id
+                ? [
+                    {
+                      id: boardInfo.comment ? boardInfo.comment[boardInfo.comment.length - 1].id : 1,
+                      user_id: auth.id,
+                      content: boardInfo.content,
+                    },
+                    ...boardList,
+                  ]
+                : item.comment,
+          }));
+          localStorage.setItem('BoardList', JSON.stringify(addCommentList));
+          setBoardList(addCommentList);
+        }
       }
     },
     [auth, boardList]
@@ -163,5 +159,4 @@ const BoardContextProvider = ({ children }: Props) => {
     </BoardContext.Provider>
   );
 };
-
 export default BoardContextProvider;

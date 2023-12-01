@@ -4,9 +4,9 @@ import FormControl from '../FormControl';
 import styled from 'styled-components';
 
 const Input = styled.input`
-  width: 520px;
+  width: 100%;
   height: 35px;
-  padding-left: 6px;
+  padding: 0 6px;
 `;
 
 function BoardText<T extends BoardTextValue>({ value: initValue, name, placeholder, onChange, ...props }: Props<T>) {

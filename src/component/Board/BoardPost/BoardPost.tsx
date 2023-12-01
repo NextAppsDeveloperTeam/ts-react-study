@@ -1,22 +1,26 @@
-import React, {useContext, useEffect} from 'react';
-import {Form, FormCommands, Title} from '../../Common';
+import React, { useContext, useEffect } from 'react';
+import { Form, FormCommands, Title } from '../../Common';
 import styled from 'styled-components';
 import FormContextProvider from '../../Common/Form/FormContextProvider';
 import BoardText from '../../Common/Form/BoardText';
 import BoardTextArea from '../../Common/Form/BoardTextArea';
-import {Board} from "../../../@types";
-import {useNavigate} from "react-router-dom";
-import {BoardContext, BoardContextValue} from "../../../context";
+import { Board } from '../../../@types';
+import { useNavigate } from 'react-router-dom';
+import { BoardContext, BoardContextValue } from '../../../context';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+`;
+
+const Button = styled.div`
+  text-align: center;
+  margin: 15px 0 0 12px;
 
   button {
-    width: 530px;
+    width: 100%;
     height: 40px;
-    margin: 15px auto;
     font-size: 16px;
     border: none;
     background: #000000;
@@ -25,7 +29,6 @@ const Container = styled.div`
     &:hover {
       opacity: 0.7;
     }
-  }
 `;
 
 const BoardPost: React.FC = () => {
@@ -44,12 +47,12 @@ const BoardPost: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-      (value: Board) => {
-        addBoard(value);
-        confirm('글을 등록하시겠습니까?');
-        navigate('/boardList');
-      },
-      [addBoard, navigate]
+    (value: Board) => {
+      addBoard(value);
+      confirm('글을 등록하시겠습니까?');
+      navigate('/boardList');
+    },
+    [addBoard, navigate]
   );
 
   return (
@@ -59,7 +62,9 @@ const BoardPost: React.FC = () => {
         <Form ref={formCommandsRef} onSubmit={handleSubmit}>
           <BoardText label='제목' name='title' placeholder='제목을 입력해주세요' required />
           <BoardTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
-          <button>등록하기</button>
+          <Button>
+            <button>등록하기</button>
+          </Button>
         </Form>
       </FormContextProvider>
     </Container>

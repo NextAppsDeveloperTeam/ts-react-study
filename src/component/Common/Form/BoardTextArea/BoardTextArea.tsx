@@ -4,7 +4,7 @@ import FormControl from '../FormControl';
 import styled from 'styled-components';
 
 const Input = styled.textarea`
-  width: 516px;
+  width: 100%;
   height: 300px;
   padding: 10px 6px;
   resize: none;
