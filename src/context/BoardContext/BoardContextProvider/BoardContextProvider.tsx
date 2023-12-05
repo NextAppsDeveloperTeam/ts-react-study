@@ -13,7 +13,7 @@ const boards: Board[] = [
     create_date: new Date('2023-11-3'),
     update_date: new Date(),
     views: 0,
-    comment: [{ id: 1, user_id: 2, content: '댓글' }],
+    comment: [{ id: 1, user_id: 1, content: '댓글' }],
   },
   {
     id: 1,
@@ -23,7 +23,7 @@ const boards: Board[] = [
     create_date: new Date('2023-9-17'),
     update_date: undefined,
     views: 0,
-    comment: [{ id: 1, user_id: 1, content: '댓글' }],
+    comment: [{ id: 1, user_id: 2, content: '댓글' }],
   },
 ];
 
@@ -46,6 +46,11 @@ const BoardContextProvider = ({ children }: Props) => {
       if (boardId) {
         const board = boardList.find((info) => info.id === Number(boardId));
         setBoard(board);
+
+        const list = localStorage.getItem(`BoardComment_${boardId}`);
+        if (list) {
+          const commentList: Board['comment'] = JSON.parse(list);
+        }
       }
     }
     // localStorage.removeItem('BoardList');
@@ -115,32 +120,59 @@ const BoardContextProvider = ({ children }: Props) => {
     [boardList]
   );
 
+  // const addComment = useCallback(
+  //   (board: Board) => {
+  //     if (board && auth) {
+  //       const boardInfo = boardList.find((info) => info.id === board.id);
+  //       if (boardInfo) {
+  // const newComment : Board["comment"] = [
+  //     {
+  //         id: boardInfo.comment ? boardInfo.comment[boardInfo.comment.length-1].id : 1,
+  //         user_id: auth.id,
+  //         content: boardInfo.content,
+  //     }
+  // ];
+  //         const addCommentList = boardList.map((item) => ({
+  //           ...item,
+  //           comment:
+  //             item.id === boardInfo.id
+  //               ? [
+  //                   {
+  //                     id: boardInfo.comment ? boardInfo.comment[boardInfo.comment.length - 1].id : 1,
+  //                     user_id: auth.id,
+  //                     content: boardInfo.content,
+  //                   },
+  //                 ]
+  //               : item.comment,
+  //         }));
+  //         localStorage.setItem('BoardList', JSON.stringify(addCommentList));
+  //         setBoardList(addCommentList);
+  //       }
+  //     }
+  //   },
+  //   [auth, boardList]
+  // );
+
   const addComment = useCallback(
-    (board: Board) => {
-      if (board && auth) {
+    (boards: Board) => {
+      if (boards && board && auth) {
         const boardInfo = boardList.find((info) => info.id === board.id);
         if (boardInfo) {
-          const addCommentList = boardList.map((item) => ({
-            ...item,
-            comment:
-              item.id === boardInfo.id
-                ? [
-                    {
-                      id: boardInfo.comment ? boardInfo.comment[boardInfo.comment.length - 1].id : 1,
-                      user_id: auth.id,
-                      content: boardInfo.content,
-                    },
-                    ...boardList,
-                  ]
-                : item.comment,
-          }));
-          localStorage.setItem('BoardList', JSON.stringify(addCommentList));
-          setBoardList(addCommentList);
+          const newComment: Board['comment'] = [
+            {
+              id: boardInfo.comment && boardInfo.comment[boardInfo.comment.length - 1].id ? +1 : 1,
+              user_id: auth.id,
+              content: boardInfo.content,
+            },
+            ...(boardInfo.comment ? boardInfo.comment : []),
+          ];
+          localStorage.setItem(`BoardComment_${board.id}`, JSON.stringify(newComment));
         }
       }
     },
-    [auth, boardList]
+    [auth, board, boardList]
   );
+
   // -------------------------------------------------------------------------------------------------------------------
 
   return (

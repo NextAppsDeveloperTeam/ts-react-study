@@ -48,8 +48,8 @@ const BoardPost: React.FC = () => {
 
   const handleSubmit = useCallback(
     (value: Board) => {
-      addBoard(value);
       confirm('글을 등록하시겠습니까?');
+      addBoard(value);
       navigate('/boardList');
     },
     [addBoard, navigate]

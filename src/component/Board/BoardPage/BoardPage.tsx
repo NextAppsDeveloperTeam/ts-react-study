@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import FormContextProvider from '../../Common/Form/FormContextProvider';
 import { Board } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
-import BoardText from "../../Common/Form/BoardText";
+import BoardText from '../../Common/Form/BoardText';
 
 const Container = styled.div`
   width: 80%;
@@ -64,9 +64,11 @@ const BoardPage: React.FC = () => {
   const { boardList, board, addComment } = useContext(BoardContext) as BoardContextValue;
 
   const handleSubmit = useCallback((value: Board) => {
-    confirm('글을 등록하시겠습니까?');
-    addComment(value);
-  }, [addComment]);
+    if (board) {
+      confirm('글을 등록하시겠습니까?');
+      addComment(value);
+    }
+  }, [addComment, board]);
   ll(board);
 
   return (
@@ -74,34 +76,29 @@ const BoardPage: React.FC = () => {
       {board &&
         boardList
           .filter((item) => item.id === board.id)
-          .map((board: Board) => (
-            <div key={board.id}>
-              <div className='boardTitle'>{board.title}</div>
-              <div className='boardContent'>{board.content}</div>
-            </div>
-          ))}
-      <FormContextProvider>
-        <Form onSubmit={handleSubmit}>
-          <div className='commentForm'>
-            <BoardText name='content' placeholder='댓글을 입력해주세요' />
-            <button>등록하기</button>
-          </div>
-        </Form>
-      </FormContextProvider>
-      {board &&
-        boardList
-          .filter((item) => item.id === board.id)
-          .map((board: Board) => (
-            <div key={board.id}>
-              {board.comment?.map((board) => (
-                <div key={board.id}>
-                  <div className='commentName'>
-                    {userList.map((user) => (user.id === board.user_id ? user.name : ''))}
+          .map((boards: Board) => (
+            <div key={boards.id}>
+              <div className='boardTitle'>{boards.title}</div>
+              <div className='boardContent'>{boards.content}</div>
+              <FormContextProvider>
+                <Form onSubmit={handleSubmit}>
+                  <div className='commentForm'>
+                    <BoardText name='conmment' placeholder='댓글을 입력해주세요' />
+                    <button>등록하기</button>
                   </div>
-                  <div className='commentContent'>{board.content}</div>
-                  <hr />
-                </div>
-              ))}
+                </Form>
+              </FormContextProvider>
+              {boards.comment
+                ?.filter((item) => item.id === board.id)
+                .map((items) => (
+                  <div key={items.id}>
+                    <div className='commentName'>
+                      {userList.map((user) => (user.id === items.user_id ? user.name : ''))}
+                    </div>
+                    <div className='commentContent'>{items.content}</div>
+                    <hr />
+                  </div>
+                ))}
             </div>
           ))}
     </Container>
