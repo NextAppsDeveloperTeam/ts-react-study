@@ -7,10 +7,13 @@ import {
 import FormControl, { FormControlValue } from '../FormControl';
 import styled from 'styled-components';
 
+const InputContainer = styled.div`
+  display: flex;
+`;
+
 const Input = styled.input`
-  width: 270px;
-  height: 35px;
-  padding-left: 6px;
+  flex: 1;
+  padding: 10px;
 `;
 
 const FormInputControl = <Type extends FormInputControlType, T extends FormControlValue>({
@@ -64,14 +67,16 @@ const FormInputControl = <Type extends FormInputControlType, T extends FormContr
 
   return (
     <FormControl value={value} {...props} onRequestFocus={handleRequestFocus}>
-      <Input
-        ref={inputRef}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onKeyDown={onKeyDown}
-        onChange={handleChange}
-      />
+      <InputContainer>
+        <Input
+          ref={inputRef}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onKeyDown={onKeyDown}
+          onChange={handleChange}
+        />
+      </InputContainer>
     </FormControl>
   );
 };

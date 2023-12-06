@@ -33,7 +33,7 @@ const MainRoute = () => {
           <Route path='/myDelete' element={<MyDelete />} />
           <Route path='/boardList' element={<BoardList />} />
           <Route path='/boardPost' element={<BoardPost />} />
-          <Route path='/boardPage' element={<BoardPage />} />
+          <Route path='/boardPage/:id' element={<BoardPage />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>
       ) : (

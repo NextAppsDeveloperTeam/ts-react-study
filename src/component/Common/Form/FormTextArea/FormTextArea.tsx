@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { BoardTextAreaProps as Props, BoardTextAreaDefaultProps, BoardTextAreaValue } from './BoardTextArea.types';
+import { FormTextAreaProps as Props, FormTextAreaDefaultProps, FormTextAreaValue } from './FormTextArea.types';
 import FormControl from '../FormControl';
 import styled from 'styled-components';
 
@@ -10,7 +10,7 @@ const Input = styled.textarea`
   resize: none;
 `;
 
-function BoardTextArea<T extends BoardTextAreaValue>({
+function FormTextArea<T extends FormTextAreaValue>({
   value: initValue,
   name,
   placeholder,
@@ -39,18 +39,21 @@ function BoardTextArea<T extends BoardTextAreaValue>({
     inputRef.current?.focus();
   }, []);
 
-  const handleValidate = useCallback((value: T) => {
-    const strReg = value.replace(/\s/g, '').length === 0;
-    if (notEmpty(value) && strReg) {
-      return '내용을 입력해주세요.';
-    }
+  const handleValidate = useCallback(
+    (value: T) => {
+      const strReg = value.replace(/\s/g, '').length === 0;
+      if (notEmpty(value) && strReg) {
+        return '내용을 입력해주세요.';
+      }
 
-    if (onValidate) {
-      return onValidate(value);
-    }
+      if (onValidate) {
+        return onValidate(value);
+      }
 
-    return true;
-  }, [onValidate]);
+      return true;
+    },
+    [onValidate]
+  );
 
   return (
     <FormControl name={name} value={value} onRequestFocus={handleRequestFocus} onValidate={handleValidate} {...props}>
@@ -59,7 +62,7 @@ function BoardTextArea<T extends BoardTextAreaValue>({
   );
 }
 
-BoardTextArea.displayName = 'BoardText';
-BoardTextArea.defaultProps = BoardTextAreaDefaultProps;
+FormTextArea.displayName = 'BoardText';
+FormTextArea.defaultProps = FormTextAreaDefaultProps;
 
-export default BoardTextArea;
+export default FormTextArea;

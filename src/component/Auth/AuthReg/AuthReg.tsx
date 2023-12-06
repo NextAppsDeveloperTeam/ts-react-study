@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, FormCommands, FormEmail, FormPassword, FormPhone, FormRadioGroup, FormText, Title } from '../../Common';
+import { Form, FormCommands, FormEmail, FormName, FormPassword, FormPhone, FormRadioGroup, Title } from '../../Common';
 import FormContextProvider from '../../Common/Form/FormContextProvider';
 import { UserContext, UserContextValue } from '../../../context';
 import styled from 'styled-components';
@@ -89,7 +89,7 @@ const AuthReg = () => {
       <Container>
         <FormContextProvider>
           <Form ref={formCommandsRef} onSubmit={handleSubmit}>
-            <FormText label='Name' name='name' placeholder='텍스트를 입력해주세요' required />
+            <FormName label='Name' name='name' placeholder='텍스트를 입력해주세요' required />
             <FormEmail
               label='Email'
               name='email'

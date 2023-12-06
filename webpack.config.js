@@ -20,6 +20,12 @@ const options = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/',
+    filename: '[name].[chunkhash].js',
+    chunkFilename: 'chunks/[name].[chunkhash].js',
+  },
   devServer: {
     host: env.APP_HOST,
     port: env.APP_PORT,

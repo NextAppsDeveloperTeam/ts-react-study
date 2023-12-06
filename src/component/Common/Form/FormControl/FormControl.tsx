@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { UserContext, UserContextValue } from '../../../../context';
 
 const InputBox = styled.div`
-  padding-bottom: 10px;
+  //padding-bottom: 10px;
 `;
 
 const Label = styled.label`
@@ -14,11 +14,13 @@ const Label = styled.label`
 `;
 
 const HelperText = styled.div`
+  margin-top: 5px;
   font-size: 13px;
   opacity: 0.5;
 `;
 
 const ErrorText = styled.div`
+  margin-top: 5px;
   font-size: 14px;
   color: red;
 `;
@@ -73,10 +75,12 @@ function FormControl<T extends FormControlValue>({
 
   return (
     <InputBox>
-      <div style={{ color: error ? 'red' : undefined }}>
-        <Label>{label}</Label>
-        {required && '*'}
-      </div>
+      {label && (
+        <div style={{ color: error ? 'red' : undefined }}>
+          <Label>{label}</Label>
+          {required && '*'}
+        </div>
+      )}
       <div>{children}</div>
       {helperText && <HelperText>{helperText}</HelperText>}
       {error && <ErrorText>{errorText}</ErrorText>}

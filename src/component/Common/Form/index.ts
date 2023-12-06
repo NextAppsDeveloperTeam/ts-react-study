@@ -9,3 +9,5 @@ export * from './FormNumber';
 export * from './FormPhone';
 export * from './FormPassword';
 export * from './FormRadioGroup';
+export * from './FormName';
+export * from './FormTextArea';

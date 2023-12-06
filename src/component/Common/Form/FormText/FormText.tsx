@@ -1,15 +1,9 @@
-import React, { KeyboardEvent } from 'react';
+import React from 'react';
 import { FormTextProps as Props, FormTextDefaultProps } from './FormText.types';
 import FormInputControl from '../FormInputControl';
 
 const FormText: React.FC<Props> = (props) => {
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === ' ') {
-      e.preventDefault();
-    }
-  }, []);
-
-  return <FormInputControl type='text' onKeyDown={handleKeyDown} {...props} />;
+  return <FormInputControl type='text' {...props} />;
 };
 
 FormText.displayName = 'FormText';

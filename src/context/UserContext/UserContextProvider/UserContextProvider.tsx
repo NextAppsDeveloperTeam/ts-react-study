@@ -132,6 +132,13 @@ const UserContextProvider = ({ children }: Props) => {
     [userList]
   );
 
+  const getUserInfo = useCallback(
+    (id: number) => {
+      return userList.find((info) => info.id === id);
+    },
+    [userList]
+  );
+
   const logout = useCallback(() => {
     setAuth(undefined);
     localStorage.removeItem('UserAuth');
@@ -148,6 +155,7 @@ const UserContextProvider = ({ children }: Props) => {
         deleteUser,
         updateUser,
         updateInfo,
+        getUserInfo,
         login,
         logout,
       }}

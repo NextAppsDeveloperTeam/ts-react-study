@@ -101,7 +101,7 @@ const BoardList: React.FC = () => {
   const navigate = useNavigate();
 
   const { userList } = useContext(UserContext) as UserContextValue;
-  const { boardList, openBoard, addViews } = useContext(BoardContext) as BoardContextValue;
+  const { boardList } = useContext(BoardContext) as BoardContextValue;
 
   // const formatDate = useCallback((date: Date) => {
   //   const year = date.getFullYear();
@@ -135,29 +135,27 @@ const BoardList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {boardList.map((board: Board) => (
-              <tr key={board.id}>
-                <td>{board.id}</td>
-                <td>
-                  <a
-                    onClick={() => {
-                      openBoard(board.id);
-                      addViews(board.id);
-                      navigate('/boardPage');
-                    }}
-                  >
-                    {board.title}
-                  </a>
-                </td>
-                <td>{userList.map((user) => (user.id === board.user_id ? user.name : ''))}</td>
-                <td>
-                  {/*{formatDate(board.create_date)}*/}
-                  {board.create_date.toString().slice(0, 4)}.{board.create_date.toString().slice(5, 7)}.
-                  {board.create_date.toString().slice(8, 10)}
-                </td>
-                <td>{board.views}</td>
-              </tr>
-            ))}
+            {boardList.map((board: Board) => {
+              return (
+                <tr key={board.id}>
+                  <td>{board.id}</td>
+                  <td>
+                    <a
+                      onClick={() => {
+                        // openBoard(board.id);
+                        // addViews(board.id);
+                        navigate(`/boardPage/${board.id}`);
+                      }}
+                    >
+                      {board.title}
+                    </a>
+                  </td>
+                  <td>{userList.map((user) => (user.id === board.user_id ? user.name : ''))}</td>
+                  <td>{board.create_date.substring(0, 10).replace(/-/g, '.')}</td>
+                  <td>{board.views}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </TableStyled>

@@ -4,11 +4,10 @@ import React from 'react';
 export type BoardContextValue = {
   board?: Board;
   boardList: Board[];
-  addBoard: (board: Board) => void;
+  addBoard: (title: string, content: string) => void;
   deleteBoard: (id: number) => void;
-  openBoard(id: number): boolean;
-  addViews: (id: number) => void;
-  addComment: (board: Board) => void;
+  getBoardInfo(id: number, addViewCount?: boolean): Board | undefined;
+  addComment(boardId: number, comment: string): void;
 };
 
 export interface BoardContextProps {

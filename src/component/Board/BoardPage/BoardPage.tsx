@@ -1,108 +1,79 @@
 import React, { useContext } from 'react';
-import { Form } from '../../Common';
-import styled from 'styled-components';
-import FormContextProvider from '../../Common/Form/FormContextProvider';
-import { Board } from '../../../@types';
+import { Form, FormText, FormContextProvider } from '../../Common';
+import { Board, BoardComment } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
-import BoardText from '../../Common/Form/BoardText';
-
-const Container = styled.div`
-  width: 80%;
-  max-width: 1000px;
-  margin: 50px auto;
-  text-align: left;
-
-  .boardTitle {
-    font-weight: bold;
-    font-size: 28px;
-  }
-
-  .boardContent {
-    font-size: 17px;
-    margin: 50px 0;
-  }
-
-  .commentName,
-  .commentContent {
-    margin-bottom: 10px;
-  }
-
-  .commentForm {
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 15px;
-
-    input {
-      float: left;
-      width: 75%;
-      height: 36px;
-      padding-left: 5px;
-    }
-
-    button {
-      margin-top: -10px;
-      width: 70px;
-      height: 40px;
-      font-size: 14px;
-      border: none;
-      background: #000000;
-      color: #ffffff;
-
-      &:hover {
-        opacity: 0.7;
-      }
-    }
-  }
-
-  hr {
-    width: 80%;
-  }
-`;
+import { useNavigate, useParams } from 'react-router-dom';
+import { Container } from './BoardPage.style';
 
 const BoardPage: React.FC = () => {
-  const { userList } = useContext(UserContext) as UserContextValue;
-  const { boardList, board, addComment } = useContext(BoardContext) as BoardContextValue;
+  const params = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
-  const handleSubmit = useCallback((value: Board) => {
-    if (board) {
-      confirm('글을 등록하시겠습니까?');
-      addComment(value);
+  const boardId = useMemo(() => Number(params.id), [params]);
+
+  const { getUserInfo } = useContext(UserContext) as UserContextValue;
+  const { boardList, getBoardInfo, addComment } = useContext(BoardContext) as BoardContextValue;
+
+  const [boardInfo, setBoardInfo] = useState<Board>();
+  const [commentList, setCommentList] = useState<(BoardComment & { user_name: string | undefined })[]>();
+
+  useEffect(() => {
+    const info = getBoardInfo(boardId, true);
+    if (info) {
+      setBoardInfo(info);
+    } else {
+      navigate('/boardList');
     }
-  }, [addComment, board]);
-  ll(board);
+  }, [boardId, boardList, getBoardInfo, navigate, params.id]);
 
-  return (
-    <Container className='Board'>
-      {board &&
-        boardList
-          .filter((item) => item.id === board.id)
-          .map((boards: Board) => (
-            <div key={boards.id}>
-              <div className='boardTitle'>{boards.title}</div>
-              <div className='boardContent'>{boards.content}</div>
-              <FormContextProvider>
-                <Form onSubmit={handleSubmit}>
-                  <div className='commentForm'>
-                    <BoardText name='conmment' placeholder='댓글을 입력해주세요' />
-                    <button>등록하기</button>
-                  </div>
-                </Form>
-              </FormContextProvider>
-              {boards.comment
-                ?.filter((item) => item.id === board.id)
-                .map((items) => (
-                  <div key={items.id}>
-                    <div className='commentName'>
-                      {userList.map((user) => (user.id === items.user_id ? user.name : ''))}
-                    </div>
-                    <div className='commentContent'>{items.content}</div>
-                    <hr />
-                  </div>
-                ))}
-            </div>
-          ))}
-    </Container>
+  useEffect(() => {
+    if (boardInfo) {
+      setCommentList(
+        boardInfo.comment.map((comment) => ({
+          ...comment,
+          user_name: getUserInfo(comment.user_id)?.name,
+        }))
+      );
+    }
+  }, [boardInfo, getUserInfo]);
+
+  const handleSubmit = useCallback(
+    (values: { comment: string }) => {
+      addComment(boardId, values.comment);
+    },
+    [addComment, boardId]
   );
+
+  return boardInfo ? (
+    <Container className='Board'>
+      <div key={boardInfo.id}>
+        <div className='boardTitle'>{boardInfo.title}</div>
+        <div>{boardInfo.views}</div>
+        <div>{boardInfo.create_date}</div>
+        <div className='boardContent'>{boardInfo.content}</div>
+        <div>
+          {commentList &&
+            commentList.map((comment) => (
+              <div key={comment.id}>
+                <div>{comment.content}</div>
+                <div>{comment.user_name}</div>
+                <div>{comment.create_date}</div>
+              </div>
+            ))}
+        </div>
+        <FormContextProvider>
+          <Form onSubmit={handleSubmit}>
+            <div className='commentForm'>
+              <div className='commentText'>
+                <FormText name='comment' placeholder='댓글을 입력해주세요' required />
+              </div>
+              <button>등록하기</button>
+            </div>
+          </Form>
+        </FormContextProvider>
+      </div>
+    </Container>
+  ) : null;
 };
 
 BoardPage.displayName = 'BoardPage';

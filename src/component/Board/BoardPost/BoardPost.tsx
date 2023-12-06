@@ -1,10 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { Form, FormCommands, Title } from '../../Common';
+import { Form, FormCommands, FormText, Title, FormContextProvider, FormTextArea } from '../../Common';
 import styled from 'styled-components';
-import FormContextProvider from '../../Common/Form/FormContextProvider';
-import BoardText from '../../Common/Form/BoardText';
-import BoardTextArea from '../../Common/Form/BoardTextArea';
-import { Board } from '../../../@types';
 import { useNavigate } from 'react-router-dom';
 import { BoardContext, BoardContextValue } from '../../../context';
 
@@ -47,9 +43,8 @@ const BoardPost: React.FC = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (value: Board) => {
-      confirm('글을 등록하시겠습니까?');
-      addBoard(value);
+    (values: { title: string; content: string }) => {
+      addBoard(values.title, values.content);
       navigate('/boardList');
     },
     [addBoard, navigate]
@@ -60,8 +55,8 @@ const BoardPost: React.FC = () => {
       <Title text='게시글 작성' />
       <FormContextProvider>
         <Form ref={formCommandsRef} onSubmit={handleSubmit}>
-          <BoardText label='제목' name='title' placeholder='제목을 입력해주세요' required />
-          <BoardTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
+          <FormText label='제목' name='title' placeholder='제목을 입력해주세요' required />
+          <FormTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
           <Button>
             <button>등록하기</button>
           </Button>
