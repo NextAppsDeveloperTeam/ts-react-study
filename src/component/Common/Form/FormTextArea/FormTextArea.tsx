@@ -3,10 +3,14 @@ import { FormTextAreaProps as Props, FormTextAreaDefaultProps, FormTextAreaValue
 import FormControl from '../FormControl';
 import styled from 'styled-components';
 
+const InputContainer = styled.div`
+  display: flex;
+`;
+
 const Input = styled.textarea`
-  width: 100%;
+  flex: 1;
   height: 300px;
-  padding: 10px 6px;
+  padding: 10px;
   resize: none;
 `;
 
@@ -57,7 +61,9 @@ function FormTextArea<T extends FormTextAreaValue>({
 
   return (
     <FormControl name={name} value={value} onRequestFocus={handleRequestFocus} onValidate={handleValidate} {...props}>
-      <Input ref={inputRef} placeholder={placeholder} value={value} onChange={handleChange} />
+      <InputContainer>
+        <Input ref={inputRef} placeholder={placeholder} value={value} onChange={handleChange} />
+      </InputContainer>
     </FormControl>
   );
 }

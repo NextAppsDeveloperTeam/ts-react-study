@@ -13,7 +13,7 @@ const DefaultBoardList: Board[] = [
     create_date: dateToString(new Date('2023-09-01')),
     update_date: dateToString(new Date('2023-09-01')),
     views: 0,
-    comment: [{ id: 1, user_id: 1, content: '댓글', create_date: dateToString() }],
+    comment: [{ id: 1, user_id: 1, content: '댓글', create_date: dateToString(new Date('2023-09-03')) }],
   },
   {
     id: 1,
@@ -23,7 +23,7 @@ const DefaultBoardList: Board[] = [
     create_date: dateToString(new Date('2023-09-01')),
     update_date: dateToString(new Date('2023-09-01')),
     views: 0,
-    comment: [{ id: 1, user_id: 2, content: '댓글', create_date: dateToString() }],
+    comment: [{ id: 1, user_id: 2, content: '댓글', create_date: dateToString(new Date('2023-09-02')) }],
   },
 ];
 
@@ -110,7 +110,7 @@ const BoardContextProvider = ({ children }: Props) => {
               return comment.id > res ? comment.id : res;
             }, 0) + 1;
 
-          info.comment.push({
+          info.comment.unshift({
             id: commentId,
             user_id: auth.id,
             content: comment,
@@ -131,14 +131,11 @@ const BoardContextProvider = ({ children }: Props) => {
   return boardList ? (
     <BoardContext.Provider
       value={{
-        // board,
         boardList,
         addBoard,
         deleteBoard,
         getBoardInfo,
         addComment,
-        // addViews,
-        // addComment,
       }}
     >
       {children}

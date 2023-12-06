@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form, FormText, FormContextProvider } from '../../Common';
 import { Board, BoardComment } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
@@ -16,11 +16,13 @@ const BoardPage: React.FC = () => {
 
   const [boardInfo, setBoardInfo] = useState<Board>();
   const [commentList, setCommentList] = useState<(BoardComment & { user_name: string | undefined })[]>();
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
     const info = getBoardInfo(boardId, true);
     if (info) {
       setBoardInfo(info);
+      setComment('');
     } else {
       navigate('/boardList');
     }
@@ -48,29 +50,38 @@ const BoardPage: React.FC = () => {
     <Container className='Board'>
       <div key={boardInfo.id}>
         <div className='boardTitle'>{boardInfo.title}</div>
-        <div>{boardInfo.views}</div>
-        <div>{boardInfo.create_date}</div>
-        <div className='boardContent'>{boardInfo.content}</div>
-        <div>
-          {commentList &&
-            commentList.map((comment) => (
-              <div key={comment.id}>
-                <div>{comment.content}</div>
-                <div>{comment.user_name}</div>
-                <div>{comment.create_date}</div>
-              </div>
-            ))}
+        <div className='boardDiv'>
+          <div className='boardDate'>{boardInfo.create_date}</div>
+          <div className='boardViews'>{boardInfo.views}</div>
         </div>
+        <div className='boardContent'>{boardInfo.content}</div>
         <FormContextProvider>
           <Form onSubmit={handleSubmit}>
             <div className='commentForm'>
               <div className='commentText'>
-                <FormText name='comment' placeholder='댓글을 입력해주세요' required />
+                <FormText
+                  value={comment}
+                  name='comment'
+                  placeholder='댓글을 입력해주세요'
+                  onChange={setComment}
+                  required
+                />
               </div>
               <button>등록하기</button>
             </div>
           </Form>
         </FormContextProvider>
+        <div>
+          {commentList &&
+            commentList.map((comment) => (
+              <div key={comment.id} className='commentDiv'>
+                <div className='commentName'>{comment.user_name}</div>
+                <div className='commentContent'>{comment.content}</div>
+                <div className='commentDate'>{comment.create_date}</div>
+                <hr />
+              </div>
+            ))}
+        </div>
       </div>
     </Container>
   ) : null;

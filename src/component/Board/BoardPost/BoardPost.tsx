@@ -12,10 +12,11 @@ const Container = styled.div`
 
 const Button = styled.div`
   text-align: center;
-  margin: 15px 0 0 12px;
+  margin: 15px 0;
+  display: flex;
 
   button {
-    width: 100%;
+    flex: 1;
     height: 40px;
     font-size: 16px;
     border: none;
