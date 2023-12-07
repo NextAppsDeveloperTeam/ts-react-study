@@ -12,7 +12,7 @@ const BoardPage: React.FC = () => {
   const boardId = useMemo(() => Number(params.id), [params]);
 
   const { getUserInfo } = useContext(UserContext) as UserContextValue;
-  const { boardList, getBoardInfo, addComment } = useContext(BoardContext) as BoardContextValue;
+  const { getBoardInfo, addComment } = useContext(BoardContext) as BoardContextValue;
 
   const [boardInfo, setBoardInfo] = useState<Board>();
   const [commentList, setCommentList] = useState<(BoardComment & { user_name: string | undefined })[]>();
@@ -26,7 +26,7 @@ const BoardPage: React.FC = () => {
     } else {
       navigate('/boardList');
     }
-  }, [boardId, boardList, getBoardInfo, navigate, params.id]);
+  }, [boardId, getBoardInfo, navigate]);
 
   useEffect(() => {
     if (boardInfo) {
@@ -45,16 +45,27 @@ const BoardPage: React.FC = () => {
     },
     [addComment, boardId]
   );
+  ll(boardInfo);
 
   return boardInfo ? (
     <Container className='Board'>
       <div key={boardInfo.id}>
         <div className='boardTitle'>{boardInfo.title}</div>
+        <div>{getUserInfo(boardInfo.user_id)?.name}</div>
         <div className='boardDiv'>
           <div className='boardDate'>{boardInfo.create_date}</div>
-          <div className='boardViews'>{boardInfo.views}</div>
+          <div className='boardViews'>조회수: {boardInfo.views}</div>
         </div>
-        <div className='boardContent'>{boardInfo.content}</div>
+        <div className='boardContent'>
+          {boardInfo.content}
+          {/*{boardInfo.content.split('\n').map((text) => {*/}
+          {/*  return (*/}
+          {/*  <span key={boardId}>*/}
+          {/*    {text}*/}
+          {/*    <br/>*/}
+          {/*  </span>*/}
+          {/*  )})}*/}
+        </div>
         <FormContextProvider>
           <Form onSubmit={handleSubmit}>
             <div className='commentForm'>

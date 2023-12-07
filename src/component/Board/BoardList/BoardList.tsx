@@ -103,13 +103,6 @@ const BoardList: React.FC = () => {
   const { userList } = useContext(UserContext) as UserContextValue;
   const { boardList } = useContext(BoardContext) as BoardContextValue;
 
-  // const formatDate = useCallback((date: Date) => {
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const day = date.getDate().toString().padStart(2, '0');
-  //   return `${year}.${month}.${day}`;
-  // }, []);
-
   return (
     <Container className='Board'>
       <Title text='자유게시판' />
@@ -142,8 +135,6 @@ const BoardList: React.FC = () => {
                   <td>
                     <a
                       onClick={() => {
-                        // openBoard(board.id);
-                        // addViews(board.id);
                         navigate(`/boardPage/${board.id}`);
                       }}
                     >

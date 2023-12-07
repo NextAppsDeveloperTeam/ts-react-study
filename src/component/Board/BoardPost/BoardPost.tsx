@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Form, FormCommands, FormText, Title, FormContextProvider, FormTextArea } from '../../Common';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BoardContext, BoardContextValue } from '../../../context';
+import { Board } from '../../../@types';
 
 const Container = styled.div`
   width: 80%;
@@ -29,11 +30,17 @@ const Button = styled.div`
 `;
 
 const BoardPost: React.FC = () => {
+  const params = useParams<{ id: string }>();
+
   const navigate = useNavigate();
 
   const formCommandsRef = useRef<FormCommands>(null);
 
-  const { addBoard } = useContext(BoardContext) as BoardContextValue;
+  const boardId = useMemo(() => Number(params.id), [params]);
+
+  const [boardInfo, setBoardInfo] = useState<Board>();
+
+  const { getBoardInfo, addBoard } = useContext(BoardContext) as BoardContextValue;
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,6 +49,13 @@ const BoardPost: React.FC = () => {
       }
     }, 1);
   }, []);
+
+  useEffect(() => {
+    const info = getBoardInfo(boardId, true);
+    if (info) {
+      setBoardInfo(info);
+    }
+  }, [boardId, getBoardInfo, navigate]);
 
   const handleSubmit = useCallback(
     (values: { title: string; content: string }) => {
@@ -56,11 +70,23 @@ const BoardPost: React.FC = () => {
       <Title text='게시글 작성' />
       <FormContextProvider>
         <Form ref={formCommandsRef} onSubmit={handleSubmit}>
-          <FormText label='제목' name='title' placeholder='제목을 입력해주세요' required />
-          <FormTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
-          <Button>
-            <button>등록하기</button>
-          </Button>
+          {boardInfo ? (
+            <>
+              <FormText label='제목' name='title' placeholder='제목을 입력해주세요' required />
+              <FormTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
+              <Button>
+                <button>수정하기</button>
+              </Button>
+            </>
+          ) : (
+            <>
+              <FormText label='제목' name='title' placeholder='제목을 입력해주세요' required />
+              <FormTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
+              <Button>
+                <button>등록하기</button>
+              </Button>
+            </>
+          )}
         </Form>
       </FormContextProvider>
     </Container>
