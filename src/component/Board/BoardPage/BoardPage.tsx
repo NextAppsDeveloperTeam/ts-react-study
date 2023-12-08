@@ -11,8 +11,8 @@ const BoardPage: React.FC = () => {
 
   const boardId = useMemo(() => Number(params.id), [params]);
 
-  const { getUserInfo } = useContext(UserContext) as UserContextValue;
-  const { getBoardInfo, addComment } = useContext(BoardContext) as BoardContextValue;
+  const { auth, getUserInfo } = useContext(UserContext) as UserContextValue;
+  const { getBoardInfo, addComment, deleteBoard } = useContext(BoardContext) as BoardContextValue;
 
   const [boardInfo, setBoardInfo] = useState<Board>();
   const [commentList, setCommentList] = useState<(BoardComment & { user_name: string | undefined })[]>();
@@ -45,22 +45,35 @@ const BoardPage: React.FC = () => {
     },
     [addComment, boardId]
   );
-  ll(boardInfo);
 
   return boardInfo ? (
     <Container className='Board'>
       <div key={boardInfo.id}>
         <div className='boardTitle'>{boardInfo.title}</div>
-        <div>{getUserInfo(boardInfo.user_id)?.name}</div>
         <div className='boardDiv'>
+          <div className='boardName'>{getUserInfo(boardInfo.user_id)?.name}</div>
           <div className='boardDate'>{boardInfo.create_date}</div>
           <div className='boardViews'>조회수: {boardInfo.views}</div>
         </div>
+        {auth?.id === boardInfo.user_id && (
+          <div className='boardBtn'>
+            <button onClick={() => navigate(`/boardPost/${boardInfo.id}`)}>수정</button>
+            <button
+              onClick={() => {
+                if (confirm('삭제하시겠습니까?')) {
+                  deleteBoard(boardInfo.id);
+                }
+              }}
+            >
+              삭제
+            </button>
+          </div>
+        )}
         <div className='boardContent'>
           {boardInfo.content}
           {/*{boardInfo.content.split('\n').map((text) => {*/}
           {/*  return (*/}
-          {/*  <span key={boardId}>*/}
+          {/*  <span key={boardInfo.id}>*/}
           {/*    {text}*/}
           {/*    <br/>*/}
           {/*  </span>*/}
@@ -85,8 +98,16 @@ const BoardPage: React.FC = () => {
         <div>
           {commentList &&
             commentList.map((comment) => (
-              <div key={comment.id} className='commentDiv'>
-                <div className='commentName'>{comment.user_name}</div>
+              <div key={comment.id} className='commentStyled'>
+                <div className='commentDiv'>
+                  <div className='commentName'>{comment.user_name}</div>
+                  {auth?.id === comment.user_id && (
+                    <div className='commentBtn'>
+                      <button>수정</button>
+                      <button>삭제</button>
+                    </div>
+                  )}
+                </div>
                 <div className='commentContent'>{comment.content}</div>
                 <div className='commentDate'>{comment.create_date}</div>
                 <hr />

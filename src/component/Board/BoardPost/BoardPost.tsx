@@ -39,30 +39,27 @@ const BoardPost: React.FC = () => {
   const boardId = useMemo(() => Number(params.id), [params]);
 
   const [boardInfo, setBoardInfo] = useState<Board>();
+  const [title, setTitle] = useState(boardInfo ? boardInfo.title : '');
 
   const { getBoardInfo, addBoard } = useContext(BoardContext) as BoardContextValue;
 
   useEffect(() => {
-    setTimeout(() => {
-      if (formCommandsRef.current) {
-        formCommandsRef.current.focus('title');
-      }
-    }, 1);
-  }, []);
-
-  useEffect(() => {
-    const info = getBoardInfo(boardId, true);
+    const info = getBoardInfo(boardId, false);
     if (info) {
       setBoardInfo(info);
     }
-  }, [boardId, getBoardInfo, navigate]);
+  }, [boardId, getBoardInfo]);
 
   const handleSubmit = useCallback(
     (values: { title: string; content: string }) => {
       addBoard(values.title, values.content);
-      navigate('/boardList');
+      if (boardInfo) {
+        navigate(`boardPage/${boardInfo.id}`);
+      } else {
+        navigate('/boardList');
+      }
     },
-    [addBoard, navigate]
+    [addBoard, boardInfo, navigate]
   );
 
   return (
@@ -72,7 +69,7 @@ const BoardPost: React.FC = () => {
         <Form ref={formCommandsRef} onSubmit={handleSubmit}>
           {boardInfo ? (
             <>
-              <FormText label='제목' name='title' placeholder='제목을 입력해주세요' required />
+              <FormText label='제목' name='title' value={title} onChange={setTitle} required />
               <FormTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
               <Button>
                 <button>수정하기</button>

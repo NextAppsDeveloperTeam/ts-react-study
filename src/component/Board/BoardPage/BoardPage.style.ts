@@ -8,41 +8,87 @@ export const Container = styled.div`
 
   .boardTitle {
     font-weight: bold;
-    font-size: 28px;
+    font-size: 27px;
   }
-  
+
   .boardContent {
     font-size: 17px;
-    margin: 50px 0;
+    margin: 35px 0 50px 0;
   }
-  
+
   .boardDiv {
     width: 100%;
     display: flex;
-    text-align: right;
-    font-size: 14px;
-    
+    color: #707070;
+    margin: 5px 0;
+
+    .boardName {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
     .boardDate {
       flex: 1;
       margin: 0 15px;
     }
-    
+
+    .boardDate,
     .boardViews {
-      
+      text-align: right;
+      font-size: 14px;
     }
   }
 
-  .commentDiv {
+  .boardBtn {
+    width: 100%;
+    text-align: right;
+
+    button {
+      background-color: #707070;
+      color: #ffffff;
+      border: none;
+      padding: 3px 7px;
+      margin-left: 5px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .commentStyled {
 
     > div {
       margin: 4px 0;
     }
+    
+    .commentDiv {
+      display: flex;
+      
+      .commentName {
+        flex: 1;
+        font-size: 16px;
+        font-weight: 600;
+      }
 
-    .commentName {
-      font-size: 16px;
-      font-weight: 600;
+      .commentBtn {
+        text-align: right;
+
+        button {
+          background-color: #707070;
+          color: #ffffff;
+          border: none;
+          padding: 2px 4px;
+          margin: 0 2px;
+          font-size: 13px;
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
     }
-
+    
     .commentContent {
       font-size: 15px;
     }
@@ -61,7 +107,7 @@ export const Container = styled.div`
 
     .commentText {
       flex: 1;
-      //padding-right: 10px;
+
       input {
         width: 100%;
       }
@@ -82,6 +128,6 @@ export const Container = styled.div`
   }
 
   hr {
-    width: 80%;
+    width: 100%;
   }
 `;
