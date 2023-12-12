@@ -40,8 +40,9 @@ const BoardPost: React.FC = () => {
 
   const [boardInfo, setBoardInfo] = useState<Board>();
   const [title, setTitle] = useState(boardInfo ? boardInfo.title : '');
+  const [content, setContent] = useState(boardInfo ? boardInfo.content : '');
 
-  const { getBoardInfo, addBoard } = useContext(BoardContext) as BoardContextValue;
+  const { getBoardInfo, addBoard, updateBoard } = useContext(BoardContext) as BoardContextValue;
 
   useEffect(() => {
     const info = getBoardInfo(boardId, false);
@@ -54,12 +55,13 @@ const BoardPost: React.FC = () => {
     (values: { title: string; content: string }) => {
       addBoard(values.title, values.content);
       if (boardInfo) {
+        updateBoard(boardInfo.id, title, content);
         navigate(`boardPage/${boardInfo.id}`);
       } else {
         navigate('/boardList');
       }
     },
-    [addBoard, boardInfo, navigate]
+    [addBoard, boardInfo, content, navigate, title, updateBoard]
   );
 
   return (
@@ -69,8 +71,8 @@ const BoardPost: React.FC = () => {
         <Form ref={formCommandsRef} onSubmit={handleSubmit}>
           {boardInfo ? (
             <>
-              <FormText label='제목' name='title' value={title} onChange={setTitle} required />
-              <FormTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
+              <FormText label='제목' name='title' value={boardInfo.title} onChange={setTitle} required />
+              <FormTextArea label='내용' name='content' value={boardInfo.content} onChange={setContent} required />
               <Button>
                 <button>수정하기</button>
               </Button>

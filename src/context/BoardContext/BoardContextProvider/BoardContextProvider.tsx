@@ -80,6 +80,24 @@ const BoardContextProvider = ({ children }: Props) => {
     [boardList]
   );
 
+  const updateBoard = useCallback(
+    (id: number, title: string, content: string) => {
+      if (boardList) {
+        const boardInfo = boardList.find((info) => info.id === id);
+        if (boardInfo) {
+          const updateList = boardList.map((item) => ({
+            ...item,
+            title: item.id === boardInfo.id ? title : item.title,
+            content: item.id === boardInfo.id ? content : item.content,
+          }));
+          localStorage.setItem('BoardList', JSON.stringify(updateList));
+          setBoardList(updateList);
+        }
+      }
+    },
+    [boardList]
+  );
+
   const getBoardInfo = useCallback(
     (id: number, addViewCount?: boolean) => {
       if (boardList) {
@@ -126,6 +144,18 @@ const BoardContextProvider = ({ children }: Props) => {
     [auth, boardList, getBoardInfo]
   );
 
+  const updateComment = useCallback((boardId: number, comment: string) => {
+    if (auth && boardList) {
+      const Info = getBoardInfo(boardId);
+      if (Info) {
+        /**/
+      }
+    }
+
+    // localStorage.setItem('BoardList', JSON.stringify(updateList));
+    // setBoardList(updateList);
+  }, [auth, boardList, getBoardInfo]);
+
   // -------------------------------------------------------------------------------------------------------------------
 
   return boardList ? (
@@ -134,8 +164,10 @@ const BoardContextProvider = ({ children }: Props) => {
         boardList,
         addBoard,
         deleteBoard,
+        updateBoard,
         getBoardInfo,
         addComment,
+        updateComment,
       }}
     >
       {children}
