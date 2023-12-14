@@ -10,6 +10,7 @@ export type BoardContextValue = {
   getBoardInfo(id: number, addViewCount?: boolean): Board | undefined;
   addComment(boardId: number, comment: string): void;
   updateComment(boardId: number, comment: string): void;
+  deleteComment(boardId: number): void;
 };
 
 export interface BoardContextProps {

@@ -12,7 +12,7 @@ const BoardPage: React.FC = () => {
   const boardId = useMemo(() => Number(params.id), [params]);
 
   const { auth, getUserInfo } = useContext(UserContext) as UserContextValue;
-  const { getBoardInfo, addComment, deleteBoard } = useContext(BoardContext) as BoardContextValue;
+  const { getBoardInfo, addComment, deleteBoard, deleteComment } = useContext(BoardContext) as BoardContextValue;
 
   const [boardInfo, setBoardInfo] = useState<Board>();
   const [commentList, setCommentList] = useState<(BoardComment & { user_name: string | undefined })[]>();
@@ -104,7 +104,7 @@ const BoardPage: React.FC = () => {
                   {auth?.id === comment.user_id && (
                     <div className='commentBtn'>
                       <button>수정</button>
-                      <button>삭제</button>
+                      <button onClick={() => deleteComment(boardId)}>삭제</button>
                     </div>
                   )}
                 </div>
