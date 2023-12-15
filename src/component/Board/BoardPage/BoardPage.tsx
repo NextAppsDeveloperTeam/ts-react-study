@@ -70,14 +70,13 @@ const BoardPage: React.FC = () => {
           </div>
         )}
         <div className='boardContent'>
-          {boardInfo.content}
-          {/*{boardInfo.content.split('\n').map((text) => {*/}
-          {/*  return (*/}
-          {/*  <span key={boardInfo.id}>*/}
-          {/*    {text}*/}
-          {/*    <br/>*/}
-          {/*  </span>*/}
-          {/*  )})}*/}
+          {boardInfo.content.split('\n').map((text, num) => {
+            return (
+            <span key={num}>
+              {text}
+              <br/>
+            </span>
+            )})}
         </div>
         <FormContextProvider>
           <Form onSubmit={handleSubmit}>
