@@ -9,7 +9,7 @@ export type BoardContextValue = {
   updateBoard: (id: number, title: string, content: string) => void;
   getBoardInfo(id: number, addViewCount?: boolean): Board | undefined;
   addComment(boardId: number, comment: string): void;
-  updateComment(boardId: number, comment: string): void;
+  // updateComment(boardId: number, comment: string): void;
   deleteComment(boardId: number): void;
 };
 

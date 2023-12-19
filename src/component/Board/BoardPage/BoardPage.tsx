@@ -102,7 +102,7 @@ const BoardPage: React.FC = () => {
                   <div className='commentName'>{comment.user_name}</div>
                   {auth?.id === comment.user_id && (
                     <div className='commentBtn'>
-                      <button>수정</button>
+                      {/*<button>수정</button>*/}
                       <button onClick={() => deleteComment(boardId)}>삭제</button>
                     </div>
                   )}

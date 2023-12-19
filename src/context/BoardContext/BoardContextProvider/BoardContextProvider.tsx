@@ -144,12 +144,11 @@ const BoardContextProvider = ({ children }: Props) => {
     [auth, boardList, getBoardInfo]
   );
 
-  const updateComment = useCallback(
-    (boardId: number, comment: string) => {
-      if (auth && boardList) {
-        const info = getBoardInfo(boardId);
-        if (info) {
-          // const commentId = info.comment.;
+  // const updateComment = useCallback(
+  //   (boardId: number, comment: string) => {
+  //     if (auth && boardList) {
+  //       const info = getBoardInfo(boardId);
+  //       if (info) {
 
           // info.comment.unshift({
             // id: commentId,
@@ -158,14 +157,14 @@ const BoardContextProvider = ({ children }: Props) => {
           //   create_date: dateToString(),
           // });
 
-          const updateList = boardList.map((board) => (board.id === boardId ? { ...info } : board));
-          localStorage.setItem('BoardList', JSON.stringify(updateList));
-          setBoardList(updateList);
-        }
-      }
-    },
-    [auth, boardList, getBoardInfo]
-  );
+  //         const updateList = boardList.map((board) => (board.id === boardId ? { ...info } : board));
+  //         localStorage.setItem('BoardList', JSON.stringify(updateList));
+  //         setBoardList(updateList);
+  //       }
+  //     }
+  //   },
+  //   [auth, boardList, getBoardInfo]
+  // );
 
   const deleteComment = useCallback(
       (boardId: number) => {
@@ -195,7 +194,7 @@ const BoardContextProvider = ({ children }: Props) => {
         updateBoard,
         getBoardInfo,
         addComment,
-        updateComment,
+        // updateComment,
         deleteComment,
       }}
     >
