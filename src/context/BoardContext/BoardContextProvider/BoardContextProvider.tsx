@@ -88,14 +88,14 @@ const BoardContextProvider = ({ children }: Props) => {
   );
 
   const deleteBoard = useCallback(
-      (id: number) => {
-        if (boardList) {
-          const list = boardList.filter((board) => board.id !== id);
-          localStorage.removeItem('BoardList');
-          setBoardList(list);
-        }
-      },
-      [boardList]
+    (id: number) => {
+      if (boardList) {
+        const list = boardList.filter((board) => board.id !== id);
+        localStorage.removeItem('BoardList');
+        setBoardList(list);
+      }
+    },
+    [boardList]
   );
 
   const getBoardInfo = useCallback(
@@ -150,12 +150,12 @@ const BoardContextProvider = ({ children }: Props) => {
   //       const info = getBoardInfo(boardId);
   //       if (info) {
 
-          // info.comment.unshift({
-            // id: commentId,
-          //   user_id: auth.id,
-          //   content: comment,
-          //   create_date: dateToString(),
-          // });
+  // info.comment.unshift({
+  // id: commentId,
+  //   user_id: auth.id,
+  //   content: comment,
+  //   create_date: dateToString(),
+  // });
 
   //         const updateList = boardList.map((board) => (board.id === boardId ? { ...info } : board));
   //         localStorage.setItem('BoardList', JSON.stringify(updateList));
@@ -167,20 +167,20 @@ const BoardContextProvider = ({ children }: Props) => {
   // );
 
   const deleteComment = useCallback(
-      (boardId: number) => {
-        if (boardList) {
-          const info = getBoardInfo(boardId);
-          if(info) {
-            // info.comment.find((item) => item.id === boardId);
-            info.comment.map((item) => item.id === boardId ? item : '');
-            const deleteList = boardList.map((board) => (board.id === boardId ? { ...info } : board));
-            // localStorage.removeItem('BoardList');
-            localStorage.setItem('BoardList', JSON.stringify(deleteList));
-            setBoardList(deleteList);
-          }
+    (boardId: number) => {
+      if (boardList) {
+        const info = getBoardInfo(boardId);
+        if (info) {
+          // info.comment.find((item) => item.id === boardId);
+          info.comment.map((item) => (item.id === boardId ? item : ''));
+          const deleteList = boardList.map((board) => (board.id === boardId ? { ...info } : board));
+          // localStorage.removeItem('BoardList');
+          localStorage.setItem('BoardList', JSON.stringify(deleteList));
+          setBoardList(deleteList);
         }
-      },
-      [boardList, getBoardInfo]
+      }
+    },
+    [boardList, getBoardInfo]
   );
 
   // -------------------------------------------------------------------------------------------------------------------
