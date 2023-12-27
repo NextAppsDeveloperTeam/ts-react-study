@@ -61,6 +61,11 @@ export const TableStyled = styled.div`
             cursor: pointer;
           }
         }
+        
+        .notSearch {
+          padding-top: 40px;
+          font-size: 17px;
+        }
       }
     }
   }
@@ -81,6 +86,10 @@ export const SearchBtn = styled.div`
 
   button {
     padding: 9px 17px;
+    
+    &:disabled {
+      opacity: 0.6;
+    }
   }
 `;
 
@@ -95,6 +104,10 @@ export const PageBtn = styled.div`
     background: #ffffff;
     color: #000000;
     border: 1px solid #000000;
+
+    &:hover {
+      background: rgba(224, 224, 224, 0.78);
+    }
   }
 `;
 
@@ -103,5 +116,9 @@ export const AddBtn = styled.div`
 
   button {
     padding: 10px 20px;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 `;

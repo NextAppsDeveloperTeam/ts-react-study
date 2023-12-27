@@ -202,4 +202,5 @@ const BoardContextProvider = ({ children }: Props) => {
     </BoardContext.Provider>
   ) : null;
 };
+
 export default BoardContextProvider;
