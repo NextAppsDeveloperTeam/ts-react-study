@@ -8,12 +8,13 @@ import { AddBtn, Container, PageBtn, SearchBtn, TableStyled } from './BoardList.
 const BoardList: React.FC = () => {
   const navigate = useNavigate();
 
-  const { userList, getUserInfo } = useContext(UserContext) as UserContextValue;
+  const { getUserInfo } = useContext(UserContext) as UserContextValue;
   const { boardList } = useContext(BoardContext) as BoardContextValue;
 
   const [searchInput, setSearchInput] = useState('');
   const [searchList, setSearchList] = useState<Board[]>([]);
   const [searchSelect, setSearchSelect] = useState('title');
+  const [btnClick, setBtnClick] = useState(false);
 
   const handleChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value.toLowerCase());
@@ -32,6 +33,7 @@ const BoardList: React.FC = () => {
         : getUserInfo(item.user_id)?.name.toLowerCase().includes(searchInput)
     );
     setSearchList(list);
+    setBtnClick(true);
   }, [boardList, getUserInfo, searchInput, searchSelect]);
 
   return (
@@ -43,7 +45,7 @@ const BoardList: React.FC = () => {
           <option value='content'>내용</option>
           <option value='writer'>작성자</option>
         </select>
-        <input type='text' placeholder='검색' value={searchInput} onChange={handleChangeInput} />
+        <input type='text' placeholder='검색' onChange={handleChangeInput} />
         <button onClick={handleClick} disabled={searchInput === ''}>
           검색
         </button>
@@ -63,7 +65,7 @@ const BoardList: React.FC = () => {
           <tbody>
             {searchList.length === 0 ? (
               <>
-                {!searchInput ? (
+                {!btnClick ? (
                   <>
                     {boardList.map((board: Board) => {
                       return (
@@ -88,7 +90,9 @@ const BoardList: React.FC = () => {
                 ) : (
                   <>
                     <tr>
-                      <td className='notSearch' colSpan={5}>검색 결과가 없습니다.</td>
+                      <td className='notSearch' colSpan={5}>
+                        검색 결과가 없습니다.
+                      </td>
                     </tr>
                   </>
                 )}
@@ -108,7 +112,7 @@ const BoardList: React.FC = () => {
                           {boards.title}
                         </a>
                       </td>
-                      <td>{userList.map((user) => (user.id === boards.user_id ? user.name : ''))}</td>
+                      <td>{getUserInfo(boards.user_id)?.name}</td>
                       <td>{boards.create_date.substring(0, 10).replace(/-/g, '.')}</td>
                       <td>{boards.views}</td>
                     </tr>

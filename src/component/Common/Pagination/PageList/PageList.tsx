@@ -13,5 +13,25 @@ const PageList: React.FC = () => {
   );
 };
 
+// const PageList = () => {
+//   const [curPage, setCurPage] = useState(1);
+//   //생략
+//
+//   return (
+//     <>
+//       {boardList.length !== 0 && (
+//         <PageListPagination
+//           curPage={curPage}
+//           setCurPage={setCurPage}
+//           totalPage={page.totalPages}
+//           totalCount={page.totalElements}
+//           size={page.size}
+//           pageCount={10}
+//         />
+//       )}
+//     </>
+//   );
+// };
+
 PageList.displayName = 'BoardList';
 export default PageList;
