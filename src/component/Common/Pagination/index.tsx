@@ -1,2 +1,1 @@
-export * from './PageList';
-export * from './PageListPagination';
+export * from './Pagination';

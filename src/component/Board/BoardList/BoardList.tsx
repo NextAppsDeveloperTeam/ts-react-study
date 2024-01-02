@@ -3,7 +3,8 @@ import { Title } from '../../Common';
 import { Board } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
 import { useNavigate } from 'react-router-dom';
-import { AddBtn, Container, PageBtn, SearchBtn, TableStyled } from './BoardList.style';
+import { AddBtn, Container, SearchBtn, TableStyled } from './BoardList.style';
+import Pagination from "../../Common/Pagination/Pagination";
 
 const BoardList: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ const BoardList: React.FC = () => {
   const [searchList, setSearchList] = useState<Board[]>([]);
   const [searchSelect, setSearchSelect] = useState('title');
   const [btnClick, setBtnClick] = useState(false);
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const offset = (page - 1) * limit;
 
   const handleChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value.toLowerCase());
@@ -67,7 +71,7 @@ const BoardList: React.FC = () => {
               <>
                 {!btnClick ? (
                   <>
-                    {boardList.map((board: Board) => {
+                    {boardList.slice(offset, offset + limit).map((board: Board) => {
                       return (
                         <tr key={board.id}>
                           <td>{board.id}</td>
@@ -123,11 +127,7 @@ const BoardList: React.FC = () => {
           </tbody>
         </table>
       </TableStyled>
-      <PageBtn>
-        <button>&lt;</button>
-        <button>1</button>
-        <button>&gt;</button>
-      </PageBtn>
+      <Pagination total={boardList.length} limit={limit} page={page} setPage={setPage} />
       <AddBtn>
         <button onClick={() => navigate('/boardPost')}>글쓰기</button>
       </AddBtn>

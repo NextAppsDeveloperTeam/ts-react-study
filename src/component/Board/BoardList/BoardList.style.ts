@@ -93,24 +93,6 @@ export const SearchBtn = styled.div`
   }
 `;
 
-export const PageBtn = styled.div`
-  text-align: center;
-  margin: 10px 0;
-
-  button {
-    width: 20px;
-    height: 20px;
-    margin: 2px;
-    background: #ffffff;
-    color: #000000;
-    border: 1px solid #000000;
-
-    &:hover {
-      background: rgba(224, 224, 224, 0.78);
-    }
-  }
-`;
-
 export const AddBtn = styled.div`
   text-align: center;
 
