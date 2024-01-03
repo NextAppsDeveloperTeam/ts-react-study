@@ -48,15 +48,25 @@ const BoardPost: React.FC = () => {
     const info = getBoardInfo(boardId, false);
     if (info) {
       setBoardInfo(info);
+      setTitle(info.title);
+      setContent(info.content);
     }
   }, [boardId, getBoardInfo]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (formCommandsRef.current) {
+        formCommandsRef.current.focus('title');
+      }
+    }, 1);
+  }, []);
 
   const handleSubmit = useCallback(
     (values: { title: string; content: string }) => {
       addBoard(values.title, values.content);
       if (boardInfo) {
         updateBoard(boardInfo.id, title, content);
-        navigate(`boardPage/${boardInfo.id}`);
+        navigate(`/boardPage/${boardInfo.id}`);
       } else {
         navigate('/boardList');
       }
@@ -71,8 +81,8 @@ const BoardPost: React.FC = () => {
         <Form ref={formCommandsRef} onSubmit={handleSubmit}>
           {boardInfo ? (
             <>
-              <FormText label='제목' name='title' value={boardInfo.title} onChange={setTitle} required />
-              <FormTextArea label='내용' name='content' value={boardInfo.content} onChange={setContent} required />
+              <FormText label='제목' name='title' value={title} onChange={setTitle} required />
+              <FormTextArea label='내용' name='content' value={content} onChange={setContent} required />
               <Button>
                 <button>수정하기</button>
               </Button>

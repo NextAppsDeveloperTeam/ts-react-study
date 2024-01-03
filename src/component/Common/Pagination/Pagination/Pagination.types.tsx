@@ -5,4 +5,6 @@ export interface PaginationProps {
     limit: number;
     page: number;
     setPage: React.Dispatch<React.SetStateAction<number>>;
+    block: number;
+    setBlock: React.Dispatch<React.SetStateAction<number>>;
 }

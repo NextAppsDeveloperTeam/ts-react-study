@@ -17,7 +17,9 @@ const BoardList: React.FC = () => {
   const [searchSelect, setSearchSelect] = useState('title');
   const [btnClick, setBtnClick] = useState(false);
   const [page, setPage] = useState(1);
+  const [block, setBlock] = useState(0);
   const limit = 10;
+  let total = boardList.length;
   const offset = (page - 1) * limit;
 
   const handleChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +105,8 @@ const BoardList: React.FC = () => {
               </>
             ) : (
               <>
-                {searchList.map((boards: Board) => {
+                {searchList.slice(offset, offset + limit).map((boards: Board) => {
+                  total = searchList.length;
                   return (
                     <tr key={boards.id}>
                       <td>{boards.id}</td>
@@ -127,7 +130,7 @@ const BoardList: React.FC = () => {
           </tbody>
         </table>
       </TableStyled>
-      <Pagination total={boardList.length} limit={limit} page={page} setPage={setPage} />
+      <Pagination total={total} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />
       <AddBtn>
         <button onClick={() => navigate('/boardPost')}>글쓰기</button>
       </AddBtn>

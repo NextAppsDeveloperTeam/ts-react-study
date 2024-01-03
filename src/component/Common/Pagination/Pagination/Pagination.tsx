@@ -1,64 +1,66 @@
 import React from 'react';
 import { PaginationProps as Props } from './Pagination.types';
-import styled from 'styled-components';
+import {PageBtn} from "./Pagination.style";
 
-const PageBtn = styled.nav`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
+function Pagination({ total, limit, page, setPage, block, setBlock }: Props) {
+  const createArr = (n: number) => {
+    const iArr: number[] = new Array(n);
+    for (let i = 0; i < n; i++) iArr[i] = i + 1;
+    return iArr;
+  };
 
-  button {
-    width: 23px;
-    height: 23px;
-    margin: 2px;
-    border: none;
-    background: #ffffff;
-    color: #000000;
-    cursor: pointer;
-    font-size: 15px;
+  const totalPage = Math.ceil(total / limit);
+  const pageLimit = 10;
+  const blockArea = Number(block * pageLimit);
+  const nArr = createArr(Number(totalPage));
+  const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);
 
-    &:hover {
-      background: rgba(206, 206, 206, 0.78);
+  const firstPage = () => {
+    setPage(1);
+    setBlock(0);
+  };
+
+  const lastPage = () => {
+    setPage(totalPage);
+    setBlock(Math.ceil(totalPage / pageLimit) - 1);
+  };
+
+  const prevPage = () => {
+    if (block === 0) {
+      setPage(1);
+    } else {
+      setPage((n: number) => n - (page % pageLimit));
+      setBlock((n: number) => n - 1);
     }
+  };
 
-    &[disabled] {
-      color: #b2b2b2;
-      cursor: revert;
-      transform: revert;
-      
-      &:hover {
-        background: none;
-      }
+  const nextPage = () => {
+    if (block === Math.ceil(totalPage / pageLimit) - 1) {
+      setPage(totalPage);
+    } else {
+      setPage(pageLimit * Number(block + 1) + 1);
+      setBlock((n: number) => n + 1);
     }
-
-    &[aria-current] {
-      background: #646464;
-      color: rgb(255, 255, 255);
-      font-weight: bold;
-      cursor: revert;
-      transform: revert;
-    }
-  }
-`;
-
-function Pagination({ total, limit, page, setPage }: Props) {
-  const numPages = Math.ceil(total / limit);
+  };
 
   return (
     <PageBtn>
-      <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+      <button className='pageBtn' onClick={() => firstPage()} disabled={page === 1}>
+        &lt;&lt;
+      </button>
+      <button className='pageBtn' onClick={() => prevPage()} disabled={page === 1}>
         &lt;
       </button>
-      {Array(numPages)
-        .fill('')
-        .map((_, i) => (
-          <button key={i + 1} onClick={() => setPage(i + 1)} aria-current={page === i + 1 ? 'page' : undefined}>
-            {i + 1}
-          </button>
-        ))}
-      <button onClick={() => setPage(page + 1)} disabled={page === numPages}>
+      {pArr.map((n) => (
+        <button key={n} onClick={() => setPage(n)} aria-current={page === n ? 'page' : undefined}>
+          {n}
+        </button>
+      ))}
+      <button className='pageBtn' onClick={() => nextPage()} disabled={page === totalPage}>
         &gt;
+      </button>
+      <button className='pageBtn' onClick={() => lastPage()} disabled={page === totalPage}>
+        &gt;&gt;
       </button>
     </PageBtn>
   );

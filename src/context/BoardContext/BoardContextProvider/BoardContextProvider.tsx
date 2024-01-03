@@ -172,6 +172,7 @@ const BoardContextProvider = ({ children }: Props) => {
         const info = getBoardInfo(boardId);
         if (info) {
           // info.comment.find((item) => item.id === boardId);
+          // const arr = info.comment.filter((item) => item.id !== boardId);
           info.comment.map((item) => (item.id === boardId ? item : ''));
           const deleteList = boardList.map((board) => (board.id === boardId ? { ...info } : board));
           // localStorage.removeItem('BoardList');

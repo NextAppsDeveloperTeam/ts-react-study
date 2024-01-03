@@ -16,14 +16,14 @@ export const TableStyled = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 440px;
+  height: 450px;
 
   table {
     width: 100%;
 
     thead {
       th {
-        padding: 10px 0;
+        padding: 13px 0;
       }
 
       th:nth-child(1) {
@@ -50,7 +50,7 @@ export const TableStyled = styled.div`
     tbody {
       tr {
         td {
-          padding: 7px 0;
+          padding: 8px 0;
         }
 
         td:nth-child(2) {
@@ -95,6 +95,7 @@ export const SearchBtn = styled.div`
 
 export const AddBtn = styled.div`
   text-align: center;
+  margin-top: 20px;
 
   button {
     padding: 10px 20px;
