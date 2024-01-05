@@ -1,68 +1,38 @@
 import React, { useContext } from 'react';
 import { User } from '../../../@types';
-import styled from 'styled-components';
 import { UserContext, UserContextValue } from '../../../context';
+import { Button, StyleUserItem } from './UserItem.style';
 
 type Props = {
   user: User;
   deleteUser?: (id: number) => void;
 };
 
-const StyleUserItem = styled.div`
-  margin: 20px;
-`;
-
-const Item = styled.span`
-  display: flex;
-  margin: 5px 0;
-
-  div {
-    width: 80px;
-  }
-
-  p {
-    color: #051169;
-  }
-`;
-
-const Button = styled.button`
-  width: 80px;
-  height: 35px;
-  margin: 15px 0;
-  font-size: 14px;
-  border: none;
-  background: #282828;
-  color: #ffffff;
-
-  &:hover {
-    opacity: 0.7;
-`;
-
 const UserItem: React.FC<Props> = ({ user, deleteUser }) => {
   const { auth, logout } = useContext(UserContext) as UserContextValue;
 
   return (
     <StyleUserItem>
-      <Item>
+      <div className='userItem'>
         <div>아이디</div>
         <p>{user.id}</p>
-      </Item>
-      <Item>
+      </div>
+      <div className='userItem'>
         <div>이름</div>
         <p>{user.name}</p>
-      </Item>
-      <Item>
+      </div>
+      <div className='userItem'>
         <div>이메일</div>
         <p>{user.email}</p>
-      </Item>
-      <Item>
+      </div>
+      <div className='userItem'>
         <div>전화번호</div>
         <p>{user.phone}</p>
-      </Item>
-      <Item>
+      </div>
+      <div className='userItem'>
         <div>회원유형</div>
         <p>{user.status}</p>
-      </Item>
+      </div>
       {deleteUser && (
         <Button
           onClick={() => {

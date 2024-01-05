@@ -2,42 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Form, FormCommands, FormEmail, FormName, FormPassword, FormPhone, FormRadioGroup, Title } from '../../Common';
 import FormContextProvider from '../../Common/Form/FormContextProvider';
 import { UserContext, UserContextValue } from '../../../context';
-import styled from 'styled-components';
 import { User, UserStatus } from '../../../@types';
 import { useNavigate } from 'react-router-dom';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Button = styled.button`
-  width: 280px;
-  height: 40px;
-  margin: 15px 0;
-  font-size: 16px;
-  border: none;
-  background: #000000;
-  color: #ffffff;
-
-  &:hover {
-    opacity: 0.7;
-`;
-
-const StyledLoginText = styled.p`
-  font-size: 13px;
-  text-align: center;
-  margin: 10px 0;
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-`;
+import { Button, Container, StyledLoginText } from './AuthReg.style';
 
 const AuthReg = () => {
   const { addUser, userList } = useContext(UserContext) as UserContextValue;

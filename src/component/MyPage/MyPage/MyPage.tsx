@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import MyPwdCheck from '../MyPwdCheck';
 
 const Container = styled.div`
-  margin-left: 230px;
+  margin-left: 210px;
 `;
 
 const Button = styled.button`
@@ -51,30 +51,30 @@ const MyPage: React.FC = () => {
 
   return (
     <Container className='MyPage'>
-      <Title text='내 정보' />
-      <MyMenu />
-      {auth && (
-        <>
-          <Item>
-            <div>이름</div>
-            <p>{auth.name}</p>
-          </Item>
-          <Item>
-            <div>이메일</div>
-            <p>{auth.email}</p>
-          </Item>
-          <Item>
-            <div>전화번호</div>
-            <p>{auth.phone}</p>
-          </Item>
-          <Item>
-            <div>회원유형</div>
-            <p>{auth.status}</p>
-          </Item>
-        </>
-      )}
-      <Button onClick={clickModal}>내 정보 수정</Button>
-      {isOpenModal && <MyPwdCheck onCLick={closeModal}/>}
+        <Title text='내 정보' />
+        <MyMenu />
+        {auth && (
+          <>
+            <Item>
+              <div>이름</div>
+              <p>{auth.name}</p>
+            </Item>
+            <Item>
+              <div>이메일</div>
+              <p>{auth.email}</p>
+            </Item>
+            <Item>
+              <div>전화번호</div>
+              <p>{auth.phone}</p>
+            </Item>
+            <Item>
+              <div>회원유형</div>
+              <p>{auth.status}</p>
+            </Item>
+          </>
+        )}
+        <Button onClick={clickModal}>내 정보 수정</Button>
+        {isOpenModal && <MyPwdCheck onCLick={closeModal} />}
     </Container>
   );
 };

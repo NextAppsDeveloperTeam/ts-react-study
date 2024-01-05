@@ -1,46 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Form, FormCommands, FormContextProvider, FormEmail, FormPassword, Title } from '../../Common';
 import { UserContext, UserContextValue } from '../../../context';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Button = styled.button`
-  width: 280px;
-  height: 40px;
-  margin: 15px 0;
-  font-size: 16px;
-  border: none;
-  background: #000000;
-  color: #ffffff;
-
-  &:hover {
-    opacity: 0.7;
-`;
-
-const StyledJoinText = styled.p`
-  font-size: 13px;
-  text-align: center;
-  margin: 10px 0;
-
-  a {
-    text-decoration: none;
-
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-`;
-
-const ErrorText = styled.div`
-  font-size: 14px;
-  color: red;
-`;
+import {Button, Container, ErrorText, StyledJoinText} from "./AuthLogin.style";
 
 const AuthLogin = () => {
   const { login } = useContext(UserContext) as UserContextValue;

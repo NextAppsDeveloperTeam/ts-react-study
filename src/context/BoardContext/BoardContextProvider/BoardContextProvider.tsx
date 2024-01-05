@@ -163,20 +163,24 @@ const BoardContextProvider = ({ children }: Props) => {
   //       }
   //     }
   //   },
-  //   [auth, boardList, getBoardInfo]
+  //   [auth, boardList, getBoardInfo]0.2
   // );
 
   const deleteComment = useCallback(
-    (boardId: number) => {
+    (boardId: number, commentId: number) => {
       if (boardList) {
         const info = getBoardInfo(boardId);
         if (info) {
-          // info.comment.find((item) => item.id === boardId);
-          // const arr = info.comment.filter((item) => item.id !== boardId);
-          info.comment.map((item) => (item.id === boardId ? item : ''));
-          const deleteList = boardList.map((board) => (board.id === boardId ? { ...info } : board));
-          // localStorage.removeItem('BoardList');
-          localStorage.setItem('BoardList', JSON.stringify(deleteList));
+          const list = info.comment.filter((item) => item.id !== commentId);
+          const deleteList = boardList.map((board) =>
+            board.id === boardId
+              ? {
+                  ...info,
+                  comment: [...list],
+                }
+              : board
+          );
+          localStorage.removeItem('BoardList');
           setBoardList(deleteList);
         }
       }

@@ -1,10 +1,9 @@
 import React, { ChangeEvent, useCallback, useContext, useState } from 'react';
-import { Title } from '../../Common';
+import { Pagination, Title } from '../../Common';
 import { Board } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
 import { useNavigate } from 'react-router-dom';
 import { AddBtn, Container, SearchBtn, TableStyled } from './BoardList.style';
-import Pagination from "../../Common/Pagination/Pagination";
 
 const BoardList: React.FC = () => {
   const navigate = useNavigate();

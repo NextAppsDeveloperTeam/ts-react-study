@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Form, FormText, FormContextProvider } from '../../Common';
+import { Form, FormText, FormContextProvider, Pagination } from '../../Common';
 import { Board, BoardComment } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,6 +17,11 @@ const BoardPage: React.FC = () => {
   const [boardInfo, setBoardInfo] = useState<Board>();
   const [commentList, setCommentList] = useState<(BoardComment & { user_name: string | undefined })[]>();
   const [comment, setComment] = useState('');
+  const [page, setPage] = useState(1);
+  const [block, setBlock] = useState(0);
+  const limit = 10;
+  const total = commentList?.length;
+  const offset = (page - 1) * limit;
 
   useEffect(() => {
     const info = getBoardInfo(boardId, true);
@@ -72,11 +77,12 @@ const BoardPage: React.FC = () => {
         <div className='boardContent'>
           {boardInfo.content.split('\n').map((text, num) => {
             return (
-            <span key={num}>
-              {text}
-              <br/>
-            </span>
-            )})}
+              <span key={num}>
+                {text}
+                <br />
+              </span>
+            );
+          })}
         </div>
         <FormContextProvider>
           <Form onSubmit={handleSubmit}>
@@ -96,14 +102,20 @@ const BoardPage: React.FC = () => {
         </FormContextProvider>
         <div>
           {commentList &&
-            commentList.map((comment) => (
+            commentList.slice(offset, offset + limit).map((comment) => (
               <div key={comment.id} className='commentStyled'>
                 <div className='commentDiv'>
                   <div className='commentName'>{comment.user_name}</div>
                   {auth?.id === comment.user_id && (
                     <div className='commentBtn'>
                       {/*<button>수정</button>*/}
-                      <button onClick={() => deleteComment(boardId)}>삭제</button>
+                      <button
+                        onClick={() => {
+                          deleteComment(boardId, comment.id);
+                        }}
+                      >
+                        삭제
+                      </button>
                     </div>
                   )}
                 </div>
@@ -113,6 +125,9 @@ const BoardPage: React.FC = () => {
               </div>
             ))}
         </div>
+        {total && (
+          <Pagination total={total} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />
+        )}
       </div>
     </Container>
   ) : null;
