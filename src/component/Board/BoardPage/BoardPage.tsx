@@ -51,6 +51,8 @@ const BoardPage: React.FC = () => {
     [addComment, boardId]
   );
 
+  ll(commentList?.length);
+
   return boardInfo ? (
     <Container className='Board'>
       <div key={boardInfo.id}>
@@ -101,29 +103,36 @@ const BoardPage: React.FC = () => {
           </Form>
         </FormContextProvider>
         <div>
-          {commentList &&
-            commentList.slice(offset, offset + limit).map((comment) => (
-              <div key={comment.id} className='commentStyled'>
-                <div className='commentDiv'>
-                  <div className='commentName'>{comment.user_name}</div>
-                  {auth?.id === comment.user_id && (
-                    <div className='commentBtn'>
-                      {/*<button>수정</button>*/}
-                      <button
-                        onClick={() => {
-                          deleteComment(boardId, comment.id);
-                        }}
-                      >
-                        삭제
-                      </button>
+          {commentList && (
+            <>
+              {commentList.length === 0 ? (
+                <>댓글이 없습니다.</>
+              ) : (
+                commentList.slice(offset, offset + limit).map((comment) => (
+                  <div key={comment.id} className='commentStyled'>
+                    <div className='commentDiv'>
+                      <div className='commentName'>{comment.user_name}</div>
+                      {auth?.id === comment.user_id && (
+                        <div className='commentBtn'>
+                          {/*<button>수정</button>*/}
+                          <button
+                            onClick={() => {
+                              deleteComment(boardId, comment.id);
+                            }}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-                <div className='commentContent'>{comment.content}</div>
-                <div className='commentDate'>{comment.create_date}</div>
-                <hr />
-              </div>
-            ))}
+                    <div className='commentContent'>{comment.content}</div>
+                    <div className='commentDate'>{comment.create_date}</div>
+                    <hr />
+                  </div>
+                ))
+              )}
+            </>
+          )}
         </div>
         {total && (
           <Pagination total={total} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />

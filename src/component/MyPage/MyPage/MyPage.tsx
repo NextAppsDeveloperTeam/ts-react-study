@@ -7,10 +7,25 @@ import MyPwdCheck from '../MyPwdCheck';
 
 const Container = styled.div`
   margin-left: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Item = styled.div`
+  margin: 10px;
+
+  div {
+    width: 220px;
+  }
+
+  p {
+    color: #051169;
+  }
 `;
 
 const Button = styled.button`
-  width: 250px;
+  width: 220px;
   height: 37px;
   margin: 15px 20px;
   font-size: 15px;
@@ -20,20 +35,6 @@ const Button = styled.button`
 
   &:hover {
     opacity: 0.7;
-`;
-
-const Item = styled.div`
-  display: block;
-  margin: 15px 20px;
-
-  div {
-    float: left;
-    width: 120px;
-  }
-
-  p {
-    color: #051169;
-  }
 `;
 
 const MyPage: React.FC = () => {

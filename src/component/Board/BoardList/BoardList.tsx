@@ -51,7 +51,7 @@ const BoardList: React.FC = () => {
           <option value='writer'>작성자</option>
         </select>
         <input type='text' placeholder='검색' onChange={handleChangeInput} />
-        <button onClick={handleClick} disabled={searchInput === ''}>
+        <button className='searchBtn' onClick={handleClick} disabled={searchInput === ''}>
           검색
         </button>
       </SearchBtn>
@@ -129,7 +129,11 @@ const BoardList: React.FC = () => {
           </tbody>
         </table>
       </TableStyled>
-      <Pagination total={total} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />
+      {btnClick && searchList.length === 0 ? (
+        <Pagination total={1} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />
+      ) : (
+        <Pagination total={total} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />
+      )}
       <AddBtn>
         <button onClick={() => navigate('/boardPost')}>글쓰기</button>
       </AddBtn>

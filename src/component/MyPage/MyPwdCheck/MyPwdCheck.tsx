@@ -89,8 +89,8 @@ const MyPwdCheck: React.FC<Props> = ({ onCLick }) => {
                 onValidate={handlePwdValidate}
                 required
               />
-              <Button onClick={onCLick}>취소</Button>
-              <Button>확인</Button>
+              <Button type='button' onClick={onCLick}>취소</Button>
+              <Button type='submit'>확인</Button>
             </Form>
         </FormContextProvider>
       </Modal>

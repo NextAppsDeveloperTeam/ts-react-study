@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 80%;
   margin: 0 auto;
 
-  button {
+  .searchBtn {
     background: #000000;
     color: #ffffff;
     border: none;
@@ -99,6 +99,9 @@ export const AddBtn = styled.div`
 
   button {
     padding: 10px 20px;
+    background: #000000;
+    color: #ffffff;
+    border: none;
 
     &:hover {
       opacity: 0.8;
