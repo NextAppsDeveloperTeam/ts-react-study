@@ -106,7 +106,7 @@ const BoardPage: React.FC = () => {
           {commentList && (
             <>
               {commentList.length === 0 ? (
-                <>댓글이 없습니다.</>
+                <></>
               ) : (
                 commentList.slice(offset, offset + limit).map((comment) => (
                   <div key={comment.id} className='commentStyled'>
@@ -134,8 +134,10 @@ const BoardPage: React.FC = () => {
             </>
           )}
         </div>
-        {total && (
+        {total && commentList?.length !== 0 ? (
           <Pagination total={total} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />
+        ) : (
+          <></>
         )}
       </div>
     </Container>

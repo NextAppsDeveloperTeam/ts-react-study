@@ -95,10 +95,10 @@ export const SearchBtn = styled.div`
 
 export const AddBtn = styled.div`
   text-align: center;
-  margin-top: 20px;
+  margin: 25px 0;
 
   button {
-    padding: 10px 20px;
+    padding: 10px 25px;
     background: #000000;
     color: #ffffff;
     border: none;
