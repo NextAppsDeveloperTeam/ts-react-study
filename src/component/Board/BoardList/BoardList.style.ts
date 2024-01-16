@@ -27,7 +27,7 @@ export const TableStyled = styled.div`
       }
 
       th:nth-child(1) {
-        width: 15%;
+        width: 12%;
       }
 
       th:nth-child(2) {
@@ -35,36 +35,37 @@ export const TableStyled = styled.div`
       }
 
       th:nth-child(3) {
-        width: 12%;
+        width: 15%;
       }
 
       th:nth-child(4) {
-        width: 18%;
+        width: 17%;
       }
 
       th:nth-child(5) {
-        width: 10%;
+        width: 11%;
       }
     }
 
     tbody {
       tr {
+
         td {
           padding: 8px 0;
         }
 
         td:nth-child(2) {
           text-align: left;
-
-          a {
-            color: #000000;
-            cursor: pointer;
-          }
         }
-        
+
         .notSearch {
           padding-top: 40px;
           font-size: 17px;
+        }
+
+        &:hover {
+          background: rgba(210, 210, 210, 0.53);
+          cursor: pointer;
         }
       }
     }
@@ -86,10 +87,6 @@ export const SearchBtn = styled.div`
 
   button {
     padding: 9px 17px;
-    
-    &:disabled {
-      opacity: 0.6;
-    }
   }
 `;
 

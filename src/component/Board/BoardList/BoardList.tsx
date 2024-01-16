@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useContext, useState } from 'react';
-import { Pagination, Title } from '../../Common';
+import { Form, FormContextProvider, Pagination, Title } from '../../Common';
 import { Board } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ const BoardList: React.FC = () => {
     setSearchSelect(e.target.value);
   }, []);
 
-  const handleClick = useCallback(() => {
+  const handleSubmit = useCallback(() => {
     const list = boardList.filter((item) =>
       searchSelect === 'title'
         ? item.title.toLowerCase().includes(searchInput)
@@ -45,15 +45,17 @@ const BoardList: React.FC = () => {
     <Container className='Board'>
       <Title text='자유게시판' />
       <SearchBtn>
-        <select onChange={handleChangeSelect}>
-          <option value='title'>제목</option>
-          <option value='content'>내용</option>
-          <option value='writer'>작성자</option>
-        </select>
-        <input type='text' placeholder='검색' onChange={handleChangeInput} />
-        <button className='searchBtn' onClick={handleClick} disabled={searchInput === ''}>
-          검색
-        </button>
+        <FormContextProvider>
+          <Form onSubmit={handleSubmit}>
+            <select onChange={handleChangeSelect}>
+              <option value='title'>제목</option>
+              <option value='content'>내용</option>
+              <option value='writer'>작성자</option>
+            </select>
+            <input type='text' placeholder='검색' onChange={handleChangeInput} />
+            <button className='searchBtn'>검색</button>
+          </Form>
+        </FormContextProvider>
       </SearchBtn>
       <hr />
       <TableStyled>
@@ -74,17 +76,14 @@ const BoardList: React.FC = () => {
                   <>
                     {boardList.slice(offset, offset + limit).map((board: Board) => {
                       return (
-                        <tr key={board.id}>
+                        <tr
+                          key={board.id}
+                          onClick={() => {
+                            navigate(`/boardPage/${board.id}`);
+                          }}
+                        >
                           <td>{board.id}</td>
-                          <td>
-                            <a
-                              onClick={() => {
-                                navigate(`/boardPage/${board.id}`);
-                              }}
-                            >
-                              {board.title}
-                            </a>
-                          </td>
+                          <td>{board.title}</td>
                           <td>{getUserInfo(board.user_id)?.name}</td>
                           <td>{board.create_date.substring(0, 10).replace(/-/g, '.')}</td>
                           <td>{board.views}</td>
@@ -107,17 +106,14 @@ const BoardList: React.FC = () => {
                 {searchList.slice(offset, offset + limit).map((boards: Board) => {
                   total = searchList.length;
                   return (
-                    <tr key={boards.id}>
+                    <tr
+                      key={boards.id}
+                      onClick={() => {
+                        navigate(`/boardPage/${boards.id}`);
+                      }}
+                    >
                       <td>{boards.id}</td>
-                      <td>
-                        <a
-                          onClick={() => {
-                            navigate(`/boardPage/${boards.id}`);
-                          }}
-                        >
-                          {boards.title}
-                        </a>
-                      </td>
+                      <td>{boards.title}</td>
                       <td>{getUserInfo(boards.user_id)?.name}</td>
                       <td>{boards.create_date.substring(0, 10).replace(/-/g, '.')}</td>
                       <td>{boards.views}</td>

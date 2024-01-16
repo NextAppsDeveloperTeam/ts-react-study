@@ -51,8 +51,6 @@ const BoardPage: React.FC = () => {
     [addComment, boardId]
   );
 
-  ll(commentList?.length);
-
   return boardInfo ? (
     <Container className='Board'>
       <div key={boardInfo.id}>
