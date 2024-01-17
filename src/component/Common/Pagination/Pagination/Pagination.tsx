@@ -1,8 +1,11 @@
 import React from 'react';
 import { PaginationProps as Props } from './Pagination.types';
-import {PageBtn} from "./Pagination.style";
+import { PageBtn } from './Pagination.style';
+import { useNavigate } from 'react-router-dom';
 
 function Pagination({ total, limit, page, setPage, block, setBlock }: Props) {
+  const navigate = useNavigate();
+
   const createArr = (n: number) => {
     const iArr: number[] = new Array(n);
     for (let i = 0; i < n; i++) iArr[i] = i + 1;
@@ -14,6 +17,10 @@ function Pagination({ total, limit, page, setPage, block, setBlock }: Props) {
   const blockArea = Number(block * pageLimit);
   const nArr = createArr(Number(totalPage));
   const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);
+
+  useEffect(() => {
+    navigate(`/boardList#p=${page}`);
+  }, [navigate, page]);
 
   const firstPage = () => {
     setPage(1);

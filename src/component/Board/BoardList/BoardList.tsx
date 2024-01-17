@@ -2,11 +2,12 @@ import React, { ChangeEvent, useCallback, useContext, useState } from 'react';
 import { Form, FormContextProvider, Pagination, Title } from '../../Common';
 import { Board } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AddBtn, Container, SearchBtn, TableStyled } from './BoardList.style';
 
 const BoardList: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { getUserInfo } = useContext(UserContext) as UserContextValue;
   const { boardList } = useContext(BoardContext) as BoardContextValue;
@@ -20,6 +21,11 @@ const BoardList: React.FC = () => {
   const limit = 10;
   let total = boardList.length;
   const offset = (page - 1) * limit;
+
+  useEffect(() => {
+    setPage(Number(location.hash.substring(3)));
+    navigate(`/boardList${location.hash}`);
+  }, [location.hash, navigate]);
 
   const handleChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value.toLowerCase());

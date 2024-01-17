@@ -31,8 +31,7 @@ const MainRoute = () => {
           <Route path='myInfoUpdate' element={<MyInfoUpdate />} />
           <Route path='myPwdCheck' element={<MyPwdCheck />} />
           <Route path='/myDelete' element={<MyDelete />} />
-          <Route path='/boardList/:id' element={<BoardList />} />
-          {/*<HashRouter />*/}
+          <Route path='/boardList' element={<BoardList />} />
           <Route path='/boardPost/:id?' element={<BoardPost />} />
           <Route path='/boardPage/:id' element={<BoardPage />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}

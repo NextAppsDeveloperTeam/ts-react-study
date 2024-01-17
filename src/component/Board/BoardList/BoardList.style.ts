@@ -20,6 +20,7 @@ export const TableStyled = styled.div`
 
   table {
     width: 100%;
+    border-collapse: collapse;
 
     thead {
       th {
@@ -64,7 +65,7 @@ export const TableStyled = styled.div`
         }
 
         &:hover {
-          background: rgba(210, 210, 210, 0.53);
+          background: #E0E0E0A5;
           cursor: pointer;
         }
       }
