@@ -3,7 +3,7 @@ import { Pagination, Title } from '../../Common';
 import { Board } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AddBtn, Container, TableStyled } from './BoardList.style';
+import { Container, StyledAddBtn, TableStyled } from './BoardList.style';
 import { util } from '../../../@util';
 import { Search } from './controls';
 import { SearchType } from './controls/Search';
@@ -26,12 +26,29 @@ const BoardList: React.FC = () => {
 
   // Memo --------------------------------------------------------------------------------------------------------------
 
-  const total = useMemo(() => boardList.length, [boardList]);
+  const searchList = useMemo(() => {
+    return boardList.filter((item) =>
+      searchType === 'title'
+        ? item.title.toLowerCase().includes(keyword)
+        : searchType === 'content'
+        ? item.content.toLowerCase().includes(keyword)
+        : getUserInfo(item.user_id)?.name.toLowerCase().includes(keyword)
+    );
+  }, [boardList, getUserInfo, keyword, searchType]);
+
+  const total = useMemo(
+    () => (keyword === '' ? boardList.length : searchList.length),
+    [boardList.length, keyword, searchList.length]
+  );
 
   const list = useMemo(() => {
     const offset = (page - 1) * limit;
-    return boardList.slice(offset, offset + limit);
-  }, [boardList, page]);
+    if (keyword === '') {
+      return boardList.slice(offset, offset + limit);
+    } else {
+      return searchList.slice(offset, offset + limit);
+    }
+  }, [boardList, keyword, page, searchList]);
 
   // Effect ------------------------------------------------------------------------------------------------------------
 
@@ -107,84 +124,41 @@ const BoardList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {list.map((boards: Board) => {
-              return (
-                <tr
-                  key={boards.id}
-                  onClick={() => {
-                    navigate(`/boardPage/${boards.id}`);
-                  }}
-                >
-                  <td>{boards.id}</td>
-                  <td>{boards.title}</td>
-                  <td>{getUserInfo(boards.user_id)?.name}</td>
-                  <td>{boards.create_date.substring(0, 10).replace(/-/g, '.')}</td>
-                  <td>{boards.views}</td>
+            {list.length === 0 ? (
+              <>
+                <tr>
+                  <td className='notSearch' colSpan={5}>
+                    검색 결과가 없습니다.
+                  </td>
                 </tr>
-              );
-            })}
-
-            {/*{searchList.length === 0 ? (*/}
-            {/*  <>*/}
-            {/*    {!btnClick ? (*/}
-            {/*      <>*/}
-            {/*        {boardList.slice(offset, offset + limit).map((board: Board) => {*/}
-            {/*          return (*/}
-            {/*            <tr*/}
-            {/*              key={board.id}*/}
-            {/*              onClick={() => {*/}
-            {/*                navigate(`/boardPage/${board.id}`);*/}
-            {/*              }}*/}
-            {/*            >*/}
-            {/*              <td>{board.id}</td>*/}
-            {/*              <td>{board.title}</td>*/}
-            {/*              <td>{getUserInfo(board.user_id)?.name}</td>*/}
-            {/*              <td>{board.create_date.substring(0, 10).replace(/-/g, '.')}</td>*/}
-            {/*              <td>{board.views}</td>*/}
-            {/*            </tr>*/}
-            {/*          );*/}
-            {/*        })}*/}
-            {/*      </>*/}
-            {/*    ) : (*/}
-            {/*      <>*/}
-            {/*        <tr>*/}
-            {/*          <td className='notSearch' colSpan={5}>*/}
-            {/*            검색 결과가 없습니다.*/}
-            {/*          </td>*/}
-            {/*        </tr>*/}
-            {/*      </>*/}
-            {/*    )}*/}
-            {/*  </>*/}
-            {/*) : (*/}
-            {/*  <>*/}
-            {/*    {searchList.slice(offset, offset + limit).map((boards: Board) => {*/}
-            {/*      total = searchList.length;*/}
-            {/*      return (*/}
-            {/*        <tr*/}
-            {/*          key={boards.id}*/}
-            {/*          onClick={() => {*/}
-            {/*            navigate(`/boardPage/${boards.id}`);*/}
-            {/*          }}*/}
-            {/*        >*/}
-            {/*          <td>{boards.id}</td>*/}
-            {/*          <td>{boards.title}</td>*/}
-            {/*          <td>{getUserInfo(boards.user_id)?.name}</td>*/}
-            {/*          <td>{boards.create_date.substring(0, 10).replace(/-/g, '.')}</td>*/}
-            {/*          <td>{boards.views}</td>*/}
-            {/*        </tr>*/}
-            {/*      );*/}
-            {/*    })}*/}
-            {/*  </>*/}
-            {/*)}*/}
+              </>
+            ) : (
+              <>
+                {list.map((board: Board) => {
+                  return (
+                    <tr
+                      key={board.id}
+                      onClick={() => {
+                        navigate(`/board/${board.id}`);
+                      }}
+                    >
+                      <td>{board.id}</td>
+                      <td>{board.title}</td>
+                      <td>{getUserInfo(board.user_id)?.name}</td>
+                      <td>{board.create_date.substring(0, 10).replace(/-/g, '.')}</td>
+                      <td>{board.views}</td>
+                    </tr>
+                  );
+                })}
+              </>
+            )}
           </tbody>
         </table>
       </TableStyled>
-      {/*{btnClick && list && list.length > 0 && (*/}
       <Pagination total={total} page={page} onPage={handlePageChange} />
-      {/*)}*/}
-      <AddBtn>
+      <StyledAddBtn>
         <button onClick={() => navigate('/boardPost')}>글쓰기</button>
-      </AddBtn>
+      </StyledAddBtn>
     </Container>
   );
 };

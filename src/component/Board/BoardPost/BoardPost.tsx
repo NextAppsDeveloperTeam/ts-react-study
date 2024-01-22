@@ -30,15 +30,26 @@ const Button = styled.div`
 `;
 
 const BoardPost: React.FC = () => {
+  // Use ---------------------------------------------------------------------------------------------------------------
+
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
+
   const { getBoardInfo, addBoard, updateBoard } = useContext(BoardContext) as BoardContextValue;
+
+  // Ref ---------------------------------------------------------------------------------------------------------------
 
   const formCommandsRef = useRef<FormCommands>(null);
 
-  const boardId = useMemo(() => Number(params.id), [params]);
+  // State -------------------------------------------------------------------------------------------------------------
 
   const [boardInfo, setBoardInfo] = useState<Board>();
+
+  // Memo --------------------------------------------------------------------------------------------------------------
+
+  const boardId = useMemo(() => Number(params.id), [params]);
+
+  // Effect ------------------------------------------------------------------------------------------------------------
 
   useEffect(() => {
     const info = getBoardInfo(boardId, false);
@@ -55,6 +66,8 @@ const BoardPost: React.FC = () => {
     }, 1);
   }, []);
 
+  // Event Handler -----------------------------------------------------------------------------------------------------
+
   const handleSubmit = useCallback(
     (values: { title: string; content: string }) => {
       addBoard(values.title, values.content);
@@ -67,6 +80,8 @@ const BoardPost: React.FC = () => {
     },
     [addBoard, boardInfo, navigate, updateBoard]
   );
+
+  // Render ------------------------------------------------------------------------------------------------------------
 
   return (
     <Container className='Board'>
@@ -86,7 +101,6 @@ const BoardPost: React.FC = () => {
               <button>{boardId ? '수정하기' : '등록하기'}</button>
             </Button>
           </>
-          {/*)}*/}
         </Form>
       </FormContextProvider>
     </Container>

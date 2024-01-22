@@ -3,6 +3,8 @@ import { PaginationProps as Props } from './Pagination.types';
 import { PageBtn } from './Pagination.style';
 
 function Pagination({ total, limit: initLimit, page, onPage }: Props) {
+  // Memo --------------------------------------------------------------------------------------------------------------
+
   const limit = useMemo(() => initLimit || 10, [initLimit]);
 
   const totalPage = useMemo(() => Math.ceil(total / limit), [limit, total]);
@@ -19,6 +21,8 @@ function Pagination({ total, limit: initLimit, page, onPage }: Props) {
     return nArr?.slice(blockArea, Number(limit) + blockArea);
   }, [limit, page, totalPage]);
 
+  // Event Handler -----------------------------------------------------------------------------------------------------
+
   const handleFirstPageClick = useCallback(() => {
     onPage(1);
   }, [onPage]);
@@ -34,6 +38,8 @@ function Pagination({ total, limit: initLimit, page, onPage }: Props) {
   const handleLastPageClick = useCallback(() => {
     onPage(totalPage);
   }, [onPage, totalPage]);
+
+  // Render ------------------------------------------------------------------------------------------------------------
 
   return (
     <PageBtn>

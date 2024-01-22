@@ -72,7 +72,7 @@ export const TableStyled = styled.div`
   }
 `;
 
-export const AddBtn = styled.div`
+export const StyledAddBtn = styled.div`
   text-align: center;
   margin: 25px 0;
 

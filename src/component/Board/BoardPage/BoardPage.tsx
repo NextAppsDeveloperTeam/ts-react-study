@@ -1,37 +1,73 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Form, FormText, FormContextProvider, Pagination } from '../../Common';
 import { Board, BoardComment } from '../../../@types';
 import { BoardContext, BoardContextValue, UserContext, UserContextValue } from '../../../context';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Container } from './BoardPage.style';
+import { SearchType } from '../BoardList/controls/Search';
+import { util } from '../../../@util';
 
 const BoardPage: React.FC = () => {
+  // Use ---------------------------------------------------------------------------------------------------------------
+
   const params = useParams<{ id: string }>();
   const navigate = useNavigate();
-
-  const boardId = useMemo(() => Number(params.id), [params]);
+  const location = useLocation();
 
   const { auth, getUserInfo } = useContext(UserContext) as UserContextValue;
   const { getBoardInfo, addComment, deleteBoard, deleteComment } = useContext(BoardContext) as BoardContextValue;
+
+  // State -------------------------------------------------------------------------------------------------------------
 
   const [boardInfo, setBoardInfo] = useState<Board>();
   const [commentList, setCommentList] = useState<(BoardComment & { user_name: string | undefined })[]>();
   const [comment, setComment] = useState('');
   const [page, setPage] = useState(1);
-  const [block, setBlock] = useState(0);
+
   const limit = 10;
-  const total = commentList?.length;
-  const offset = (page - 1) * limit;
+
+  // Memo --------------------------------------------------------------------------------------------------------------
+
+  const boardId = useMemo(() => Number(params.id), [params]);
+
+  const total = useMemo(() => commentList?.length, [commentList]);
+
+  const list = useMemo(() => {
+    const offset = (page - 1) * limit;
+    return commentList?.slice(offset, offset + limit);
+  }, [commentList, page]);
+
+  // Function ----------------------------------------------------------------------------------------------------------
+
+  const makeHash = useCallback(
+    (data: { page?: number; searchType?: SearchType; keyword?: string }) => {
+      const hashes: string[] = [];
+
+      const finalPage = data.page ? data.page : page;
+
+      if (finalPage > 1) {
+        hashes.push(`p=${finalPage}`);
+      }
+
+      return hashes;
+    },
+    [page]
+  );
+
+  // Effect ------------------------------------------------------------------------------------------------------------
 
   useEffect(() => {
     const info = getBoardInfo(boardId, true);
     if (info) {
       setBoardInfo(info);
       setComment('');
+      const hash = util.deHash(location.hash);
+      const page = hash.p ? Number(hash.p) : 1;
+      setPage(page);
     } else {
       navigate('/boardList');
     }
-  }, [boardId, getBoardInfo, navigate]);
+  }, [boardId, getBoardInfo, location.hash, navigate]);
 
   useEffect(() => {
     if (boardInfo) {
@@ -44,12 +80,24 @@ const BoardPage: React.FC = () => {
     }
   }, [boardInfo, getUserInfo]);
 
+  // Event Handler -----------------------------------------------------------------------------------------------------
+
   const handleSubmit = useCallback(
     (values: { comment: string }) => {
       addComment(boardId, values.comment);
     },
     [addComment, boardId]
   );
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      const hashes = makeHash({ page });
+      navigate(`#${hashes.join('&')}`);
+    },
+    [makeHash, navigate]
+  );
+
+  // Render ------------------------------------------------------------------------------------------------------------
 
   return boardInfo ? (
     <Container className='Board'>
@@ -106,13 +154,13 @@ const BoardPage: React.FC = () => {
               {commentList.length === 0 ? (
                 <></>
               ) : (
-                commentList.slice(offset, offset + limit).map((comment) => (
+                list &&
+                list.map((comment) => (
                   <div key={comment.id} className='commentStyled'>
                     <div className='commentDiv'>
                       <div className='commentName'>{comment.user_name}</div>
                       {auth?.id === comment.user_id && (
                         <div className='commentBtn'>
-                          {/*<button>수정</button>*/}
                           <button
                             onClick={() => {
                               deleteComment(boardId, comment.id);
@@ -133,7 +181,7 @@ const BoardPage: React.FC = () => {
           )}
         </div>
         {total && commentList?.length !== 0 ? (
-          <Pagination total={total} limit={limit} page={page} setPage={setPage} block={block} setBlock={setBlock} />
+          <Pagination total={total} onPage={handlePageChange} page={page} />
         ) : (
           <></>
         )}
