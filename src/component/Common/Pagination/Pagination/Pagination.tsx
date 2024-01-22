@@ -1,72 +1,57 @@
 import React from 'react';
 import { PaginationProps as Props } from './Pagination.types';
 import { PageBtn } from './Pagination.style';
-import { useNavigate } from 'react-router-dom';
 
-function Pagination({ total, limit, page, setPage, block, setBlock }: Props) {
-  const navigate = useNavigate();
+function Pagination({ total, limit: initLimit, page, onPage }: Props) {
+  const limit = useMemo(() => initLimit || 10, [initLimit]);
 
-  const createArr = (n: number) => {
-    const iArr: number[] = new Array(n);
-    for (let i = 0; i < n; i++) iArr[i] = i + 1;
-    return iArr;
-  };
+  const totalPage = useMemo(() => Math.ceil(total / limit), [limit, total]);
 
-  const totalPage = Math.ceil(total / limit);
-  const pageLimit = 10;
-  const blockArea = Number(block * pageLimit);
-  const nArr = createArr(Number(totalPage));
-  const pArr = nArr?.slice(blockArea, Number(pageLimit) + blockArea);
+  const pArr = useMemo(() => {
+    const createArr = (n: number) => {
+      const iArr: number[] = new Array(n);
+      for (let i = 0; i < n; i++) iArr[i] = i + 1;
+      return iArr;
+    };
 
-  useEffect(() => {
-    navigate(`/boardList#p=${page}`);
-  }, [navigate, page]);
+    const blockArea = Math.floor((page - 1) / limit) * limit;
+    const nArr = createArr(Number(totalPage));
+    return nArr?.slice(blockArea, Number(limit) + blockArea);
+  }, [limit, page, totalPage]);
 
-  const firstPage = () => {
-    setPage(1);
-    setBlock(0);
-  };
+  const handleFirstPageClick = useCallback(() => {
+    onPage(1);
+  }, [onPage]);
 
-  const lastPage = () => {
-    setPage(totalPage);
-    setBlock(Math.ceil(totalPage / pageLimit) - 1);
-  };
+  const handlePrevPageClick = useCallback(() => {
+    onPage(page > 1 ? page - 1 : 1);
+  }, [onPage, page]);
 
-  const prevPage = () => {
-    if (block === 0) {
-      setPage(1);
-    } else {
-      setPage((n: number) => n - (page % pageLimit));
-      setBlock((n: number) => n - 1);
-    }
-  };
+  const handleNextPageClick = useCallback(() => {
+    onPage(page < totalPage ? page + 1 : totalPage);
+  }, [onPage, page, totalPage]);
 
-  const nextPage = () => {
-    if (block === Math.ceil(totalPage / pageLimit) - 1) {
-      setPage(totalPage);
-    } else {
-      setPage(pageLimit * Number(block + 1) + 1);
-      setBlock((n: number) => n + 1);
-    }
-  };
+  const handleLastPageClick = useCallback(() => {
+    onPage(totalPage);
+  }, [onPage, totalPage]);
 
   return (
     <PageBtn>
-      <button className='pageBtn' onClick={() => firstPage()} disabled={page === 1}>
+      <button className='pageBtn' onClick={handleFirstPageClick} disabled={page === 1}>
         &lt;&lt;
       </button>
-      <button className='pageBtn' onClick={() => prevPage()} disabled={page === 1}>
+      <button className='pageBtn' onClick={handlePrevPageClick} disabled={page === 1}>
         &lt;
       </button>
       {pArr.map((n) => (
-        <button key={n} onClick={() => setPage(n)} aria-current={page === n ? 'page' : undefined}>
+        <button key={n} onClick={() => onPage(n)} aria-current={page === n ? 'page' : undefined}>
           {n}
         </button>
       ))}
-      <button className='pageBtn' onClick={() => nextPage()} disabled={page === totalPage}>
+      <button className='pageBtn' onClick={handleNextPageClick} disabled={page === totalPage}>
         &gt;
       </button>
-      <button className='pageBtn' onClick={() => lastPage()} disabled={page === totalPage}>
+      <button className='pageBtn' onClick={handleLastPageClick} disabled={page === totalPage}>
         &gt;&gt;
       </button>
     </PageBtn>

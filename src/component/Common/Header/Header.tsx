@@ -74,7 +74,7 @@ const Header: React.FC = () => {
               <a onClick={() => navigate('/myPage')}>MY</a>
             </li>
             <li>
-              <a onClick={() => navigate('/boardList#p=1')}>자유게시판</a>
+              <a onClick={() => navigate('/board')}>자유게시판</a>
             </li>
             {auth.status === UserStatus.Admin && (
               <li>

@@ -28,12 +28,12 @@ const MainRoute = () => {
         <>
           <Route path='/myPage' element={<MyPage />} />
           <Route path='/myPwdChange' element={<MyPwdChange />} />
-          <Route path='myInfoUpdate' element={<MyInfoUpdate />} />
-          <Route path='myPwdCheck' element={<MyPwdCheck />} />
+          <Route path='/myInfoUpdate' element={<MyInfoUpdate />} />
+          <Route path='/myPwdCheck' element={<MyPwdCheck />} />
           <Route path='/myDelete' element={<MyDelete />} />
-          <Route path='/boardList' element={<BoardList />} />
-          <Route path='/boardPost/:id?' element={<BoardPost />} />
-          <Route path='/boardPage/:id' element={<BoardPage />} />
+          <Route path='/board' element={<BoardList />} />
+          <Route path='/board/post/:id?' element={<BoardPost />} />
+          <Route path='/board/:id' element={<BoardPage />} />
           {auth.status === UserStatus.Admin && <Route path='/userList' element={<UserList />} />}
         </>
       ) : (

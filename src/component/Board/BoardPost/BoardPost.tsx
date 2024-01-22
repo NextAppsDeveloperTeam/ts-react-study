@@ -31,25 +31,19 @@ const Button = styled.div`
 
 const BoardPost: React.FC = () => {
   const params = useParams<{ id: string }>();
-
   const navigate = useNavigate();
+  const { getBoardInfo, addBoard, updateBoard } = useContext(BoardContext) as BoardContextValue;
 
   const formCommandsRef = useRef<FormCommands>(null);
 
   const boardId = useMemo(() => Number(params.id), [params]);
 
   const [boardInfo, setBoardInfo] = useState<Board>();
-  const [title, setTitle] = useState(boardInfo ? boardInfo.title : '');
-  const [content, setContent] = useState(boardInfo ? boardInfo.content : '');
-
-  const { getBoardInfo, addBoard, updateBoard } = useContext(BoardContext) as BoardContextValue;
 
   useEffect(() => {
     const info = getBoardInfo(boardId, false);
     if (info) {
       setBoardInfo(info);
-      setTitle(info.title);
-      setContent(info.content);
     }
   }, [boardId, getBoardInfo]);
 
@@ -65,13 +59,13 @@ const BoardPost: React.FC = () => {
     (values: { title: string; content: string }) => {
       addBoard(values.title, values.content);
       if (boardInfo) {
-        updateBoard(boardInfo.id, title, content);
+        updateBoard(boardInfo.id, values.title, values.content);
         navigate(`/boardPage/${boardInfo.id}`);
       } else {
         navigate('/boardList');
       }
     },
-    [addBoard, boardInfo, content, navigate, title, updateBoard]
+    [addBoard, boardInfo, navigate, updateBoard]
   );
 
   return (
@@ -79,23 +73,20 @@ const BoardPost: React.FC = () => {
       <Title text='게시글 작성' />
       <FormContextProvider>
         <Form ref={formCommandsRef} onSubmit={handleSubmit}>
-          {boardInfo ? (
-            <>
-              <FormText label='제목' name='title' value={title} onChange={setTitle} required />
-              <FormTextArea label='내용' name='content' value={content} onChange={setContent} required />
-              <Button>
-                <button>수정하기</button>
-              </Button>
-            </>
-          ) : (
-            <>
-              <FormText label='제목' name='title' placeholder='제목을 입력해주세요' required />
-              <FormTextArea label='내용' name='content' placeholder='내용을 입력해주세요' required />
-              <Button>
-                <button>등록하기</button>
-              </Button>
-            </>
-          )}
+          <>
+            <FormText label='제목' name='title' placeholder='제목을 입력해주세요' required value={boardInfo?.title} />
+            <FormTextArea
+              label='내용'
+              name='content'
+              placeholder='내용을 입력해주세요'
+              required
+              value={boardInfo?.content}
+            />
+            <Button>
+              <button>{boardId ? '수정하기' : '등록하기'}</button>
+            </Button>
+          </>
+          {/*)}*/}
         </Form>
       </FormContextProvider>
     </Container>

@@ -50,7 +50,6 @@ export const TableStyled = styled.div`
 
     tbody {
       tr {
-
         td {
           padding: 8px 0;
         }
@@ -65,29 +64,11 @@ export const TableStyled = styled.div`
         }
 
         &:hover {
-          background: #E0E0E0A5;
+          background: #e0e0e0a5;
           cursor: pointer;
         }
       }
     }
-  }
-`;
-
-export const SearchBtn = styled.div`
-  text-align: right;
-  margin: 20px 0;
-
-  select {
-    padding: 7px 5px;
-  }
-
-  input {
-    width: 200px;
-    padding: 7px 5px;
-  }
-
-  button {
-    padding: 9px 17px;
   }
 `;
 
