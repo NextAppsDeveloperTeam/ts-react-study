@@ -85,8 +85,10 @@ const BoardPage: React.FC = () => {
   const handleSubmit = useCallback(
     (values: { comment: string }) => {
       addComment(boardId, values.comment);
+      const hashes = makeHash({ page: 1 });
+      navigate(`#${hashes.join('&')}`);
     },
-    [addComment, boardId]
+    [addComment, boardId, makeHash, navigate]
   );
 
   const handlePageChange = useCallback(

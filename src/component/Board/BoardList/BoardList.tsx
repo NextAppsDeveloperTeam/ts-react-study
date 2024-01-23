@@ -99,7 +99,7 @@ const BoardList: React.FC = () => {
 
   const handleSearchSubmit = useCallback(
     (type: SearchType, keyword: string) => {
-      const hashes = makeHash({ searchType: type, keyword });
+      const hashes = makeHash({ page: 1, searchType: type, keyword });
       navigate(notEmpty(hashes) ? `#${hashes.join('&')}` : '');
     },
     [makeHash, navigate]
